@@ -65,7 +65,7 @@ function Header({
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       // UPDATED: Added flex-wrap, gap-y-3 for spacing between stacked rows, and adjusted padding
-      className="fixed top-0 left-0 w-full z-50 flex flex-wrap md:flex-nowrap justify-between items-center bg-gradient-to-r from-orange-400 to-amber-400 px-3 sm:px-6 md:px-8 py-3 pt-5 md:py-2 shadow-xl backdrop-blur-lg animate-bounce-gentle gap-y-3"
+      className="fixed top-0 left-0 w-full z-50 flex flex-wrap md:flex-nowrap justify-between items-center bg-gradient-to-r from-orange-400 to-amber-400 px-3 sm:px-6 md:px-8 py-3 pt-5  md:py-2 shadow-xl backdrop-blur-lg animate-bounce-gentle gap-y-3 "
     >
       {/* ---------------- LOGO ---------------- */}
       <motion.div
