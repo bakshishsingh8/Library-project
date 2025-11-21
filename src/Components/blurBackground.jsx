@@ -1,11 +1,17 @@
 function Background(){
     return(
-        <div 
+      //   <div 
       
-        className="absolute inset-0 bg-[url('https://www.voicesofruralindia.org/wp-content/uploads/2020/11/ylswjsy7stw-scaled.jpg')] bg-center bg-cover filter blur-[3px] "
-      >
-
+      //   className="absolute inset-0 bg-[url('')] bg-center bg-cover filter blur-[px] "
+      // >
+<div className="absolute inset-0 overflow-hidden opacity-80">
+        <img
+          src="src/assets/jpg/library.webp"  // 🌿 Use your uploaded image here
+          alt="Decorative background"
+          className="w-full h-full object-cover blur-[2px]"
+        />
       </div>
+      // </div>
     )
 }
 export default Background;

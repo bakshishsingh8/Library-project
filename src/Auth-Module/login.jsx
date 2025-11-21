@@ -1,127 +1,146 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 import Background from "../Components/blurBackground";
 import LogImg from "../Components/leftSideImg";
 
-// ✅ API base URL from .env file (Vite uses import.meta.env)
 const LOGIN_URL = import.meta.env.VITE_APP_LOGIN_URL;
 
-
 function LogIn() {
-  const navigate = useNavigate(); // ✅ Hook to programmatically navigate between routes
+  const navigate = useNavigate();
 
-  // ✅ React state to store form data, loading status, errors, and password toggle
-  const [email, setEmail] = useState(""); // User email input
-  const [password, setPassword] = useState(""); // User password input
-  const [error, setError] = useState(""); // API error messages
-  const [loading, setLoading] = useState(false); // Loading state for login button
-  const [showPassword, setShowPassword] = useState(false); // Password visibility toggle
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  // ✅ Redirect already logged-in users automatically
   useEffect(() => {
-    const token = localStorage.getItem("authToken"); // Check if token exists
-    if (token) {
-      // If user already logged in, redirect to /books
-      // 'replace: true' prevents using the back button to go back to login
-      navigate("/books", { replace: true });
-    }
+    const token = localStorage.getItem("authToken");
+    if (token) navigate("/books", { replace: true });
   }, []);
 
-  // ✅ Function called on form submission
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent page reload
-    setError(""); // Reset previous error messages
-    setLoading(true); // Set loading to true to disable button and show feedback
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      // ✅ Send POST request to login API
-      const response = await axios.post(LOGIN_URL, {
-        email,
-        password,
-      });
-
-      // ✅ Save returned token in localStorage for authentication
+      const response = await axios.post(LOGIN_URL, { email, password });
       localStorage.setItem("authToken", response.data.token);
-
-      // ✅ Navigate user to protected /books page after successful login
-      navigate("/books", { replace: true }); // Replace prevents back button
+      navigate("/welcome", { replace: true });
     } catch (err) {
-      console.error(err); // Log error for debugging
-
-      // ✅ Display backend error message or fallback message
+      console.error(err);
       setError(err.response?.data?.message || "Login failed! Please enter valid info.");
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
-  };
-
-  // ✅ Function to toggle password visibility
-  const togglePassword = () => {
-    setShowPassword((prev) => !prev); // Switch between true/false
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center font-poppins">
-      {/* ✅ Blurred background component */}
+    <div className="relative min-h-screen flex items-center justify-center font-poppins overflow-hidden bg-gradient-to-br from-amber-950 via-amber-800 to-orange-700">
+      {/* ✅ Animated floating circles */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute top-20 left-20 w-72 h-72 bg-amber-400/20 rounded-full blur-3xl"
+          animate={{ y: [0, 40, 0], x: [0, -40, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-20 w-80 h-80 bg-orange-500/20 rounded-full blur-3xl"
+          animate={{ y: [0, -30, 0], x: [0, 30, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
       <Background />
 
-      <div className="relative flex justify-center items-center w-[950px] h-[600px] mx-auto my-12 rounded-2xl overflow-hidden">
-        {/* ✅ Left side image component */}
-        <LogImg />
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative flex justify-center items-center w-[950px] h-[600px] mx-auto my-12 rounded-3xl overflow-hidden backdrop-blur-3xl shadow-[0_0_60px_rgba(255,193,7,0.25)] border border-white/10"
+      >
+        <motion.div
+          initial={{ opacity: 0, x: -60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+          className="hidden md:block w-1/2 h-full"
+        >
+          <LogImg />
+        </motion.div>
 
-        {/* ✅ Right side login form */}
-        <div className="w-106 flex flex-col justify-center px-10 py-10 h-full backdrop-blur-xl text-white bg-amber-900/30">
-          <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-          <p className="text-gray-300 mb-6">Please enter your details</p>
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="w-full md:w-1/2 flex flex-col justify-center px-10 py-12 h-full backdrop-blur-xl text-white bg-white/10"
+        >
+          <motion.h1
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="text-4xl font-bold mb-2 bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent"
+          >
+            Welcome Back 👋
+          </motion.h1>
+          <p className="text-gray-300 mb-8">Please enter your details to continue</p>
 
-          {/* ✅ Login form */}
           <form className="flex flex-col" onSubmit={handleLogin}>
-            {/* ✅ Display error message if login fails */}
-            {error && <p className="text-red-400 mb-3">{error}</p>}
+            {error && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-red-400 mb-3 text-sm"
+              >
+                {error}
+              </motion.p>
+            )}
 
-            {/* ✅ Email input field */}
-            <input
+            <motion.input
               type="email"
               placeholder="Email"
               required
-              value={email} // Bind state to input
-              onChange={(e) => setEmail(e.target.value)} // Update state on change
-              className="w-full mb-4 px-4 py-3 rounded-xl border border-white/20 bg-white/5 text-white placeholder-white/70 focus:border-amber-400 focus:shadow-[0_0_8px_rgba(255,179,71,0.5)] outline-none transition"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full mb-4 px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white placeholder-white/60 focus:border-amber-400 focus:shadow-[0_0_12px_rgba(255,179,71,0.5)] outline-none transition"
+              whileFocus={{ scale: 1.02 }}
             />
 
-            {/* ✅ Password input field with visibility toggle */}
-            <div className="relative mb-4">
+            <motion.div
+              className="relative mb-4"
+              whileFocus={{ scale: 1.02 }}
+            >
               <input
-                type={showPassword ? "text" : "password"} // Show/hide password
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 text-white placeholder-white/70 focus:border-amber-400 focus:shadow-[0_0_8px_rgba(255,179,71,0.5)] outline-none transition"
+                className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white placeholder-white/60 focus:border-amber-400 focus:shadow-[0_0_12px_rgba(255,179,71,0.5)] outline-none transition"
               />
-              {/* 👁 Icon to toggle password */}
               <span
-                className="absolute right-3 top-3 text-gray-400 text-lg cursor-pointer select-none"
-                onClick={togglePassword}
+                className="absolute right-3 top-3 text-gray-300 text-lg cursor-pointer select-none"
+                onClick={() => setShowPassword((prev) => !prev)}
               >
-                {showPassword ? "🙈" : "👁"} {/* Change icon based on state */}
+                {showPassword ? "🙈" : "👁"}
               </span>
-            </div>
+            </motion.div>
 
-            {/* ✅ Login button */}
-            <button
+            <motion.button
               type="submit"
-              disabled={loading} // Disable button while waiting for API
-              className="w-full cursor-pointer py-3 mt-2 rounded-xl bg-gradient-to-r from-orange-400 to-amber-400 font-semibold text-white text-lg hover:from-amber-400 hover:to-orange-400 transform hover:-translate-y-1 transition disabled:opacity-50"
+              disabled={loading}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="w-full py-3 mt-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 font-semibold text-white text-lg shadow-[0_0_15px_rgba(255,179,71,0.4)] hover:shadow-[0_0_25px_rgba(255,179,71,0.6)] transition disabled:opacity-50 cursor-pointer"
             >
-              {loading ? "Logging in..." : "Log In"} {/* Show loading text */}
-            </button>
+              {loading ? "Logging in..." : "Log In"}
+            </motion.button>
 
-            {/* ✅ Link to signup page */}
             <p
               onClick={() => navigate("/signup")}
-              className="mt-4 text-sm text-gray-400 cursor-pointer"
+              className="mt-5 text-sm text-gray-300 cursor-pointer text-center"
             >
               Don&apos;t have an account?{" "}
               <span className="text-amber-400 hover:text-amber-300 transition">
@@ -130,24 +149,21 @@ function LogIn() {
             </p>
           </form>
 
-          {/* ✅ Divider line */}
           <div className="flex items-center text-gray-400 text-sm my-6">
             <span className="flex-1 h-px bg-white/20 mx-2"></span>
             OR
             <span className="flex-1 h-px bg-white/20 mx-2"></span>
           </div>
 
-          {/* ✅ Forgot password link */}
-          <div className="flex justify-center mt-4">
-            <p
-              onClick={() => navigate("/forgot-password")}
-              className="cursor-pointer text-amber-400 hover:underline"
-            >
-              Forgot Password?
-            </p>
-          </div>
-        </div>
-      </div>
+          <motion.p
+            whileHover={{ scale: 1.05 }}
+            onClick={() => navigate("/forgot-password")}
+            className="cursor-pointer text-center text-amber-400 hover:underline"
+          >
+            Forgot Password?
+          </motion.p>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
