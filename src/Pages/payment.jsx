@@ -76,22 +76,22 @@ function Payment() {
           </h2>
 
           {/* Payment Options */}
-          <div className="grid grid-cols-1  sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1  sm:grid-cols-3 gap-3 ">
             {[
               {
                 label: "Credit/Debit Card",
                 icon: CreditCard,
-                color: "from-green-500 to-emerald-600",
+                color: "from-green-500 to-emerald-600 cursor-pointer",
               },
               {
                 label: "UPI / Wallet",
                 icon: Wallet,
-                color: "from-blue-500 to-indigo-600",
+                color: "from-blue-500 to-indigo-600 cursor-pointer",
               },
               {
                 label: "Net Banking",
                 icon: Globe,
-                color: "from-purple-500 to-fuchsia-600",
+                color: "from-purple-500 to-fuchsia-600 cursor-pointer",
               },
             ].map(({ label, icon: Icon, color }) => (
               <button

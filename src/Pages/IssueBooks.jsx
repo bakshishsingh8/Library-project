@@ -249,7 +249,7 @@ function IssueBooks() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate("/payment", { state: { issueBooks } })}
-                className="bg-green-600 text-white font-semibold rounded-xl px-6 py-2.5 hover:bg-green-700 shadow-lg flex items-center gap-2 transition-all"
+                className="bg-green-600 text-white font-semibold rounded-xl px-6 py-2.5 hover:bg-green-700 shadow-lg flex items-center gap-2 transition-all cursor-pointer"
               >
                 <CreditCard size={18} />
                 Proceed to Payment
