@@ -1,7 +1,7 @@
 import './App.css'
 import Routing from './Routing/routing'
-
-import AISearch from "./Components/AISearch.jsx";
+// import  Footer from './Pages/footer.jsx'
+// import AISearch from "./Components/AISearch.jsx";
 
 
 function App() {
@@ -9,7 +9,8 @@ function App() {
   return (
     <>
       <Routing />
-      <AISearch />
+      {/* <AISearch /> */}
+      {/* <Footer /> */}
 
     </>
   )

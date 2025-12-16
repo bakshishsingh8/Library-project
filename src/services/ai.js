@@ -12,7 +12,7 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 // PICK FASTEST MODEL
 // -------------------------
 async function getValidModelName() {
-  return "gemini-1.5-flash"; // works for free plans
+  return "gemini-2.5-flash"; // works for free plans
 }
 
 // -------------------------

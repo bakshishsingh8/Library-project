@@ -1,371 +1,12 @@
 // import React, { useState, useEffect, useRef, useMemo } from "react";
-// import { useNavigate, useParams } from "react-router-dom";
+// import { useNavigate, useParams, useLocation } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { motion, AnimatePresence } from "framer-motion";
 // import { Plus, Check, MinusCircle } from "lucide-react";
 // import Header from "../Layout/header.jsx";
 // import { addBook, removeBook } from "../Redux/issueBooksSlice.js";
-
-// // Reuse animation variants for consistency with Books page
-// export const allBooksData = {
-//   1: [
-//     { id: "1.1", mainid: "1", title: "To Kill a Mockingbird – Harper Lee", img: "https://d3525k1ryd2155.cloudfront.net/h/112/127/1081127112.0.x.4.jpg", desc: "A powerful novel about racial injustice and moral growth in the Deep South, seen through the eyes of a young girl.", price: 200, },
-//     { id: "1.2", mainid: "1", title: "1984 – George Orwell", img: "https://www.eourmart.com/cdn/shop/products/51OiP9ZQ1tL.jpg?v=1639834548&width=1445", desc: "A chilling vision of a totalitarian future where Big Brother watches everyone.", price: 300, },
-//     { id: "1.3", mainid: "1", title: "Harry Potter and the Sorcerer’s Stone — J.K. Rowling", img: "https://substackcdn.com/image/fetch/$s_!fxEI!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3317a341-8447-4104-a37a-88db2301f07b_2912x2096.png", desc: "An orphan discovers he’s a wizard and enters a world of magic, friendship, and destiny.", price: 250, },
-//     { id: "1.4", mainid: "1", title: "The Girl on the Train — Paula Hawkins", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTczZ1P8PeJxdj-SO01NWxh1HWux94QA-dAbw&s", desc: "A woman’s daily commute turns into a psychological thriller when she witnesses something shocking.", price: 100, },
-//     { id: "1.5", mainid: "1", title: "Train to Pakistan – Khushwant Singh", img: "https://www.esplanade.com/-/media/Esplanade/Images/Whats-On/festival-and-series/2024/kalaa-utsavam/train-to-pakistan-01.ashx", desc: "A moving portrayal of love and humanity amid the horrors of the Partition.", price: 450, },
-//     { id: "1.6", mainid: "1", title: "The White Tiger – Aravind Adiga", img: "https://images.squarespace-cdn.com/content/v1/6023b47e6c992a7aded9b1bd/2df6dd9f-6643-4a67-89d1-9af832b68c64/Book+cover+mock+up+the+white+tiger+novel+by+Aravind+Adiga+by+kiyary+do.jpg", desc: "A darkly comic story about an ambitious driver’s rise from poverty to wealth in modern India.", price: 220, },
-//     { id: "1.7", mainid: "1", title: "Five Point Someone – Chetan Bhagat", img: "https://ik.imagekit.io/shortpedia/Voices/wp-content/uploads/2021/05/five-points-of-someone.jpg", desc: "A humorous and emotional tale about three friends struggling through IIT life.", price: 130, },
-//     { id: "1.8", mainid: "1", title: "The Lord of the Rings – J.R.R. Tolkien", img: "https://compote.slate.com/images/c011d20f-dfa5-48d8-baa3-ecc93a57023f.jpg", desc: "An epic quest to destroy a powerful ring that could doom the world.", price: 230, }
-//   ],
-//   2: [
-//     { id: "2.1", mainid: "2", title: "The War That Saved My Life – Kimberly Brubaker Bradley", img: "https://images.penguinrandomhouse.com/cover/9780147510488", desc: "A disabled girl escapes her abusive home during WWII and discovers her own courage and freedom.", price: 230, },
-//     { id: "2.2", mainid: "2", title: "As Brave As You – Jason Reynolds", img: "https://m.media-amazon.com/images/I/817pEwSwkmL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg", desc: "Two brothers from Brooklyn spend a summer in rural Virginia, learning about family, identity, and bravery.", price: 230, },
-//     { id: "2.3", mainid: "2", title: "She Persisted – Chelsea Clinton", img: "https://images.penguinrandomhouse.com/cover/9781524741723", desc: "A collection of inspiring stories of 13 American women who showed courage and perseverance.", price: 230, },
-//     { id: "2.4", mainid: "2", title: "She Persisted Around the World – Chelsea Clinton", img: "https://images.penguinrandomhouse.com/cover/9780525516996", desc: "Thirteen stories of women from around the world who changed history through bravery and determination.", price: 230, },
-//     { id: "2.5", mainid: "2", title: "Courage: Eight Portraits – Gordon Brown", img: "https://cheltenhamrarebooks.co.uk/cdn/shop/products/brown-gordon-courage-signed-612331.jpg?v=1619938564&width=600", desc: "Profiles of eight remarkable figures like Mandela and MLK, exploring the meaning of moral courage.", price: 230, },
-//     { id: "2.6", mainid: "2", title: "Why Courage Matters – John McCain & Mark Salter", img: "https://images.pangobooks.com/book_images/5heNRC71SKdOm0rbk7LjJp8EbdA2/1669494746982_5heNRC71SKdOm0rbk7LjJp8EbdA2?width=800&quality=85&crop=1%3A1", desc: "An inspiring look at what true courage means, featuring stories from history and McCain’s own life.", price: 230, },
-//     { id: "2.7", mainid: "2", title: "The Auschwitz Volunteer – Witold Pilecki", img: "https://m.media-amazon.com/images/I/61FtyUQwQHL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg", desc: "The true story of a man who volunteered to enter Auschwitz to organize resistance and report on atrocities.", price: 230, },
-//     { id: "2.8", mainid: "2", title: "Igraine the Brave – Cornelia Funke", img: "https://asylumbookstore.com/cdn/shop/products/igraine-the-brave-paperback-by-cornelia-funke-811985.jpg?v=1697954448&width=1946", desc: "A fun fantasy tale of a young girl who dreams of becoming a knight and proves her bravery against invaders.", price: 230, }
-//   ],
-//   3: [
-//     { id: "3.1", mainid: "3", title: "A History of the Sikhs – Khushwant Singh", img: "https://kitabhut.in/cdn/shop/files/IMG20240521100627.jpg?v=1716280390", desc: "A two-volume masterpiece tracing Sikh history from Guru Nanak’s time to post-independence India, offering deep insights into Sikh identity and evolution.", price: 230, },
-//     { id: "3.2", mainid: "3", title: "The Sikh Religion: Its Gurus, Sacred Writings and Authors – Max Arthur Macauliffe", img: "https://m.media-amazon.com/images/I/61iK+OF8jrL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg", desc: "A monumental six-volume work exploring the lives and teachings of the Sikh Gurus with historical detail and reverence.", price: 230, },
-//     { id: "3.3", mainid: "3", title: "Ranjit Singh: Maharaja of the Punjab - Khushwant Singh", img: "https://www.tallengestore.com/cdn/shop/products/AnEquestrianPortraitOfMaharajaRanjitSingh-VintageIndianMiniatureArtSikhPainting_74c0d1d8-1473-4d65-9118-8ae85ecde10b.jpg?v=1603354245", desc: "The book charts the life of Maharaja Ranjit Singh — “from being a petty chieftain to becoming the most powerful Indian ruler of his time. His empire extended from Tibet to the deserts of Sindh and from the Khyber Pass to the Sutlej.", price: 230, },
-//     { id: "3.4", mainid: "3", title: "The Sikh Gurus and the Sikh Religion – Harbans Singh", img: "https://sikhizm.com/wp-content/uploads/2023/02/The-Encyclopaedia-of-Sikhism-Vol.4.webp", desc: "An insightful overview of the lives, philosophies, and spiritual legacies of the ten Sikh Gurus.", price: 230, },
-//     { id: "3.5", mainid: "3", title: "The Evolution of the Sikh Community – W. H. McLeod", img: "https://m.media-amazon.com/images/I/41HK8HW21RL._AC_CR0%2C0%2C0%2C0_SY315_.jpg", desc: "A historical study of how the Sikh community developed its identity, institutions, and religious practices.", price: 230, },
-//     { id: "3.6", mainid: "3", title: "The Sikhs in History – Dr. Sangat Singh", img: "https://m.media-amazon.com/images/I/316K5-263QL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg", desc: "Covers the political, social, and cultural evolution of Sikh society, with special focus on key historical turning points.", price: 230, },
-//     { id: "3.7", mainid: "3", title: "Guru Nanak: His Life and Teachings – Dr. Surinder Singh Kohli", img: "https://fatehnama.com/wp-content/uploads/2019/11/Guru-Nanak-dev-ji-by-Harshinder-Kaur.jpg", desc: "A detailed account of Guru Nanak Dev Ji’s life, travels, and spiritual message that shaped Sikh philosophy.", price: 230, },
-//     { id: "3.8", mainid: "3", title: "The Punjab Story – Edited by Khushwant Singh", img: "https://m.media-amazon.com/images/I/71JbWYhc34L._AC_UF1000,1000_QL80_.jpg", desc: "A collection of essays and personal accounts narrating Punjab’s turbulent modern history, including the 1947 Partition and 1984 events.", price: 230, }
-//   ],
-//   4: [
-//     { id: "4.1", mainid: "4", title: "Sapiens: A Brief History of Humankind – Yuval Noah Harari", img: "https://static-01.shop.com.mm/p/7b87021301ba936ccf5e34b7a1e43015.jpg", desc: "A sweeping exploration of human evolution and how biology and history have defined societies, cultures, and economies.", price: 230, },
-//     { id: "4.2", mainid: "4", title: "Guns, Germs, and Steel – Jared Diamond", img: "https://www.bookxcess.com/cdn/shop/products/2202cdb1e2ab452c8ae9a1b07463d401.thumbnail.0000000000_1500x.jpg?v=1679986000", desc: "An award-winning study of how geography, agriculture, and environment shaped civilizations’ destinies across history.", price: 230, },
-//     { id: "4.3", mainid: "4", title: "A People’s History of the United States – Howard Zinn", img: "https://is1-ssl.mzstatic.com/image/thumb/Publication19/v4/6a/c4/c5/6ac4c574-2865-1e26-1242-4b9682ae603f/mzm.happsmes.jpg/1200x675wz.jpg", desc: "A groundbreaking retelling of American history through the eyes of workers, women, and marginalized communities.", price: 230, },
-//     { id: "4.4", mainid: "4", title: "The Pursuit of Glory: Europe 1648–1815 – Tim Blanning", img: "https://images4.penguinrandomhouse.com/smedia/9780143113898", desc: "A fascinating chronicle of Europe’s transformation during a time of empires, revolutions, and enlightenment.", price: 230, },
-//     { id: "4.5", mainid: "4", title: "Postwar: A History of Europe Since 1945 – Tony Judt", img: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/4b/43/90/4b4390ee-fcf4-f3e7-b222-f99df21a8916/6157-square.jpg/1200x600wp.png", desc: "A comprehensive narrative of Europe’s recovery, division, and reinvention after the devastation of World War II.", price: 230, },
-//     { id: "4.6", mainid: "4", title: "The Story of Civilization – Will Durant & Ariel Durant", img: "https://i.ebayimg.com/images/g/kkAAAOSwFcJmptfu/s-l400.jpg", desc: "A monumental 11-volume masterpiece tracing humanity’s philosophical, cultural, and political evolution.", price: 230, },
-//     { id: "4.7", mainid: "4", title: "The Language of History – Audrey Truschke", img: "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202508/india-5-000-years-of-history-on-the-subcontinent-by-audrey-truschke--princeton-university-press-164827233-16x9_0.jpg?VersionId=IrFvnH_jIAM.Ywf9D0Yhy6d8CuKBwqdC&size=690:388", desc: "Explores Indo-Persian chronicles and Sanskrit traditions to reinterpret medieval Indian history.", price: 230, },
-//     { id: "4.8", mainid: "4", title: "The Spartans: An Epic History by Paul Cartledge", img: "https://img-cdn.heureka.group/v1/f21d2928-4bb9-4eca-8541-09632017e05a.jpg?width=400&height=400", desc: "A comprehensive and elegant history of Sparta, from about 480 to 360 BC, giving broad coverage of society, politics and culture.", price: 230, }
-//   ],
-//   5: [
-//     { id: "5.1", mainid: "5", title: "The Jungle Book – Rudyard Kipling", img: "https://shrihindpublications.in/wp-content/uploads/2025/05/Copy-of-THE-JUNGLE-BOOK.png", desc: "A timeless collection of stories about Mowgli, a boy raised by wolves, and his adventures among the animals of the jungle.", price: 230, },
-//     { id: "5.2", mainid: "5", title: "Tarka the Otter – Henry Williamson", img: "https://www.buyusedbooks.in/image/cache/books/new_model5/9780140366211-f-500x500.jpg", desc: "A beautifully written nature novel that follows the life, struggles, and triumphs of an otter in the wild English countryside.", price: 230, },
-//     { id: "5.3", mainid: "5", title: "The Incredible Journey – Sheila Burnford", img: "https://images.ctfassets.net/qpn1gztbusu2/PxVUIGDFDEDonDZW3xlun/eca86b5e5c002f873f85fb3aa39a0a46/sheila-burnford-the-incredible-journey.webp", desc: "Two dogs and a cat embark on a perilous 300-mile journey through the Canadian wilderness to find their beloved owners.", price: 230, },
-//     { id: "5.4", mainid: "5", title: "The Exultant Ark – Jonathan Peter Balcombe", img: "https://static.vecteezy.com/system/resources/previews/030/178/569/large_2x/wallpaper-animals-the-forest-the-sun-the-animals-the-animals-the-animals-ai-generated-free-photo.jpg", desc: "A thought-provoking non-fiction book showcasing animals experiencing joy, play, and emotion — challenging human-centered views.", price: 230, },
-//     { id: "5.5", mainid: "5", title: "The White Giraffe – Lauren St John", img: "https://m.media-amazon.com/images/S/aplus-media-library-service-media/9d2cc67a-f6ba-4c98-89f8-b79f08230066.__CR0,0,300,300_PT0_SX300_V1___.png", desc: "After losing her parents, Martine moves to Africa, where she discovers a magical connection with a legendary white giraffe.", price: 230, },
-//     { id: "5.6", mainid: "5", title: "A Sick Day for Amos McGee – Philip C. Stead", img: "https://www.heirloomartco.com/cdn/shop/products/IMG_2678.jpg?v=1607549389", desc: "When kind zookeeper Amos McGee falls ill, his animal friends visit him to return the love and care he’s always given them.", price: 230, },
-//     { id: "5.7", mainid: "5", title: "Animal Homes – Ashwitha Jayakumar", img: "https://m.media-amazon.com/images/I/51xIP7d-OmL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg", desc: "A delightful educational book for young readers exploring the unique and surprising homes animals build and live in.", price: 230, },
-//     { id: "5.8", mainid: "5", title: "Migration: Incredible Animal Journeys – Mike Unwin", img: "https://ecsmedia.pl/c/16641801121416288-jpg-gallery.big-iext119655861.jpg", desc: "A visually stunning exploration of the epic journeys animals make across the planet — from whales to butterflies.", price: 230, }
-//   ],
-//   6: [
-//     { id: "6.1", mainid: "6", title: "Salt, Fat, Acid, Heat – Samin Nosrat", img: "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,w_730/k%2FPhoto%2FLifestyle%2F2019-09-cookbook-club-salt-fat-acid-heat%2FSalt-Fat-Acid-Heat_125", desc: "A revolutionary cookbook that teaches cooking through the four essential elements — salt, fat, acid, and heat — so you can cook confidently without relying on recipes.", price: 230, },
-//     { id: "6.2", mainid: "6", title: "The Food Lab: Better Home Cooking Through Science – J. Kenji López-Alt", img: "https://blog.thermoworks.com/wp-content/uploads/2015/10/food_lab_z_b-1.jpg", desc: "Explores the science of home cooking, helping you master techniques and understand the 'why' behind great dishes.", price: 230, },
-//     { id: "6.3", mainid: "6", title: "Made in India: Recipes from an Indian Family Kitchen – Meera Sodha", img: "https://rootsandcook.com/wp-content/uploads/2022/11/Honest-Cookbook-reviews-Made-in-India-1-Edit-min.jpg", desc: "Over 130 easy and vibrant recipes celebrating authentic Indian home-cooked meals passed down through generations.", price: 230, },
-//     { id: "6.4", mainid: "6", title: "Indian-ish: Recipes and Antics from a Modern American Family – Priya Krishna", img: "https://strataportland.com/cdn/shop/products/P1010040_a1529dd7-122d-4f96-82b5-d99cc7551deb_1080x.jpg?v=1662657768", desc: "A fun and modern cookbook blending Indian traditions with contemporary American flavors, full of personality and creativity.", price: 230, },
-//     { id: "6.5", mainid: "6", title: "The Rangoon Sisters: Recipes from Our Burmese Family Kitchen – Amy & Emily Chung", img: "https://is1-ssl.mzstatic.com/image/thumb/Publication124/v4/47/2f/2b/472f2b60-5e6b-76e9-8ab8-919a11b1bc80/9781473573659.jpg/1200x630wz.png", desc: "A beautiful collection of Burmese family recipes bringing together authentic flavors and heartwarming stories.", price: 230, },
-//     { id: "6.6", mainid: "6", title: "Tiffin: 500 Authentic Recipes Celebrating India’s Regional Cuisine – Sonal Ved", img: "https://m.media-amazon.com/images/I/81tkoYAzV2L._AC_UF1000,1000_QL80_.jpg", desc: "An extensive cookbook featuring 500 regional Indian recipes—from temple food to tribal dishes—showcasing India’s incredible culinary diversity.", price: 230, },
-//     { id: "6.7", mainid: "6", title: "Gordon Ramsay’s Ultimate Fit Food – Gordon Ramsay", img: "https://static-ppimages.freetls.fastly.net/nielsens/9781444780789.jpg?canvas=600,600&fit=bounds&height=600&mode=max&width=600&404=default.jpg", desc: "Healthy yet delicious recipes categorized into 'Healthy', 'Energized', and 'Lean' meals by world-famous chef Gordon Ramsay.", price: 230, },
-//     { id: "6.8", mainid: "6", title: "The Bacon Cookbook – James Villas", img: "https://m.media-amazon.com/images/I/71WWfY6eagL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg", desc: "A flavorful collection of over 150 bacon-inspired recipes from around the world for true bacon lovers.", price: 230, }
-//   ],
-//   7: [
-//     { id: "7.1", mainid: "7", title: "The Republic – Plato", img: "https://www.planksip.org/content/images/2021/05/585260_Plato_The-Republic_112110.jpg", desc: "A foundational text of Western philosophy exploring justice, morality, and the ideal society.", price: 230, },
-//     { id: "7.2", mainid: "7", title: "Nicomachean Ethics – Aristotle", img: "https://cdn.thecollector.com/wp-content/uploads/2024/03/what-are-the-nicomachean-ethics.jpg", desc: "Aristotle’s classic work on virtue, character, and how to live a good life.", price: 230, },
-//     { id: "7.3", mainid: "7", title: "Meditations – Marcus Aurelius", img: "https://m.media-amazon.com/images/I/41qDBtsEloL._SL500_.jpg", desc: "Personal reflections by a Roman emperor on Stoic philosophy, duty, and resilience.", price: 230, },
-//     { id: "7.4", mainid: "7", title: "The Problems of Philosophy – Bertrand Russell", img: "https://is1-ssl.mzstatic.com/image/thumb/Publication221/v4/d8/85/3d/d8853d61-0360-735c-cf8c-4225757b6846/9781998382460.png/1200x675wz.jpg", desc: "A clear and accessible introduction to core philosophical questions about knowledge and reality.", price: 230, },
-//     { id: "7.5", mainid: "7", title: "A Theory of Justice – John Rawls", img: "https://webdiag547.blob.core.windows.net/live/images%2Fbooks%2F100490.jpg?sv=2020-04-08&st=2025-10-19T23%3A13%3A37Z&se=2030-10-19T23%3A18%3A37Z&sr=c&sp=r&sig=DRdx9ml5FKEY6SoJtyqsyXI9ZSU2OuHKQ%2BGSk43O5yE%3D", desc: "A modern classic proposing fairness and equality as the foundation of a just society.", price: 230, },
-//     { id: "7.6", mainid: "7", title: "Beyond Good and Evil – Friedrich Nietzsche", img: "https://bluediarybooks.com/wp-content/uploads/2025/06/WhatsApp-Image-2025-06-22-at-2.45.40-PM-450x415.jpeg", desc: "Nietzsche challenges traditional morality and urges the reader to create their own values.", price: 230, },
-//     { id: "7.7", mainid: "7", title: "Philosophical Investigations – Ludwig Wittgenstein", img: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/fb/93/de/fb93de41-b505-7b93-25b0-c7dda3fe2d0b/9781004134380.jpg/1200x675wf.jpg", desc: "A groundbreaking work exploring language, meaning, and how we understand the world.", price: 230, },
-//     { id: "7.8", mainid: "7", title: "The Story of Philosophy – Will Durant", img: "https://is1-ssl.mzstatic.com/image/thumb/Publication116/v4/8c/90/2a/8c902a11-0686-e6f0-ef64-5e3d679bcdde/b6fb5965-964c-4c3c-8b95-5571923b1df0_cover_image.jpg/1200x900wz.jpg", desc: "An engaging overview of major Western philosophers and their ideas, written for general readers.", price: 230, },
-//   ],
-//   8: [
-//     { id: "8.1", mainid: "8", title: "Rich Dad Poor Dad – Robert T. Kiyosaki", img: "https://icrrd.com/public/media/01-11-2020-083226richdad-poor-dad.jpg", desc: "A personal finance classic that contrasts two perspectives on money — one focused on earning and one on building wealth.", price: 230, },
-//     { id: "8.2", mainid: "8", title: "The Intelligent Investor – Benjamin Graham", img: "https://5.imimg.com/data5/SELLER/Default/2023/3/EB/QY/ND/147952517/the-intelligent-investor-by-benjamin-graham-warren-buffett-.jpeg", desc: "The definitive guide to value investing, teaching patience, discipline, and long-term financial thinking.", price: 230, },
-//     { id: "8.3", mainid: "8", title: "Principles of Corporate Finance – Richard A. Brealey & Stewart C. Myers", img: "https://m.media-amazon.com/images/I/51TYY78A8DL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg", desc: "A comprehensive textbook on corporate finance, covering valuation, risk, capital structure, and strategic decision-making.", price: 230, },
-//     { id: "8.4", mainid: "8", title: "Profit First – Mike Michalowicz", img: "https://hookagency.com/wp-content/uploads/2024/08/profit-first-summary-book-review.jpg", desc: "A business finance method that ensures profitability by prioritizing profit before expenses.", price: 230, },
-//     { id: "8.5", mainid: "8", title: "The Wisdom of Finance – Mihir A. Desai", img: "https://static.getbookie.com/product/image/2022/12/full/1670341468-1890.44921875-00e289a5-350d-4cc7-b590-0005f9b14dc4.png", desc: "An engaging look at financial principles through the lens of literature, history, and philosophy.", price: 230, },
-//     { id: "8.6", mainid: "8", title: "The Total Money Makeover – Dave Ramsey", img: "https://media.licdn.com/dms/image/v2/D4D12AQEVJ3WqvyMUTg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1675277324928?e=2147483647&v=beta&t=WWw2ezlWWld31HxroxpxdMwcGqcBYEKsqG5co6VfjSc", desc: "A step-by-step plan to get out of debt, build savings, and take control of your financial life.", price: 230, },
-//     { id: "8.7", mainid: "8", title: "Too Big to Fail – Andrew Ross Sorkin", img: "https://fivebooks.com/book/too-big-fail-inside-story-how-wall-street-and-washington-fought-save-financial-system/shareimage.jpg", desc: "An inside account of the 2008 financial crisis, revealing how major institutions and governments responded to disaster.", price: 230, },
-//     { id: "8.8", mainid: "8", title: "The Customer-Funded Business – John Mullins", img: "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/47/6014523/1.jpg?3172", desc: "Shows how entrepreneurs can grow their ventures using customer revenue instead of relying on investors.", price: 230, }
-//   ],
-// };
-
-// const itemVariants = {
-//   hidden: { opacity: 0, y: 30 },
-//   visible: {
-//     opacity: 1,
-//     y: 0,
-//     transition: { type: "spring", stiffness: 300, damping: 24 },
-//   },
-//   exit: { opacity: 0, y: -20 },
-// };
-
-// // ✅ FIX: Removed props destructuring here
-// function BooksList() {
-//   const navigate = useNavigate();
-//   const { id } = useParams();
-//   const dispatch = useDispatch();
-//   const issueBooks = useSelector((state) => state.issueBooks.books);
-
-//   // ✅ FIX: Define State locally here
-//   const [search, setSearch] = useState("");
-//   const [selectedLetter, setSelectedLetter] = useState("");
-//   const [viewMode, setViewMode] = useState("grid");
-//   const [showFilter, setShowFilter] = useState(false);
-//   const [headerHeight, setHeaderHeight] = useState(0);
-//   const filterSectionRef = useRef(null);
-
-//   const categoryNames = {
-//     1: "Fiction",
-//     2: "Brave",
-//     3: "Sikhism",
-//     4: "History",
-//     5: "Animal Things",
-//     6: "Food Recipes",
-//     7: "Philosophy",
-//     8: "Business & Finance",
-//   };
-
-//   const categoryName = categoryNames[id] || "Books Category";
-//   const books = allBooksData[id] || [];
-
-//   const filteredBooks = useMemo(() => {
-//     const q = (search || "").trim().toLowerCase();
-//     return books.filter((book) => {
-//       const matchSearch =
-//         q === "" ||
-//         book.title.toLowerCase().includes(q) ||
-//         (book.desc && book.desc.toLowerCase().includes(q));
-//       const matchLetter = selectedLetter
-//         ? book.title.toLowerCase().startsWith(selectedLetter.toLowerCase())
-//         : true;
-//       return matchSearch && matchLetter;
-//     });
-//   }, [books, search, selectedLetter]);
-
-//   const handleAddBook = (book) => {
-//     if (!issueBooks.find((b) => b.id === book.id)) {
-//       dispatch(addBook(book));
-//     }
-//   };
-
-//   const handleRemoveBook = (book) => {
-//     dispatch(removeBook(book.id));
-//   };
-
-//   const isAdded = (book) => !!issueBooks.find((b) => b.id === book.id);
-
-//   // ========================= RENDER =========================
-
-//   return (
-//     <motion.div
-//       initial={{ opacity: 0 }}
-//       animate={{ opacity: 1 }}
-//       transition={{ duration: 0.5 }}
-//       className="bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 min-h-screen px-6 md:px-12 lg:px-20 md:mt-[-70px] py-2 mt-[-170px] pb-23 md:pb-15"
-//     >
-//       {/* ✅ Global Header: Now props passed are real state setters */}
-//       <Header
-//         viewMode={viewMode}
-//         setViewMode={setViewMode}
-//         search={search}
-//         setSearch={setSearch}
-//         selectedLetter={selectedLetter}
-//         setSelectedLetter={setSelectedLetter}
-//         scrollToFilterRef={filterSectionRef}
-//         openPageFilter={() => setShowFilter(true)}
-//         issueBooks={issueBooks}
-//         setHeaderHeight={setHeaderHeight}
-//       />
-
-//       {/* Spacing for fixed header */}
-//       <div style={{ marginTop: headerHeight + 20 }} />
-
-//       {/* ✨ Animated Page Title */}
-//       <motion.h1
-//         initial={{ opacity: 0, x: -20 }}
-//         animate={{ opacity: 1, x: 0 }}
-//         transition={{ delay: 0.2 }}
-//         className="text-4xl mb-10 font-bold text-gray-700 text-center md:text-left"
-//       >
-//         {categoryName}
-//       </motion.h1>
-
-//       {/* --- BOOK DISPLAY SECTION --- */}
-//       <AnimatePresence>
-//         {filteredBooks.length > 0 ? (
-//           viewMode === "grid" ? (
-//             <motion.div
-//               layout
-//               className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
-//             >
-//               <AnimatePresence>
-//                 {filteredBooks.map((item) => (
-//                   <motion.div
-//                     key={item.id}
-//                     layout
-//                     variants={itemVariants}
-//                     initial="hidden"
-//                     animate="visible"
-//                     exit="exit"
-//                     whileHover={{
-//                       scale: 1.03,
-//                       y: -5,
-//                       transition: { type: "spring", stiffness: 300 },
-//                     }}
-//                     className="bg-white rounded-2xl shadow-md border border-amber-100 overflow-hidden cursor-pointer mt-2"
-//                   >
-//                     <img
-//                       src={item.img}
-//                       alt={item.title}
-//                       className="w-full h-44 sm:h-52 md:h-56 object-cover rounded-t-2xl"
-//                     />
-//                     <div className="p-4 flex flex-col justify-between ">
-//                       <h2 className="text-base sm:text-lg h-20 font-bold text-gray-800">
-//                         {item.title}
-//                       </h2>
-//                       <p className="text-gray-600 text-sm mt-2 h-15 overflow-y-auto pr-2 style={{ maxHeight: 80 }}">
-//                         {item.desc}
-//                       </p>
-//                       <div className="mt-3 flex items-center justify-between">
-//                         <p className="text-amber-700 font-semibold text-lg">
-//                           ₹ {item.price}
-//                         </p>
-//                         {isAdded(item) ? (
-//                           <div className="flex gap-2">
-//                             <button className="flex-1 py-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold w-23 px-2 bg-green-500 shadow">
-//                               <Check size={16} /> Added
-//                             </button>
-//                             <motion.button
-//                               whileHover={{ scale: 1.05 }}
-//                               whileTap={{ scale: 0.95 }}
-//                               onClick={() => handleRemoveBook(item)}
-//                               className="flex-1 py-2 px-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow hover:scale-105 transition-transform cursor-pointer"
-//                             >
-//                               <MinusCircle size={16} /> Remove
-//                             </motion.button>
-//                           </div>
-//                         ) : (
-//                           <motion.button
-//                             whileHover={{ scale: 1.05 }}
-//                             whileTap={{ scale: 0.95 }}
-//                             onClick={() => handleAddBook(item)}
-//                             className="w-40 py-2 rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-amber-400 hover:bg-amber-500 shadow hover:scale-105 transition-transform"
-//                           >
-//                             <Plus size={16} /> Add
-//                           </motion.button>
-//                         )}
-//                       </div>
-//                     </div>
-//                   </motion.div>
-//                 ))}
-//               </AnimatePresence>
-//             </motion.div>
-//           ) : (
-//             // --- LIST VIEW ---
-//             <motion.div layout className="space-y-4">
-//               <AnimatePresence>
-//                 {filteredBooks.map((item) => (
-//                   <motion.div
-//                     key={item.id}
-//                     layout
-//                     variants={itemVariants}
-//                     initial="hidden"
-//                     animate="visible"
-//                     exit="exit"
-//                     whileHover={{
-//                       scale: 1.02,
-//                       x: 5,
-//                       transition: { type: "spring", stiffness: 300 },
-//                     }}
-//                     className="flex flex-col sm:flex-row items-center bg-white p-4 sm:p-5 rounded-2xl shadow-md hover:shadow-lg border border-amber-100 cursor-pointer overflow-hidden"
-//                   >
-//                     <img
-//                       src={item.img}
-//                       alt={item.title}
-//                       className="w-full sm:w-32 h-20 object-cover rounded-xl"
-//                     />
-//                     <div className="sm:ml-5 mt-3 sm:mt-0 flex-1 text-center sm:text-left">
-//                       <h2 className="text-lg sm:text-xl font-bold text-gray-800">
-//                         {item.title}
-//                       </h2>
-//                       <p className="text-gray-600 text-sm mt-1 line-clamp-2">
-//                         {item.desc}
-//                       </p>
-//                       <p className="text-amber-700 font-semibold text-lg mt-2">
-//                         ₹ {item.price}
-//                       </p>
-//                     </div>
-//                     <div className="ml-3 mt-3 sm:mt-0">
-//                       {isAdded(item) ? (
-//                         <div className="flex gap-2">
-//                           <button className="py-2 rounded-xl flex items-center px-3 justify-center gap-2 text-white font-semibold bg-green-500 shadow">
-//                             <Check size={16} /> Added
-//                           </button>
-//                           <motion.button
-//                             whileHover={{ scale: 1.05 }}
-//                             whileTap={{ scale: 0.95 }}
-//                             onClick={() => handleRemoveBook(item)}
-//                             className="py-2 rounded-xl flex items-center px-3 justify-center cursor-pointer gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow"
-//                           >
-//                             <MinusCircle size={16} /> Remove
-//                           </motion.button>
-//                         </div>
-//                       ) : (
-//                         <motion.button
-//                           whileHover={{
-//                             scale: 1.07,
-//                             boxShadow: "0px 6px 15px rgba(255, 165, 0, 0.4)",
-//                           }}
-//                           whileTap={{
-//                             scale: 0.93,
-//                           }}
-//                           transition={{
-//                             type: "spring",
-//                             stiffness: 300,
-//                             damping: 20,
-//                           }}
-//                           onClick={() => handleAddBook(item)}
-//                           className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 w-22 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:from-amber-500 hover:to-orange-500 shadow-md"
-//                         >
-//                           <Plus size={18} />
-//                           Add
-//                         </motion.button>
-//                       )}
-//                     </div>
-//                   </motion.div>
-//                 ))}
-//               </AnimatePresence>
-//             </motion.div>
-//           )
-//         ) : (
-//           <motion.p
-//             layout
-//             initial={{ opacity: 0 }}
-//             animate={{ opacity: 1 }}
-//             className="text-gray-500 text-center mt-10"
-//           >
-//             No books found.
-//           </motion.p>
-//         )}
-//       </AnimatePresence>
-//     </motion.div>
-//   );
-// }
-
-// export default BooksList;
-
-// ./////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// import React, { useState, useEffect, useRef, useMemo } from "react";
-// import { useNavigate, useParams } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { motion, AnimatePresence } from "framer-motion";
-// import { Plus, Check, MinusCircle } from "lucide-react";
-// import Header from "../Layout/header.jsx";
-// import { addBook, removeBook } from "../Redux/issueBooksSlice.js";
-
-// // ✅ IMPORT THE DATA
 // import { allBooksData, categories } from "../data/booksData";
+// import Footer from "./footer.jsx";
 
 // const itemVariants = {
 //   hidden: { opacity: 0, y: 30 },
@@ -380,6 +21,11 @@
 // function BooksList() {
 //   const navigate = useNavigate();
 //   const { id } = useParams();
+
+//   // ✅ 1. Get location state to find the highlighted ID
+//   const location = useLocation();
+//   const highlightId = location.state?.highlightId;
+
 //   const dispatch = useDispatch();
 //   const issueBooks = useSelector((state) => state.issueBooks.books);
 
@@ -390,11 +36,9 @@
 //   const [headerHeight, setHeaderHeight] = useState(0);
 //   const filterSectionRef = useRef(null);
 
-//   // ✅ Get category name dynamically from our data file
 //   const currentCategory = categories.find(cat => cat.categorieNumber === parseInt(id));
 //   const categoryName = currentCategory ? currentCategory.title : "Books Category";
-  
-//   // ✅ Get books from our data file
+
 //   const books = allBooksData[id] || [];
 
 //   const filteredBooks = useMemo(() => {
@@ -410,6 +54,18 @@
 //       return matchSearch && matchLetter;
 //     });
 //   }, [books, search, selectedLetter]);
+
+//   // ✅ 2. Effect to scroll to the highlighted book
+//   useEffect(() => {
+//     if (highlightId && filteredBooks.length > 0) {
+//       setTimeout(() => {
+//         const element = document.getElementById(`book-${highlightId}`);
+//         if (element) {
+//           element.scrollIntoView({ behavior: "smooth", block: "center" });
+//         }
+//       }, 300); // 300ms delay ensures the DOM elements are rendered
+//     }
+//   }, [highlightId, filteredBooks]);
 
 //   const handleAddBook = (book) => {
 //     if (!issueBooks.find((b) => b.id === book.id)) {
@@ -459,69 +115,138 @@
 //           viewMode === "grid" ? (
 //             <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
 //               <AnimatePresence>
-//                 {filteredBooks.map((item) => (
-//                   <motion.div
-//                     key={item.id}
-//                     layout
-//                     variants={itemVariants}
-//                     initial="hidden"
-//                     animate="visible"
-//                     exit="exit"
-//                     whileHover={{ scale: 1.03, y: -5, transition: { type: "spring", stiffness: 300 } }}
-//                     className="bg-white rounded-2xl shadow-md border border-amber-100 overflow-hidden cursor-pointer mt-2"
-//                   >
-//                     <img src={item.img} alt={item.title} className="w-full h-44 sm:h-52 md:h-56 object-cover rounded-t-2xl" />
-//                     <div className="p-4 flex flex-col justify-between ">
-//                       <h2 className="text-base sm:text-lg h-20 font-bold text-gray-800">{item.title}</h2>
-//                       <p className="text-gray-600 text-sm mt-2 h-15 overflow-y-auto pr-2">{item.desc}</p>
-//                       <div className="mt-3 flex items-center justify-between">
-//                         <p className="text-amber-700 font-semibold text-lg">₹ {item.price}</p>
-//                         {isAdded(item) ? (
-//                           <div className="flex gap-2">
-//                             <button className="flex-1 py-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold w-23 px-2 bg-green-500 shadow"><Check size={16} /> Added</button>
-//                             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleRemoveBook(item)} className="flex-1 py-2 px-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow cursor-pointer"><MinusCircle size={16} /> Remove</motion.button>
-//                           </div>
-//                         ) : (
-//                           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleAddBook(item)} className="w-40 py-2 rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-amber-400 hover:bg-amber-500 shadow"><Plus size={16} /> Add</motion.button>
-//                         )}
+//                 {filteredBooks.map((item) => {
+//                   // ✅ 3. Check if this is the highlighted item
+//                   const isHighlighted = item.id === highlightId;
+
+//                   return (
+//                     <motion.div
+//                       key={item.id}
+//                       id={`book-${item.id}`} // ✅ Added ID anchor
+//                       layout
+//                       variants={itemVariants}
+//                       initial="hidden"
+//                       // ✅ 4. Visual Highlight Animation
+//                       animate={isHighlighted ? {
+//                         opacity: 1,
+//                         y: 0,
+//                         scale: [1, 1.05, 1],
+//                         borderColor: "#f59e0b",
+//                         boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)"
+//                       } : "visible"}
+//                       exit="exit"
+//                       whileHover={{ scale: 1.03, y: -5, transition: { type: "spring", stiffness: 300 } }}
+//                       // ✅ 5. Apply highlight border classes
+//                       className={`bg-white rounded-2xl shadow-md border overflow-hidden cursor-pointer mt-2 
+//                         ${isHighlighted ? "border-amber-500 ring-4 ring-amber-200" : "border-amber-100"}`}
+//                     >
+//                       <img src={item.img} alt={item.title} className="w-full h-44 sm:h-52 md:h-56 object-cover rounded-t-2xl" />
+//                       <div className={`p-4 flex flex-col justify-between ${isHighlighted ? "bg-amber-50" : ""}`}>
+//                         <h2 className="text-base sm:text-lg h-20 font-bold text-gray-800">{item.title}</h2>
+//                         <p className="text-gray-600 text-sm mt-2 h-15 overflow-y-auto pr-2">{item.desc}</p>
+//                         <div className="mt-3 flex items-center justify-between">
+//                           <p className="text-amber-700 font-semibold text-lg">₹ {item.price}</p>
+//                           {/* {isAdded(item) ? (
+//                             <div className="flex gap-2">
+//                               <button className="flex-1 py-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold w-23 px-2 bg-green-500 shadow"><Check size={16} /> Added</button>
+//                               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleRemoveBook(item)} className="flex-1 py-2 px-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow cursor-pointer"><MinusCircle size={16} /> Remove</motion.button>
+//                             </div>
+//                           ) : (
+//                             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleAddBook(item)} className="w-40 py-2 rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-amber-400 hover:bg-amber-500 shadow"><Plus size={16} /> Add</motion.button> */}
+//                           {/* <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleAddBook(item)} className="w-40 py-2 rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-amber-400 hover:bg-amber-500 shadow"><Plus size={16} /> On Rent</motion.button>
+//                           )} */}
+//                           {isAdded(item) ? (
+//                             <div className="flex gap-2">
+//                               <button className="flex-1 py-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold w-23 px-2 bg-green-500 shadow">
+//                                 <Check size={16} /> Added
+//                               </button>
+
+//                               <motion.button
+//                                 whileHover={{ scale: 1.05 }}
+//                                 whileTap={{ scale: 0.95 }}
+//                                 onClick={() => handleRemoveBook(item)}
+//                                 className="flex-1 py-2 px-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow cursor-pointer"
+//                               >
+//                                 <MinusCircle size={16} /> Remove
+//                               </motion.button>
+//                             </div>
+//                           ) : (
+//                             // FIX: wrap both buttons in a div
+//                             <div className="flex gap-2">
+//                               <motion.button
+//                                 whileHover={{ scale: 1.05 }}
+//                                 whileTap={{ scale: 0.95 }}
+//                                 onClick={() => handleAddBook(item)}
+//                                 className="w-20 py-2 rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-amber-400 hover:bg-amber-500 shadow"
+//                               >
+//                                 <Plus size={16} /> Buy
+//                               </motion.button>
+
+//                               <motion.button
+//                                 whileHover={{ scale: 1.05 }}
+//                                 whileTap={{ scale: 0.95 }}
+//                                 onClick={() => navigate("/issue-book-form")}   // <- NEW FUNCTION
+//                                 className="w-30 py-2 rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-blue-500 hover:bg-blue-600 shadow"
+//                               >
+//                                 <Plus size={16} /> On Rent
+//                               </motion.button>
+//                             </div>
+//                           )}
+
+//                         </div>
 //                       </div>
-//                     </div>
-//                   </motion.div>
-//                 ))}
+//                     </motion.div>
+//                   );
+//                 })}
 //               </AnimatePresence>
 //             </motion.div>
 //           ) : (
+//             // LIST VIEW
 //             <motion.div layout className="space-y-4">
 //               <AnimatePresence>
-//                 {filteredBooks.map((item) => (
-//                   <motion.div
-//                     key={item.id}
-//                     layout
-//                     variants={itemVariants}
-//                     initial="hidden"
-//                     animate="visible"
-//                     exit="exit"
-//                     whileHover={{ scale: 1.02, x: 5, transition: { type: "spring", stiffness: 300 } }}
-//                     className="flex flex-col sm:flex-row items-center bg-white p-4 sm:p-5 rounded-2xl shadow-md hover:shadow-lg border border-amber-100 cursor-pointer overflow-hidden"
-//                   >
-//                     <img src={item.img} alt={item.title} className="w-full sm:w-32 h-20 object-cover rounded-xl" />
-//                     <div className="sm:ml-5 mt-3 sm:mt-0 flex-1 text-center sm:text-left">
-//                       <h2 className="text-lg sm:text-xl font-bold text-gray-800">{item.title}</h2>
-//                       <p className="text-gray-600 text-sm mt-1 line-clamp-2">{item.desc}</p>
-//                       <p className="text-amber-700 font-semibold text-lg mt-2">₹ {item.price}</p>
-//                     </div>
-//                     <div className="ml-3 mt-3 sm:mt-0">
-//                       {isAdded(item) ? (
-//                         <div className="flex gap-2">
-//                           <button className="py-2 rounded-xl flex items-center px-3 justify-center gap-2 text-white font-semibold bg-green-500 shadow"><Check size={16} /> Added</button>
-//                           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleRemoveBook(item)} className="py-2 rounded-xl flex items-center px-3 justify-center cursor-pointer gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow"><MinusCircle size={16} /> Remove</motion.button>
-//                         </div>
-//                       ) : (
-//                         <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => handleAddBook(item)} className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 w-22 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:from-amber-500 hover:to-orange-500 shadow-md"><Plus size={18} /> Add</motion.button>
-//                       )}
-//                     </div>
-//                   </motion.div>
-//                 ))}
+//                 {filteredBooks.map((item) => {
+//                   const isHighlighted = item.id === highlightId;
+
+//                   return (
+//                     <motion.div
+//                       key={item.id}
+//                       id={`book-${item.id}`} // ✅ Added ID anchor
+//                       layout
+//                       variants={itemVariants}
+//                       initial="hidden"
+//                       // ✅ Visual Highlight Animation for List View
+//                       animate={isHighlighted ? {
+//                         opacity: 1,
+//                         y: 0,
+//                         scale: [1, 1.02, 1],
+//                         borderColor: "#f59e0b",
+//                         boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)"
+//                       } : "visible"}
+//                       exit="exit"
+//                       whileHover={{ scale: 1.02, x: 5, transition: { type: "spring", stiffness: 300 } }}
+//                       // ✅ Highlight styling
+//                       className={`flex flex-col sm:flex-row items-center p-4 sm:p-5 rounded-2xl shadow-md hover:shadow-lg border cursor-pointer overflow-hidden
+//                         ${isHighlighted ? "bg-amber-50 border-amber-500 ring-2 ring-amber-200" : "bg-white border-amber-100"}`}
+//                     >
+//                       <img src={item.img} alt={item.title} className="w-full sm:w-32 h-20 object-cover rounded-xl" />
+//                       <div className="sm:ml-5 mt-3 sm:mt-0 flex-1 text-center sm:text-left">
+//                         <h2 className="text-lg sm:text-xl font-bold text-gray-800">{item.title}</h2>
+//                         <p className="text-gray-600 text-sm mt-1 line-clamp-2">{item.desc}</p>
+//                         <p className="text-amber-700 font-semibold text-lg mt-2">₹ {item.price}</p>
+//                       </div>
+//                       <div className="ml-3 mt-3 sm:mt-0">
+//                         {isAdded(item) ? (
+//                           <div className="flex gap-2">
+//                             <button className="py-2 rounded-xl flex items-center px-3 justify-center gap-2 text-white font-semibold bg-green-500 shadow"><Check size={16} /> Added</button>
+//                             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleRemoveBook(item)} className="py-2 rounded-xl flex items-center px-3 justify-center cursor-pointer gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow"><MinusCircle size={16} /> Remove</motion.button>
+//                           </div>
+//                         ) : (
+//                           <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => handleAddBook(item)} className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 w-22 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:from-amber-500 hover:to-orange-500 shadow-md"><Plus size={18} /> Add</motion.button>
+//                         )}
+//                       </div>
+//                     </motion.div>
+//                   );
+//                 })}
 //               </AnimatePresence>
 //             </motion.div>
 //           )
@@ -529,6 +254,9 @@
 //           <motion.p layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-gray-500 text-center mt-10">No books found.</motion.p>
 //         )}
 //       </AnimatePresence>
+//       <div className="  mt-20 mb-[-45px] ml-[-60px] mr-[-60px]">
+//         <Footer />
+//       </div>
 //     </motion.div>
 //   );
 // }
@@ -536,15 +264,1539 @@
 // export default BooksList;
 
 
+
+
+// // BooksList.jsx
+// import React, { useState, useEffect, useRef, useMemo } from "react";
+// import { useNavigate, useParams, useLocation } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+// import { motion, AnimatePresence } from "framer-motion";
+// import {
+//   User,
+//   BookOpen,
+//   Tags,
+//   CheckCircle,
+//   CalendarDays,
+//   ChevronDown,
+//   Plus,
+//   Check,
+//   MinusCircle,
+// } from "lucide-react";
+// import Header from "../Layout/header.jsx";
+// import { addBook, removeBook } from "../Redux/issueBooksSlice.js";
+// import { allBooksData, categories } from "../data/booksData";
+// import Footer from "./footer.jsx";
+// import { DayPicker } from "react-day-picker";
+// import "react-day-picker/dist/style.css";
+
+// /* ------------------------------
+//    Motion variants
+// -------------------------------*/
+// const itemVariants = {
+//   hidden: { opacity: 0, y: 30 },
+//   visible: {
+//     opacity: 1,
+//     y: 0,
+//     transition: { type: "spring", stiffness: 300, damping: 24 },
+//   },
+//   exit: { opacity: 0, y: -20 },
+// };
+
+// /* ----------------------------------------------------------
+//    CategoryDropdown (uses dynamic categories from booksData)
+//    - animated arrow
+//    - closes on outside click
+//    - returns the category TITLE (string)
+// -----------------------------------------------------------*/
+// function CategoryDropdown({ label, value, onChange, error }) {
+//   const [open, setOpen] = useState(false);
+//   const dropdownRef = useRef(null);
+
+//   // use the imported categories (array of objects)
+//   const catList = categories || [];
+
+//   useEffect(() => {
+//     const handleClickOutside = (e) => {
+//       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+//         setOpen(false);
+//       }
+//     };
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, []);
+
+//   return (
+//     <div className="relative space-y-2" ref={dropdownRef}>
+//       <label className="font-semibold text-gray-700">{label}</label>
+
+//       <div
+//         onClick={() => setOpen(!open)}
+//         className="mt-2 flex items-center justify-between cursor-pointer
+//                    bg-white/60 border border-gray-300 rounded-2xl px-4 py-2
+//                    shadow-inner backdrop-blur-xl hover:border-indigo-500 transition-all"
+//       >
+//         <div className="flex items-center gap-3">
+//           <Tags size={20} className="text-indigo-600" />
+//           <span className={`font-medium ${value ? "text-gray-900" : "text-gray-500"}`}>
+//             {value || "Select category"}
+//           </span>
+//         </div>
+
+//         <motion.div animate={{ rotate: open ? 180 : 0 }}>
+//           <ChevronDown size={20} className="text-gray-600" />
+//         </motion.div>
+//       </div>
+
+//       <AnimatePresence>
+//         {open && (
+//           <motion.ul
+//             initial={{ opacity: 0, y: -10, scale: 0.95 }}
+//             animate={{ opacity: 1, y: 0, scale: 1 }}
+//             exit={{ opacity: 0, y: -10, scale: 0.95 }}
+//             transition={{ duration: 0.18 }}
+//             className="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-xl
+//                        border border-gray-200  backdrop-blur-xl max-h-60 overflow-auto"
+//           >
+//             {catList.map((cat) => (
+//               <li
+//                 key={cat.id || cat.title}
+//                 onClick={() => {
+//                   onChange(cat.title); // <-- save TITLE (Option A)
+//                   setOpen(false);
+//                 }}
+//                 className={`px-4 py-3 cursor-pointer hover:bg-indigo-50 transition-all
+//                             font-medium text-gray-700 ${value === cat.title ? "bg-indigo-100 text-indigo-700" : ""
+//                   }`}
+//               >
+//                 {cat.title}
+//               </li>
+//             ))}
+//           </motion.ul>
+//         )}
+//       </AnimatePresence>
+
+//       {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
+//     </div>
+//   );
+// }
+
+// /* ----------------------------------------------------------
+//    FancyDatePicker: uses react-day-picker and opens above/below
+//    - returns JS Date objects to parent onChange
+// -----------------------------------------------------------*/
+// function FancyDatePicker({ label, value, onChange }) {
+//   const [open, setOpen] = useState(false);
+//   const [openUp, setOpenUp] = useState(false);
+//   const ref = useRef(null);
+
+//   const toggleCalendar = () => {
+//     setOpen(!open);
+//     if (ref.current) {
+//       const rect = ref.current.getBoundingClientRect();
+//       const spaceBelow = window.innerHeight - rect.bottom;
+//       const spaceAbove = rect.top;
+//       setOpenUp(spaceBelow < 350 && spaceAbove > spaceBelow);
+//     }
+//   };
+
+//   return (
+//     <div ref={ref} className="relative w-full space-y-2">
+//       <label className="text-gray-700 font-semibold block">{label}</label>
+
+//       <div
+//         onClick={toggleCalendar}
+//         className="flex items-center gap-3 bg-white/60 border border-gray-300 
+//                    rounded-2xl px-4 py-2 shadow-inner backdrop-blur-lg 
+//                    hover:border-indigo-500 transition cursor-pointer"
+//       >
+//         <CalendarDays size={20} className="text-indigo-600" />
+//         <span className="text-gray-700">
+//           {value ? new Date(value).toLocaleDateString() : "Select Date"}
+//         </span>
+//       </div>
+
+//       <AnimatePresence>
+//         {open && (
+//           <motion.div
+//             initial={{ opacity: 0, y: openUp ? 10 : -10, scale: 0.95 }}
+//             animate={{ opacity: 1, y: 0, scale: 1 }}
+//             exit={{ opacity: 0, y: openUp ? 10 : -10, scale: 0.95 }}
+//             transition={{ duration: 0.18 }}
+//             className={`absolute z-50 bg-white shadow-2xl rounded-3xl p-4 
+//                        border border-gray-200 backdrop-blur-xl 
+//                        ${openUp ? "bottom-full mb-2" : "top-full mt-2"}`}
+//           >
+//             <DayPicker
+//               mode="single"
+//               selected={value ? new Date(value) : undefined}
+//               onSelect={(day) => {
+//                 onChange(day || null);
+//                 setOpen(false);
+//               }}
+//               className="rounded-xl"
+//               modifiersClassNames={{
+//                 selected: "bg-indigo-600 text-white rounded-full",
+//                 today: "text-indigo-600 font-bold underline",
+//               }}
+//             />
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+//     </div>
+//   );
+// }
+
+// /* ----------------------------------------------------------
+//    Modal / Issue Form Component (updated)
+//    - Uses CategoryDropdown (dynamic) + FancyDatePicker (dates)
+//    - Auto-fills Book, Category (TITLE), Issue date, Student
+//    - Saves category as TITLE (Option A)
+// -----------------------------------------------------------*/
+// function IssueBookModal({ open, onClose, prefillBook }) {
+//   const [form, setForm] = useState({
+//     studentName: "",
+//     studentId: null,
+//     bookName: "",
+//     category: "", // will hold TITLE string
+//     issueDate: null, // JS Date
+//     returnDate: null, // JS Date
+//     fees: 30,
+//   });
+
+//   const [errors, setErrors] = useState({});
+//   const [loadingStudent, setLoadingStudent] = useState(false);
+//   const [success, setSuccess] = useState(false);
+
+//   useEffect(() => {
+//     if (!open) return;
+//     const today = new Date();
+//     setForm((f) => ({
+//       ...f,
+//       bookName: prefillBook?.title || "",
+//       // if book has category title use it, otherwise try to map by categorieNumber
+//       category:
+//         prefillBook?.category ||
+//         categories.find((c) => c.categorieNumber === prefillBook?.categorieNumber)?.title ||
+//         "",
+//       issueDate: today,
+//       returnDate: null,
+//       fees: 30,
+//     }));
+//     setErrors({});
+//     setSuccess(false);
+
+//     const fetchStudent = async () => {
+//       setLoadingStudent(true);
+//       try {
+//         const res = await fetch("/api/current-student"); // adapt to your backend
+//         if (!res.ok) throw new Error("Network response not ok");
+//         const data = await res.json();
+//         setForm((f) => ({
+//           ...f,
+//           studentName: data?.name || "Guest",
+//           studentId: data?.id || null,
+//         }));
+//       } catch (err) {
+//         console.warn("Could not fetch student, falling back to Guest", err);
+//         setForm((f) => ({ ...f, studentName: "Guest", studentId: null }));
+//       } finally {
+//         setLoadingStudent(false);
+//       }
+//     };
+
+//     fetchStudent();
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [open, prefillBook]);
+
+//   const handleChange = (name, value) => {
+//     setForm((s) => ({ ...s, [name]: value }));
+//     setErrors((e) => ({ ...e, [name]: undefined }));
+//     setSuccess(false);
+//   };
+
+//   const validate = () => {
+//     const newErrors = {};
+//     if (!form.studentName) newErrors.studentName = "Required";
+//     if (!form.bookName) newErrors.bookName = "Required";
+//     if (!form.category) newErrors.category = "Required";
+//     if (!form.issueDate) newErrors.issueDate = "Required";
+//     if (!form.returnDate) newErrors.returnDate = "Required";
+//     if (form.issueDate && form.returnDate && new Date(form.returnDate) < new Date(form.issueDate)) {
+//       newErrors.returnDate = "Return date cannot be earlier than issue date";
+//     }
+//     setErrors(newErrors);
+//     return Object.keys(newErrors).length === 0;
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!validate()) return;
+
+//     // Prepare payload (dates serialized as ISO strings)
+//     const payload = {
+//       studentName: form.studentName,
+//       studentId: form.studentId,
+//       bookName: form.bookName,
+//       category: form.category, // TITLE (Option A)
+//       issueDate: form.issueDate ? new Date(form.issueDate).toISOString() : null,
+//       returnDate: form.returnDate ? new Date(form.returnDate).toISOString() : null,
+//       fees: form.fees,
+//     };
+
+//     // Example: POST to backend
+//     try {
+//       // await fetch('/api/issue-book', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+//       console.log("Issuing book payload:", payload);
+//       setSuccess(true);
+
+//       // close after a brief success toast
+//       setTimeout(() => {
+//         onClose();
+//         setForm({
+//           studentName: "",
+//           studentId: null,
+//           bookName: "",
+//           category: "",
+//           issueDate: null,
+//           returnDate: null,
+//           fees: 30,
+//         });
+//         setSuccess(false);
+//       }, 700);
+//     } catch (err) {
+//       console.error("Failed to issue book", err);
+//       // handle and show friendly error (not blocking)
+//     }
+//   };
+
+//   if (!open) return null;
+
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center">
+//       {/* overlay */}
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: 0.6 }}
+//         exit={{ opacity: 0 }}
+//         className="absolute inset-0 bg-black"
+//         onClick={onClose}
+//       />
+//       {/* modal */}
+//       <motion.div
+//         initial={{ y: 20, opacity: 0, scale: 0.98 }}
+//         animate={{ y: 0, opacity: 1, scale: 1 }}
+//         exit={{ y: 10, opacity: 0, scale: 0.98 }}
+//         transition={{ duration: 0.18 }}
+//         className="relative z-60 w-full max-w-2xl bg-gradient-to-tl from-amber-100 to-white   rounded-3xl shadow-2xl p-6 md:p-6 mx-4"
+//       >
+//         <div className="flex items-center justify-between mb-4">
+//           <h3 className="text-xl font-semibold">Issue Book (On Rent)</h3>
+//           <button
+//             onClick={onClose}
+//             className="text-gray-500 hover:text-gray-700 px-3 py-1 rounded-md"
+//           >
+//             ✕
+//           </button>
+//         </div>
+
+//         {loadingStudent && <p className="text-sm text-gray-500 mb-3">Loading student info...</p>}
+
+//         {success && (
+//           <div className="mb-3 bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-md">
+//             Issued successfully
+//           </div>
+//         )}
+
+//         <form onSubmit={handleSubmit} className="space-y-4">
+//           {/* Student Name */}
+//           <div>
+//             <label className="block text-sm font-medium text-gray-700">Student Name</label>
+//             <input
+//               type="text"
+//               value={form.studentName}
+//               onChange={(e) => handleChange("studentName", e.target.value)}
+//               className="mt-1 block w-full rounded-xl border border-gray-300 p-2 bg-white shadow-inner"
+//               placeholder="Student name"
+//             />
+//             {errors.studentName && <p className="text-red-500 text-sm mt-1">{errors.studentName}</p>}
+//           </div>
+
+//           {/* Book Name */}
+//           <div>
+//             <label className="block text-sm font-medium text-gray-700">Book Name</label>
+//             <input
+//               type="text"
+//               value={form.bookName}
+//               onChange={(e) => handleChange("bookName", e.target.value)}
+//               className="mt-1 block w-full rounded-xl border border-gray-300 p-2 bg-white shadow-inner"
+//               placeholder="Book name"
+//             />
+//             {errors.bookName && <p className="text-red-500 text-sm mt-1">{errors.bookName}</p>}
+//           </div>
+
+//           {/* Category (dynamic dropdown -> saves TITLE) */}
+//           <div>
+//             <CategoryDropdown
+//               label="Category"
+//               value={form.category}
+//               onChange={(val) => handleChange("category", val)}
+//               error={errors.category}
+//             />
+//             {/* errors rendered by CategoryDropdown as well */}
+//           </div>
+
+//           {/* Issue Date */}
+//           <div>
+//             <FancyDatePicker
+//               label="Issue Date"
+//               value={form.issueDate}
+//               onChange={(date) => handleChange("issueDate", date)}
+//             />
+//             {errors.issueDate && <p className="text-red-500 text-sm mt-1">{errors.issueDate}</p>}
+//           </div>
+
+//           {/* Return Date */}
+//           <div>
+//             <FancyDatePicker
+//               label="Return Date"
+//               value={form.returnDate}
+//               onChange={(date) => handleChange("returnDate", date)}
+//             />
+//             {errors.returnDate && <p className="text-red-500 text-sm mt-1">{errors.returnDate}</p>}
+//           </div>
+
+//           {/* Fees Section */}
+//           <div>
+//             <label className="block text-sm font-medium text-gray-700">Fees (Constant)</label>
+//             <input
+//               type="number"
+//               value={form.fees}
+//               readOnly
+//               className="mt-1 block w-full rounded-xl border border-gray-300 p-2 bg-gray-100 cursor-not-allowed"
+//             />
+//             <p className="text-xs text-gray-500 mt-1">This amount is fixed at ₹30</p>
+//           </div>
+
+
+//           <div className="flex items-center justify-end gap-3">
+//             <button
+//               type="button"
+//               onClick={() => {
+//                 // If user wants to mark as done without issuing, just close
+//                 onClose();
+//               }}
+//               className="px-5 py-2 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700"
+//             >
+//               View Details
+//             </button>
+
+//             <button
+//               type="submit"
+//               className="px-5 py-2 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700"
+//             >
+//               Done
+//             </button>
+//             {/* <button
+//               type="button"
+//               onClick={() => {
+//                 // If user wants to mark as done without issuing, just close
+//                 onClose();
+//               }}
+//               className="px-5 py-2 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700"
+//             >
+//               View Details
+//             </button> */}
+//             <button
+//               type="button"
+//               onClick={onClose}
+//               className="px-4 py-2 rounded-xl border bg-gray-100 border-gray-300 hover:bg-gray-200"
+//             >
+//               Cancel
+//             </button>
+//           </div>
+//         </form>
+//       </motion.div>
+//     </div>
+//   );
+// }
+
+// /* ----------------------------------------------------------
+//    MAIN BooksList Component (unchanged, only modal replaced)
+// -----------------------------------------------------------*/
+// function BooksList() {
+//   const navigate = useNavigate();
+//   const { id } = useParams();
+
+//   // ✅ 1. Get location state to find the highlighted ID
+//   const location = useLocation();
+//   const highlightId = location.state?.highlightId;
+
+//   const dispatch = useDispatch();
+//   const issueBooks = useSelector((state) => state.issueBooks.books);
+
+//   const [search, setSearch] = useState("");
+//   const [selectedLetter, setSelectedLetter] = useState("");
+//   const [viewMode, setViewMode] = useState("grid");
+//   const [showFilter, setShowFilter] = useState(false);
+//   const [headerHeight, setHeaderHeight] = useState(0);
+//   const filterSectionRef = useRef(null);
+
+//   // Modal state
+//   const [rentModalOpen, setRentModalOpen] = useState(false);
+//   const [modalPrefillBook, setModalPrefillBook] = useState(null);
+
+//   const currentCategory = categories.find((cat) => cat.categorieNumber === parseInt(id));
+//   const categoryName = currentCategory ? currentCategory.title : "Books Category";
+
+//   const books = allBooksData[id] || [];
+
+//   const filteredBooks = useMemo(() => {
+//     const q = (search || "").trim().toLowerCase();
+//     return books.filter((book) => {
+//       const matchSearch =
+//         q === "" ||
+//         book.title.toLowerCase().includes(q) ||
+//         (book.desc && book.desc.toLowerCase().includes(q));
+//       const matchLetter = selectedLetter
+//         ? book.title.toLowerCase().startsWith(selectedLetter.toLowerCase())
+//         : true;
+//       return matchSearch && matchLetter;
+//     });
+//   }, [books, search, selectedLetter]);
+
+//   // Scroll to highlighted book
+//   useEffect(() => {
+//     if (highlightId && filteredBooks.length > 0) {
+//       setTimeout(() => {
+//         const element = document.getElementById(`book-${highlightId}`);
+//         if (element) {
+//           element.scrollIntoView({ behavior: "smooth", block: "center" });
+//         }
+//       }, 300);
+//     }
+//   }, [highlightId, filteredBooks]);
+
+//   const handleAddBook = (book) => {
+//     if (!issueBooks.find((b) => b.id === book.id)) {
+//       dispatch(addBook(book));
+//     }
+//   };
+
+//   const handleRemoveBook = (book) => {
+//     dispatch(removeBook(book.id));
+//   };
+
+//   const isAdded = (book) => !!issueBooks.find((b) => b.id === book.id);
+
+//   // Open modal with prefill
+//   const openRentModal = (book) => {
+//     setModalPrefillBook(book);
+//     setRentModalOpen(true);
+//   };
+
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0 }}
+//       animate={{ opacity: 1 }}
+//       transition={{ duration: 0.5 }}
+//       className="bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 min-h-screen px-6 md:px-12 lg:px-20 md:mt-[-70px] py-2 mt-[-170px] pb-23 md:pb-15"
+//     >
+//       <Header
+//         viewMode={viewMode}
+//         setViewMode={setViewMode}
+//         search={search}
+//         setSearch={setSearch}
+//         selectedLetter={selectedLetter}
+//         setSelectedLetter={setSelectedLetter}
+//         scrollToFilterRef={filterSectionRef}
+//         openPageFilter={() => setShowFilter(true)}
+//         issueBooks={issueBooks}
+//         setHeaderHeight={setHeaderHeight}
+//       />
+
+//       <div style={{ marginTop: headerHeight + 20 }} />
+
+//       <motion.h1
+//         initial={{ opacity: 0, x: -20 }}
+//         animate={{ opacity: 1, x: 0 }}
+//         transition={{ delay: 0.2 }}
+//         className="text-4xl mb-10 font-bold text-gray-700 text-center md:text-left"
+//       >
+//         {categoryName}
+//       </motion.h1>
+
+//       {/* Modal (Issue Form) */}
+//       <AnimatePresence>
+//         {rentModalOpen && (
+//           <IssueBookModal
+//             key="issue-modal"
+//             open={rentModalOpen}
+//             onClose={() => setRentModalOpen(false)}
+//             prefillBook={modalPrefillBook}
+//           />
+//         )}
+//       </AnimatePresence>
+
+//       <AnimatePresence>
+//         {filteredBooks.length > 0 ? (
+//           viewMode === "grid" ? (
+//             <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+//               <AnimatePresence>
+//                 {filteredBooks.map((item) => {
+//                   const isHighlighted = item.id === highlightId;
+
+//                   return (
+//                     <motion.div
+//                       key={item.id}
+//                       id={`book-${item.id}`}
+//                       layout
+//                       variants={itemVariants}
+//                       initial="hidden"
+//                       animate={
+//                         isHighlighted
+//                           ? {
+//                             opacity: 1,
+//                             y: 0,
+//                             scale: [1, 1.05, 1],
+//                             borderColor: "#f59e0b",
+//                             boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)",
+//                           }
+//                           : "visible"
+//                       }
+//                       exit="exit"
+//                       whileHover={{ scale: 1.03, y: -5, transition: { type: "spring", stiffness: 300 } }}
+//                       className={`bg-white rounded-2xl shadow-md border overflow-hidden cursor-pointer mt-2 
+//                         ${isHighlighted ? "border-amber-500 ring-4 ring-amber-200" : "border-amber-100"}`}
+//                     >
+//                       <img src={item.img} alt={item.title} className="w-full h-44 sm:h-52 md:h-56 object-cover rounded-t-2xl" />
+//                       <div className={`p-4 flex flex-col justify-between ${isHighlighted ? "bg-amber-50" : ""}`}>
+//                         <h2 className="text-base sm:text-lg h-20 font-bold text-gray-800">{item.title}</h2>
+//                         <p className="text-gray-600 text-sm mt-2 h-15 overflow-y-auto pr-2">{item.desc}</p>
+//                         <p className="text- sm:text-sm font-bold text-gray-800">Rent Fees - ₹ 30 <i className="text-red-500">(For 14 Days)</i></p>
+
+//                         <div className="mt-3 flex items-center justify-between">
+//                           <p className="text-amber-700 font-semibold text-lg">₹ {item.price}</p>
+
+//                           {isAdded(item) ? (
+//                             <div className="flex gap-2">
+//                               <button className="flex-1 py-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold w-23 px-2 bg-green-500 shadow">
+//                                 <Check size={16} /> Added
+//                               </button>
+
+//                               <motion.button
+//                                 whileHover={{ scale: 1.05 }}
+//                                 whileTap={{ scale: 0.95 }}
+//                                 onClick={() => handleRemoveBook(item)}
+//                                 className="flex-1 py-2 px-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow cursor-pointer"
+//                               >
+//                                 <MinusCircle size={16} /> Remove
+//                               </motion.button>
+//                             </div>
+//                           ) : (
+//                             <div className="flex gap-2">
+//                               <motion.button
+//                                 whileHover={{ scale: 1.05 }}
+//                                 whileTap={{ scale: 0.95 }}
+//                                 onClick={() => handleAddBook(item)}
+//                                 className="w-20 py-2 rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-amber-400 hover:bg-amber-500 shadow"
+//                               >
+//                                 <Plus size={16} /> Buy
+//                               </motion.button>
+
+//                               <motion.button
+//                                 whileHover={{ scale: 1.05 }}
+//                                 whileTap={{ scale: 0.95 }}
+//                                 onClick={() => openRentModal(item)}
+//                                 className="w-30 py-2 rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-blue-500 hover:bg-blue-600 shadow"
+//                               >
+//                                 <Plus size={16} /> On Rent
+//                               </motion.button>
+//                             </div>
+//                           )}
+//                         </div>
+//                       </div>
+//                     </motion.div>
+//                   );
+//                 })}
+//               </AnimatePresence>
+//             </motion.div>
+//           ) : (
+//             <motion.div layout className="space-y-4">
+//               <AnimatePresence>
+//                 {filteredBooks.map((item) => {
+//                   const isHighlighted = item.id === highlightId;
+
+//                   return (
+//                     <motion.div
+//                       key={item.id}
+//                       id={`book-${item.id}`}
+//                       layout
+//                       variants={itemVariants}
+//                       initial="hidden"
+//                       animate={
+//                         isHighlighted
+//                           ? {
+//                             opacity: 1,
+//                             y: 0,
+//                             scale: [1, 1.02, 1],
+//                             borderColor: "#f59e0b",
+//                             boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)",
+//                           }
+//                           : "visible"
+//                       }
+//                       exit="exit"
+//                       whileHover={{ scale: 1.01, x: 5, transition: { type: "spring", stiffness: 300 } }}
+//                       className={`flex flex-col sm:flex-row items-center p-4 sm:p-5 rounded-2xl shadow-md hover:shadow-lg border cursor-pointer overflow-hidden
+//                         ${isHighlighted ? "bg-amber-50 border-amber-500 ring-2 ring-amber-200" : "bg-white border-amber-100"}`}
+//                     >
+//                       <img src={item.img} alt={item.title} className="w-full sm:w-32 h-20 object-cover rounded-xl" />
+//                       <div className="sm:ml-5 mt-3 sm:mt-0 flex-1 text-center sm:text-left">
+//                         <h2 className="text-lg sm:text-xl font-bold text-gray-800">{item.title}</h2>
+//                         <p className="text-gray-600 text-sm mt-1 line-clamp-2">{item.desc}</p>
+//                         <p className="text-amber-700 font-semibold text-lg mt-2">₹ {item.price}</p>
+//                         <p className="text- sm:text-sm font-bold text-gray-800">Rent Fees - ₹ 30 <a className="text-red-500">(For 14 Days)</a></p>
+
+//                       </div>
+//                       <div className="ml-3 mt-3 sm:mt-0">
+//                         {isAdded(item) ? (
+//                           <div className="flex gap-2">
+//                             <button className="py-2 rounded-xl flex items-center px-3 justify-center gap-2 text-white font-semibold bg-green-500 shadow"><Check size={16} /> Added</button>
+//                             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleRemoveBook(item)} className="py-2 rounded-xl flex items-center px-3 justify-center cursor-pointer gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow"><MinusCircle size={16} /> Remove</motion.button>
+//                           </div>
+//                         ) : (
+//                           <div className="flex gap-2">
+//                             <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => handleAddBook(item)} className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 w-22 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:from-amber-500 hover:to-orange-500 shadow-md"><Plus size={18} /> Add</motion.button>
+
+//                             <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => openRentModal(item)} className="flex items-center justify-center gap-2 bg-blue-500 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:bg-blue-600 shadow-md">
+//                               <Plus size={18} /> On Rent
+//                             </motion.button>
+//                           </div>
+//                         )}
+//                       </div>
+//                     </motion.div>
+//                   );
+//                 })}
+//               </AnimatePresence>
+//             </motion.div>
+//           )
+//         ) : (
+//           <motion.p layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-gray-500 text-center mt-10">No books found.</motion.p>
+//         )}
+//       </AnimatePresence>
+
+//       <div className="mt-20 mb-[-45px] ml-[-60px] mr-[-60px]">
+//         <Footer />
+//       </div>
+//     </motion.div>
+//   );
+// }
+
+// export default BooksList;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// // BooksList.jsx
+// import React, { useState, useEffect, useRef, useMemo } from "react";
+// import { useNavigate, useParams, useLocation } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+// import { motion, AnimatePresence } from "framer-motion";
+// import {
+//   User,
+//   BookOpen,
+//   Tags,
+//   CheckCircle,
+//   CalendarDays,
+//   ChevronDown,
+//   Plus,
+//   Check,
+//   MinusCircle,
+// } from "lucide-react";
+// import Header from "../Layout/header.jsx";
+// import { addBook, removeBook, addRentedBook } from "../Redux/issueBooksSlice.js";
+// import { allBooksData, categories } from "../data/booksData";
+// import Footer from "./footer.jsx";
+// import { DayPicker } from "react-day-picker";
+// import "react-day-picker/dist/style.css";
+
+// /* ------------------------------
+//    Motion variants
+// -------------------------------*/
+// const itemVariants = {
+//   hidden: { opacity: 0, y: 30 },
+//   visible: {
+//     opacity: 1,
+//     y: 0,
+//     transition: { type: "spring", stiffness: 300, damping: 24 },
+//   },
+//   exit: { opacity: 0, y: -20 },
+// };
+
+// /* ----------------------------------------------------------
+//    CategoryDropdown (uses dynamic categories from booksData)
+// -----------------------------------------------------------*/
+// function CategoryDropdown({ label, value, onChange, error }) {
+//   const [open, setOpen] = useState(false);
+//   const dropdownRef = useRef(null);
+//   const catList = categories || [];
+
+//   useEffect(() => {
+//     const handleClickOutside = (e) => {
+//       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+//         setOpen(false);
+//       }
+//     };
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, []);
+
+//   return (
+//     <div className="relative space-y-2" ref={dropdownRef}>
+//       <label className="font-semibold text-gray-700">{label}</label>
+
+//       <div
+//         onClick={() => setOpen(!open)}
+//         className="mt-2 flex items-center justify-between cursor-pointer
+//                    bg-white/60 border border-gray-300 rounded-2xl px-4 py-2
+//                    shadow-inner backdrop-blur-xl hover:border-indigo-500 transition-all"
+//       >
+//         <div className="flex items-center gap-3">
+//           <Tags size={20} className="text-indigo-600" />
+//           <span className={`font-medium ${value ? "text-gray-900" : "text-gray-500"}`}>
+//             {value || "Select category"}
+//           </span>
+//         </div>
+
+//         <motion.div animate={{ rotate: open ? 180 : 0 }}>
+//           <ChevronDown size={20} className="text-gray-600" />
+//         </motion.div>
+//       </div>
+
+//       <AnimatePresence>
+//         {open && (
+//           <motion.ul
+//             initial={{ opacity: 0, y: -10, scale: 0.95 }}
+//             animate={{ opacity: 1, y: 0, scale: 1 }}
+//             exit={{ opacity: 0, y: -10, scale: 0.95 }}
+//             transition={{ duration: 0.18 }}
+//             className="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-xl
+//                        border border-gray-200  backdrop-blur-xl max-h-60 overflow-auto"
+//           >
+//             {catList.map((cat) => (
+//               <li
+//                 key={cat.id || cat.title}
+//                 onClick={() => {
+//                   onChange(cat.title);
+//                   setOpen(false);
+//                 }}
+//                 className={`px-4 py-3 cursor-pointer hover:bg-indigo-50 transition-all
+//                             font-medium text-gray-700 ${value === cat.title ? "bg-indigo-100 text-indigo-700" : ""
+//                   }`}
+//               >
+//                 {cat.title}
+//               </li>
+//             ))}
+//           </motion.ul>
+//         )}
+//       </AnimatePresence>
+
+//       {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
+//     </div>
+//   );
+// }
+
+// /* ----------------------------------------------------------
+//    FancyDatePicker
+// -----------------------------------------------------------*/
+// function FancyDatePicker({ label, value, onChange }) {
+//   const [open, setOpen] = useState(false);
+//   const [openUp, setOpenUp] = useState(false);
+//   const ref = useRef(null);
+
+//   const toggleCalendar = () => {
+//     setOpen(!open);
+//     if (ref.current) {
+//       const rect = ref.current.getBoundingClientRect();
+//       const spaceBelow = window.innerHeight - rect.bottom;
+//       const spaceAbove = rect.top;
+//       setOpenUp(spaceBelow < 350 && spaceAbove > spaceBelow);
+//     }
+//   };
+
+//   return (
+//     <div ref={ref} className="relative w-full space-y-2">
+//       <label className="text-gray-700 font-semibold block">{label}</label>
+
+//       <div
+//         onClick={toggleCalendar}
+//         className="flex items-center gap-3 bg-white/60 border border-gray-300 
+//                    rounded-2xl px-4 py-2 shadow-inner backdrop-blur-lg 
+//                    hover:border-indigo-500 transition cursor-pointer"
+//       >
+//         <CalendarDays size={20} className="text-indigo-600" />
+//         <span className="text-gray-700">
+//           {value ? new Date(value).toLocaleDateString() : "Select Date"}
+//         </span>
+//       </div>
+
+//       <AnimatePresence>
+//         {open && (
+//           <motion.div
+//             initial={{ opacity: 0, y: openUp ? 10 : -10, scale: 0.95 }}
+//             animate={{ opacity: 1, y: 0, scale: 1 }}
+//             exit={{ opacity: 0, y: openUp ? 10 : -10, scale: 0.95 }}
+//             transition={{ duration: 0.18 }}
+//             className={`absolute z-50 bg-white shadow-2xl rounded-3xl p-4 
+//                         border border-gray-200 backdrop-blur-xl 
+//                         ${openUp ? "bottom-full mb-2" : "top-full mt-2"}`}
+//           >
+//             <DayPicker
+//               mode="single"
+//               selected={value ? new Date(value) : undefined}
+//               onSelect={(day) => {
+//                 onChange(day || null);
+//                 setOpen(false);
+//               }}
+//               className="rounded-xl"
+//               modifiersClassNames={{
+//                 selected: "bg-indigo-600 text-white rounded-full",
+//                 today: "text-indigo-600 font-bold underline",
+//               }}
+//             />
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+//     </div>
+//   );
+// }
+
+// /* ----------------------------------------------------------
+//    Modal / Issue Form Component
+// -----------------------------------------------------------*/
+// function IssueBookModal({ open, onClose, prefillBook }) {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+//   const [showPopup, setShowPopup] = useState(false);
+
+//   const calculateDays = (issueDate, returnDate) => {
+//     if (!issueDate || !returnDate) return 0;
+//     const start = new Date(issueDate);
+//     const end = new Date(returnDate);
+//     const diffTime = end - start;
+//     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+//     return diffDays > 0 ? diffDays : 0;
+//   };
+
+//   const calculateFees = (issueDate, returnDate) => {
+//     if (!issueDate || !returnDate) return 0;
+//     const start = new Date(issueDate);
+//     const end = new Date(returnDate);
+//     const diffTime = end - start;
+//     const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+//     return days > 0 ? days * 3 : 0;
+//   };
+
+//   const [form, setForm] = useState({
+//     studentName: "",
+//     studentId: null,
+//     bookName: "",
+//     category: "",
+//     issueDate: null,
+//     returnDate: null,
+//     fees: 0,
+//   });
+
+//   const [errors, setErrors] = useState({});
+//   const [loadingStudent, setLoadingStudent] = useState(false);
+//   const [success, setSuccess] = useState(false);
+
+//   // Prefill & auto-load student
+//   useEffect(() => {
+//     if (!open) return;
+
+//     const today = new Date();
+
+//     setForm((f) => ({
+//       ...f,
+//       bookName: prefillBook?.title || "",
+//       category:
+//         prefillBook?.category ||
+//         categories.find((c) => c.categorieNumber === prefillBook?.categorieNumber)?.title ||
+//         "",
+//       issueDate: today,
+//       returnDate: null,
+//       fees: 0,
+//     }));
+
+//     setErrors({});
+//     setSuccess(false);
+
+//     const fetchStudent = async () => {
+//       setLoadingStudent(true);
+//       try {
+//         const res = await fetch("/api/current-student");
+//         if (!res.ok) throw new Error();
+//         const data = await res.json();
+//         setForm((f) => ({
+//           ...f,
+//           studentName: data?.name || "Guest",
+//           studentId: data?.id || null,
+//         }));
+//       } catch (err) {
+//         console.warn("Student fetch failed → Using Guest");
+//         setForm((f) => ({ ...f, studentName: "Guest", studentId: null }));
+//       } finally {
+//         setLoadingStudent(false);
+//       }
+//     };
+
+//     fetchStudent();
+//   }, [open, prefillBook]);
+
+//   const handleChange = (name, value) => {
+//     setForm((prev) => {
+//       const updated = { ...prev, [name]: value };
+//       updated.fees = calculateFees(updated.issueDate, updated.returnDate);
+//       return updated;
+//     });
+
+//     setErrors((e) => ({ ...e, [name]: undefined }));
+//     setSuccess(false);
+//   };
+
+//   const validate = () => {
+//     const newErrors = {};
+//     if (!form.studentName) newErrors.studentName = "Required";
+//     if (!form.bookName) newErrors.bookName = "Required";
+//     if (!form.category) newErrors.category = "Required";
+//     if (!form.issueDate) newErrors.issueDate = "Required";
+//     if (!form.returnDate) newErrors.returnDate = "Required";
+
+//     if (
+//       form.issueDate &&
+//       form.returnDate &&
+//       new Date(form.returnDate) < new Date(form.issueDate)
+//     ) {
+//       newErrors.returnDate = "Return date cannot be earlier than issue date";
+//     }
+
+//     setErrors(newErrors);
+//     return Object.keys(newErrors).length === 0;
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!validate()) return;
+
+//     const payload = {
+//       id: Date.now(),
+//       studentName: form.studentName,
+//       studentId: form.studentId,
+//       bookName: form.bookName,
+//       category: form.category,
+//       issueDate: form.issueDate?.toLocaleDateString("en-CA") || "",
+//       returnDate: form.returnDate?.toLocaleDateString("en-CA") || "",
+//       fees: form.fees,
+//     };
+
+//     dispatch(addRentedBook(payload));
+//     setShowPopup(true);
+
+//     setTimeout(() => {
+//       setShowPopup(false);
+//       onClose();
+//     }, 1300);
+//   };
+
+//   if (!open) return null;
+
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center">
+//       {/* SUCCESS POPUP */}
+//       <AnimatePresence>
+//         {showPopup && (
+//           <motion.div
+//             initial={{ opacity: 0, y: -20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             exit={{ opacity: 0, y: -20 }}
+//             transition={{ duration: 0.3 }}
+//             className="fixed top-6 right-6 bg-green-600 text-white px-4 py-2 rounded-xl shadow-lg z-[999]"
+//           >
+//             Book Issued Successfully!
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+
+//       {/* backdrop */}
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: 0.6 }}
+//         exit={{ opacity: 0 }}
+//         className="absolute inset-0 bg-black"
+//         onClick={onClose}
+//       />
+
+//       {/* modal */}
+//       <motion.div
+//         initial={{ y: 20, opacity: 0, scale: 0.98 }}
+//         animate={{ y: 0, opacity: 1, scale: 1 }}
+//         exit={{ y: 10, opacity: 0, scale: 0.98 }}
+//         transition={{ duration: 0.18 }}
+//         className="relative z-60 w-full max-w-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 border border-amber-200 shadow-2xl rounded-3xl p-6 md:p-8 mx-4"
+//       >
+//         <div className="flex items-center justify-between mb-6">
+//           <div className="flex flex-col">
+//             <h3 className="text-2xl text-amber-950 font-bold tracking-tight">
+//               Issue Book
+//             </h3>
+//             <span className="text-amber-700/60 text-sm font-medium">Rent Management</span>
+//           </div>
+
+//           <button
+//             onClick={onClose}
+//             className="p-2 rounded-full text-amber-800/60 hover:bg-amber-100 hover:text-amber-900 cursor-pointer transition-colors"
+//           >
+//             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+//               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+//             </svg>
+//           </button>
+//         </div>
+
+//         {loadingStudent && <p className="text-sm text-amber-600 mb-4 animate-pulse">Loading student info...</p>}
+
+//         {success && (
+//           <div className="mb-5 bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-3 rounded-xl flex items-center gap-2">
+//             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+//             <span className="font-medium">Book issued successfully!</span>
+//           </div>
+//         )}
+
+//         <form onSubmit={handleSubmit} className="space-y-5">
+//           <div>
+//             <label className="block text-sm font-semibold text-gray-700 mb-1">Student Name</label>
+//             <input
+//               type="text"
+//               value={form.studentName}
+//               onChange={(e) => handleChange("studentName", e.target.value)}
+//               className="w-full rounded-xl border border-stone-200 p-2.5 bg-white/80 shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+//               placeholder="Enter student name..."
+//             />
+//             {errors.studentName && (
+//               <p className="text-red-500 text-xs font-medium mt-1 ml-1">{errors.studentName}</p>
+//             )}
+//           </div>
+
+//           <div>
+//             <label className="block text-sm font-semibold text-gray-700 mb-1">Book Name</label>
+//             <input
+//               type="text"
+//               value={form.bookName}
+//               onChange={(e) => handleChange("bookName", e.target.value)}
+//               className="w-full rounded-xl border border-stone-200 p-2.5 bg-white/80 shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+//               placeholder="Search book title..."
+//             />
+//             {errors.bookName && <p className="text-red-500 text-xs font-medium mt-1 ml-1">{errors.bookName}</p>}
+//           </div>
+
+//           <CategoryDropdown
+//             label="Category"
+//             value={form.category}
+//             onChange={(val) => handleChange("category", val)}
+//             error={errors.category}
+//           />
+
+//           <div className="grid grid-cols-2 gap-4">
+//             <div>
+//               <FancyDatePicker
+//                 label="Issue Date"
+//                 value={form.issueDate}
+//                 onChange={(date) => handleChange("issueDate", date)}
+//               />
+//               {errors.issueDate && <p className="text-red-500 text-xs font-medium mt-1 ml-1">{errors.issueDate}</p>}
+//             </div>
+//             <div>
+//               <FancyDatePicker
+//                 label="Return Date"
+//                 value={form.returnDate}
+//                 onChange={(date) => handleChange("returnDate", date)}
+//               />
+//               {errors.returnDate && (
+//                 <p className="text-red-500 text-xs font-medium mt-1 ml-1">{errors.returnDate}</p>
+//               )}
+//             </div>
+//           </div>
+
+//           <div>
+//             <label className="block text-sm font-semibold text-gray-700 mb-1">Fees</label>
+//             <div className="relative">
+//               <span className="absolute left-3 top-2.5 text-gray-500">₹</span>
+//               <input
+//                 type="number"
+//                 value={form.fees}
+//                 readOnly
+//                 className="w-full rounded-xl border border-stone-200 p-2.5 pl-7 bg-stone-100 text-gray-500 cursor-not-allowed font-medium"
+//               />
+//             </div>
+//             <p className="text-xs text-gray-900 mt-1 ml-1">Rent Charges - ₹ 3/day <a className="text-orange-900">(Charges are calculated based on selected days)</a></p>
+
+//             {form.issueDate && form.returnDate && (
+//               <p className="text-gray-700 font-medium mt-2">
+//                 Total Days: <span className="text-amber-700">{calculateDays(form.issueDate, form.returnDate)}</span>
+//               </p>
+//             )}
+//           </div>
+
+//           <div className="flex items-center justify-end gap-3 pt-4 border-t border-amber-200/50 mt-2">
+//             <button
+//               type="button"
+//               onClick={onClose}
+//               className="px-4 py-2.5 rounded-xl cursor-pointer text-stone-600 hover:bg-stone-100 font-medium  text-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
+//             >
+//               Cancel
+//             </button>
+
+//             <button
+//               type="button"
+//               onClick={() => navigate("/issue-book-form", { state: { prefillData: form } })}
+//               className="px-5 py-2.5 cursor-pointer rounded-xl bg-white border border-amber-300 text-amber-900 shadow-sm hover:bg-amber-50 font-medium  text-sm  hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
+//             >
+//               View Details
+//             </button>
+
+//             <button
+//               type="submit"
+//               className="px-6 py-2.5 rounded-xl bg-gray-900 cursor-pointer text-white shadow-lg hover:bg-black hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 font-medium text-sm flex items-center gap-2"
+//             >
+//               <span>Confirm Issue</span>
+//               <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+//             </button>
+//           </div>
+//         </form>
+//       </motion.div>
+//     </div>
+//   );
+// }
+
+
+// /* ----------------------------------------------------------
+//    MAIN BooksList Component
+// -----------------------------------------------------------*/
+// function BooksList() {
+//   const navigate = useNavigate();
+//   const { id } = useParams();
+
+//   // ✅ 1. Get location state to find the highlighted ID
+//   const location = useLocation();
+//   const highlightId = location.state?.highlightId;
+
+//   const dispatch = useDispatch();
+//   const issueBooks = useSelector((state) => state.issueBooks.books);
+//   const rentedBooks = useSelector((state) => state.issueBooks.rentedBooks); // Get rented books
+
+//   const [search, setSearch] = useState("");
+//   const [selectedLetter, setSelectedLetter] = useState("");
+//   const [viewMode, setViewMode] = useState("grid");
+//   const [showFilter, setShowFilter] = useState(false);
+//   const [headerHeight, setHeaderHeight] = useState(0);
+//   const filterSectionRef = useRef(null);
+
+//   // Modal state
+//   const [rentModalOpen, setRentModalOpen] = useState(false);
+//   const [modalPrefillBook, setModalPrefillBook] = useState(null);
+
+//   const currentCategory = categories.find((cat) => cat.categorieNumber === parseInt(id));
+//   const categoryName = currentCategory ? currentCategory.title : "Books Category";
+
+//   const books = allBooksData[id] || [];
+
+//   const filteredBooks = useMemo(() => {
+//     const q = (search || "").trim().toLowerCase();
+//     return books.filter((book) => {
+//       const matchSearch =
+//         q === "" ||
+//         book.title.toLowerCase().includes(q) ||
+//         (book.desc && book.desc.toLowerCase().includes(q));
+//       const matchLetter = selectedLetter
+//         ? book.title.toLowerCase().startsWith(selectedLetter.toLowerCase())
+//         : true;
+//       return matchSearch && matchLetter;
+//     });
+//   }, [books, search, selectedLetter]);
+
+//   // Scroll to highlighted book
+//   useEffect(() => {
+//     if (highlightId && filteredBooks.length > 0) {
+//       setTimeout(() => {
+//         const element = document.getElementById(`book-${highlightId}`);
+//         if (element) {
+//           element.scrollIntoView({ behavior: "smooth", block: "center" });
+//         }
+//       }, 300);
+//     }
+//   }, [highlightId, filteredBooks]);
+
+//   const handleAddBook = (book) => {
+//     if (!issueBooks.find((b) => b.id === book.id)) {
+//       dispatch(addBook(book));
+//     }
+//   };
+
+//   const handleRemoveBook = (book) => {
+//     dispatch(removeBook(book.id));
+//   };
+
+//   const isAdded = (book) => !!issueBooks.find((b) => b.id === book.id);
+//   // Check if book is rented
+//   const isRented = (book) => !!rentedBooks.find((r) => r.bookName === book.title);
+
+//   // Open modal with prefill
+//   const openRentModal = (book) => {
+//     setModalPrefillBook(book);
+//     setRentModalOpen(true);
+//   };
+
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0 }}
+//       animate={{ opacity: 1 }}
+//       transition={{ duration: 0.5 }}
+//       className="bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 min-h-screen px-6 md:px-12 lg:px-20 md:mt-2 py-2 mt-[10px] pb-23 md:pb-15 "
+//     >
+//       <Header
+//         viewMode={viewMode}
+//         setViewMode={setViewMode}
+//         search={search}
+//         setSearch={setSearch}
+//         selectedLetter={selectedLetter}
+//         setSelectedLetter={setSelectedLetter}
+//         scrollToFilterRef={filterSectionRef}
+//         openPageFilter={() => setShowFilter(true)}
+//         issueBooks={issueBooks}
+//         rentedBooks={rentedBooks}
+//         setHeaderHeight={setHeaderHeight}
+//       />
+
+//       <div style={{ marginTop: headerHeight + 20 }} />
+
+//       <motion.h1
+//         initial={{ opacity: 0, x: -20 }}
+//         animate={{ opacity: 1, x: 0 }}
+//         transition={{ delay: 0.2 }}
+//         className="text-4xl mb-10 font-bold text-gray-700 text-center md:text-left"
+//       >
+//         {categoryName}
+//       </motion.h1>
+
+//       {/* Modal (Issue Form) */}
+//       <AnimatePresence>
+//         {rentModalOpen && (
+//           <IssueBookModal
+//             key="issue-modal"
+//             open={rentModalOpen}
+//             onClose={() => setRentModalOpen(false)}
+//             prefillBook={modalPrefillBook}
+//           />
+//         )}
+//       </AnimatePresence>
+
+//       <AnimatePresence>
+//         {filteredBooks.length > 0 ? (
+//           viewMode === "grid" ? (
+//             <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+//               <AnimatePresence>
+//                 {filteredBooks.map((item) => {
+//                   const isHighlighted = item.id === highlightId;
+
+//                   return (
+//                     <motion.div
+//                       key={item.id}
+//                       id={`book-${item.id}`}
+//                       layout
+//                       variants={itemVariants}
+//                       initial="hidden"
+//                       animate={
+//                         isHighlighted
+//                           ? {
+//                             opacity: 1,
+//                             y: 0,
+//                             scale: [1, 1.05, 1],
+//                             borderColor: "#f59e0b",
+//                             boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)",
+//                           }
+//                           : "visible"
+//                       }
+//                       exit="exit"
+//                       whileHover={{ scale: 1.03, y: -5, transition: { type: "spring", stiffness: 300 } }}
+//                       className={`bg-white rounded-2xl shadow-md border overflow-hidden cursor-pointer mt-2 
+//                          ${isHighlighted ? "border-amber-500 ring-4 ring-amber-200" : "border-amber-100"}`}
+//                     >
+//                       <img src={item.img} alt={item.title} className="w-full h-44 sm:h-52 md:h-56 object-cover rounded-t-2xl" />
+//                       <div className={`p-4 flex flex-col justify-between ${isHighlighted ? "bg-amber-50" : ""}`}>
+//                         <h2 className="text-base sm:text-lg h-20 font-bold text-gray-800">{item.title}</h2>
+//                         <p className="text-gray-600 text-sm mt-2 h-15 overflow-y-auto pr-2">{item.desc}</p>
+//                         <p className="text- sm:text-sm font-bold mt-3 text-gray-800">Rent Charges - ₹ 3/day </p>
+
+//                         <div className="mt-3 flex items-center justify-between">
+//                           <p className="text-amber-700 font-semibold text-lg">₹ {item.price}</p>
+
+//                           {isAdded(item) ? (
+//                             <div className="flex gap-2">
+//                               <button className="flex-1 py-[6px] rounded-xl flex items-center cursor-not-allowed justify-center gap-2 text-white font-semibold w-23 px-2 bg-green-500 shadow">
+//                                 <Check size={16} /> Added
+//                               </button>
+
+//                               <motion.button
+//                                 whileHover={{ scale: 1.05 }}
+//                                 whileTap={{ scale: 0.95 }}
+//                                 onClick={() => handleRemoveBook(item)}
+//                                 className="flex-1 py-[6px] px-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow cursor-pointer"
+//                               >
+//                                 <MinusCircle size={16} /> Remove
+//                               </motion.button>
+//                             </div>
+//                           ) : (
+//                             <div className="flex gap-2">
+//                               <motion.button
+//                                 whileHover={{ scale: 1.05 }}
+//                                 whileTap={{ scale: 0.95 }}
+//                                 onClick={() => handleAddBook(item)}
+//                                 className="w-20 py-[6px] rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-amber-400 hover:bg-amber-500 shadow"
+//                               >
+//                                 <Plus size={16} /> Buy
+//                               </motion.button>
+
+//                               {isRented(item) ? (
+//                                 <button
+//                                   disabled
+//                                   className="w-30 py-[6px] rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-green-500 cursor-not-allowed shadow"
+//                                 >
+//                                   <Check size={16} /> Rented
+//                                 </button>
+//                               ) : (
+//                                 <motion.button
+//                                   whileHover={{ scale: 1.05 }}
+//                                   whileTap={{ scale: 0.95 }}
+//                                   onClick={() => openRentModal(item)}
+//                                   className="w-30 py-[6px] rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-blue-500 hover:bg-blue-600 shadow"
+//                                 >
+//                                   <Plus size={16} /> On Rent
+//                                 </motion.button>
+//                               )}
+//                             </div>
+//                           )}
+//                         </div>
+//                       </div>
+//                     </motion.div>
+//                   );
+//                 })}
+//               </AnimatePresence>
+//             </motion.div>
+//           ) : (
+//             <motion.div layout className="space-y-4">
+//               <AnimatePresence>
+//                 {filteredBooks.map((item) => {
+//                   const isHighlighted = item.id === highlightId;
+
+//                   return (
+//                     <motion.div
+//                       key={item.id}
+//                       id={`book-${item.id}`}
+//                       layout
+//                       variants={itemVariants}
+//                       initial="hidden"
+//                       animate={
+//                         isHighlighted
+//                           ? {
+//                             opacity: 1,
+//                             y: 0,
+//                             scale: [1, 1.02, 1],
+//                             borderColor: "#f59e0b",
+//                             boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)",
+//                           }
+//                           : "visible"
+//                       }
+//                       exit="exit"
+//                       whileHover={{ scale: 1.01, x: 5, transition: { type: "spring", stiffness: 300 } }}
+//                       className={`flex flex-col sm:flex-row items-center p-4 sm:p-5 rounded-2xl shadow-md hover:shadow-lg border cursor-pointer overflow-hidden
+//                          ${isHighlighted ? "bg-amber-50 border-amber-500 ring-2 ring-amber-200" : "bg-white border-amber-100"}`}
+//                     >
+//                       <img src={item.img} alt={item.title} className="w-full sm:w-32 h-20 object-cover rounded-xl" />
+//                       <div className="sm:ml-5 mt-3 sm:mt-0 flex-1 text-center sm:text-left">
+//                         <h2 className="text-lg sm:text-xl font-bold text-gray-800">{item.title}</h2>
+//                         <p className="text-gray-600 text-sm mt-1 line-clamp-2">{item.desc}</p>
+//                         <p className="text-amber-700 font-semibold text-lg mt-2">₹ {item.price}</p>
+//                         <p className="text- sm:text-sm font-bold text-gray-800">Rent Charges - ₹ 3/day </p>
+
+//                       </div>
+//                       <div className="ml-3 mt-3 sm:mt-0">
+//                         {isAdded(item) ? (
+//                           <div className="flex gap-2">
+//                             <button className="py-2 rounded-xl flex items-center px-3 justify-center gap-2 text-white font-semibold bg-green-500 shadow"><Check size={16} /> Added</button>
+//                             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleRemoveBook(item)} className="py-2 rounded-xl flex items-center px-3 justify-center cursor-pointer gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow"><MinusCircle size={16} /> Remove</motion.button>
+//                           </div>
+//                         ) : (
+//                           <div className="flex gap-2">
+//                             <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => handleAddBook(item)} className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 w-22 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:from-amber-500 hover:to-orange-500 shadow-md"><Plus size={18} /> Add</motion.button>
+
+//                             {isRented(item) ? (
+//                               <button
+//                                 disabled
+//                                 className="flex items-center justify-center gap-2 bg-green-500 text-white font-medium px-2 py-2 rounded-xl cursor-not-allowed shadow-md w-28"
+//                               >
+//                                 <Check size={18} /> Added
+//                               </button>
+//                             ) : (
+//                               <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => openRentModal(item)} className="flex items-center justify-center gap-2 bg-blue-500 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:bg-blue-600 shadow-md">
+//                                 <Plus size={18} /> On Rent
+//                               </motion.button>
+//                             )}
+//                           </div>
+//                         )}
+//                       </div>
+//                     </motion.div>
+//                   );
+//                 })}
+//               </AnimatePresence>
+//             </motion.div>
+//           )
+//         ) : (
+//           <motion.p layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-gray-500 text-center mt-10">No books found.</motion.p>
+//         )}
+//       </AnimatePresence>
+
+//       <div className="mt-20 mb-[-45px] ml-[-60px] mr-[-60px]">
+//         <Footer />
+//       </div>
+//     </motion.div>
+//   );
+// }
+
+// export default BooksList;
+
+
+
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom"; 
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Check, MinusCircle } from "lucide-react";
+import {
+  User,
+  BookOpen,
+  Tags,
+  CheckCircle,
+  CalendarDays,
+  ChevronDown,
+  Plus,
+  Check,
+  MinusCircle,
+} from "lucide-react";
 import Header from "../Layout/header.jsx";
-import { addBook, removeBook } from "../Redux/issueBooksSlice.js";
+import { addBook, removeBook, addRentedBook } from "../Redux/issueBooksSlice.js";
 import { allBooksData, categories } from "../data/booksData";
+import Footer from "./footer.jsx";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 
+/* ------------------------------
+   Motion variants
+-------------------------------*/
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
@@ -555,16 +1807,470 @@ const itemVariants = {
   exit: { opacity: 0, y: -20 },
 };
 
+/* ----------------------------------------------------------
+   CategoryDropdown (uses dynamic categories from booksData)
+-----------------------------------------------------------*/
+function CategoryDropdown({ label, value, onChange, error }) {
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const catList = categories || [];
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative space-y-2" ref={dropdownRef}>
+      <label className="font-semibold text-gray-700">{label}</label>
+
+      <div
+        onClick={() => setOpen(!open)}
+        className="mt-2 flex items-center justify-between cursor-pointer
+                   bg-white/60 border border-gray-300 rounded-2xl px-4 py-2
+                   shadow-inner backdrop-blur-xl hover:border-indigo-500 transition-all"
+      >
+        <div className="flex items-center gap-3">
+          <Tags size={20} className="text-indigo-600" />
+          <span className={`font-medium ${value ? "text-gray-900" : "text-gray-500"}`}>
+            {value || "Select category"}
+          </span>
+        </div>
+
+        <motion.div animate={{ rotate: open ? 180 : 0 }}>
+          <ChevronDown size={20} className="text-gray-600" />
+        </motion.div>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.18 }}
+            className="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-xl
+                        border border-gray-200  backdrop-blur-xl max-h-60 overflow-auto"
+          >
+            {catList.map((cat) => (
+              <li
+                key={cat.id || cat.title}
+                onClick={() => {
+                  onChange(cat.title);
+                  setOpen(false);
+                }}
+                className={`px-4 py-3 cursor-pointer hover:bg-indigo-50 transition-all
+                            font-medium text-gray-700 ${value === cat.title ? "bg-indigo-100 text-indigo-700" : ""
+                  }`}
+              >
+                {cat.title}
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+
+      {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------
+   FancyDatePicker
+-----------------------------------------------------------*/
+function FancyDatePicker({ label, value, onChange }) {
+  const [open, setOpen] = useState(false);
+  const [openUp, setOpenUp] = useState(false);
+  const ref = useRef(null);
+
+  const toggleCalendar = () => {
+    setOpen(!open);
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      setOpenUp(spaceBelow < 350 && spaceAbove > spaceBelow);
+    }
+  };
+
+  return (
+    <div ref={ref} className="relative w-full space-y-2">
+      <label className="text-gray-700 font-semibold block">{label}</label>
+
+      <div
+        onClick={toggleCalendar}
+        className="flex items-center gap-3 bg-white/60 border border-gray-300 
+                   rounded-2xl px-4 py-2 shadow-inner backdrop-blur-lg 
+                   hover:border-indigo-500 transition cursor-pointer"
+      >
+        <CalendarDays size={20} className="text-indigo-600" />
+        <span className="text-gray-700">
+          {value ? new Date(value).toLocaleDateString() : "Select Date"}
+        </span>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: openUp ? 10 : -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: openUp ? 10 : -10, scale: 0.95 }}
+            transition={{ duration: 0.18 }}
+            className={`absolute z-50 bg-white shadow-2xl rounded-3xl p-4 
+                         border border-gray-200 backdrop-blur-xl 
+                         ${openUp ? "bottom-full mb-2" : "top-full mt-2"}`}
+          >
+            <DayPicker
+              mode="single"
+              selected={value ? new Date(value) : undefined}
+              onSelect={(day) => {
+                onChange(day || null);
+                setOpen(false);
+              }}
+              className="rounded-xl"
+              modifiersClassNames={{
+                selected: "bg-indigo-600 text-white rounded-full",
+                today: "text-indigo-600 font-bold underline",
+              }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------
+   Modal / Issue Form Component
+-----------------------------------------------------------*/
+function IssueBookModal({ open, onClose, prefillBook }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
+
+  const calculateDays = (issueDate, returnDate) => {
+    if (!issueDate || !returnDate) return 0;
+    const start = new Date(issueDate);
+    const end = new Date(returnDate);
+    const diffTime = end - start;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays : 0;
+  };
+
+  const calculateFees = (issueDate, returnDate) => {
+    if (!issueDate || !returnDate) return 0;
+    const start = new Date(issueDate);
+    const end = new Date(returnDate);
+    const diffTime = end - start;
+    const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return days > 0 ? days * 3 : 0;
+  };
+
+  const [form, setForm] = useState({
+    studentName: "",
+    studentId: null,
+    bookName: "",
+    category: "",
+    issueDate: null,
+    returnDate: null,
+    fees: 0,
+  });
+
+  const [errors, setErrors] = useState({});
+  const [loadingStudent, setLoadingStudent] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  // Prefill & auto-load student
+  useEffect(() => {
+    if (!open) return;
+
+    const today = new Date();
+
+    setForm((f) => ({
+      ...f,
+      bookName: prefillBook?.title || "",
+      category:
+        prefillBook?.category ||
+        categories.find((c) => c.categorieNumber === prefillBook?.categorieNumber)?.title ||
+        "",
+      issueDate: today,
+      returnDate: null,
+      fees: 0,
+    }));
+
+    setErrors({});
+    setSuccess(false);
+
+    const fetchStudent = async () => {
+      setLoadingStudent(true);
+      try {
+        const res = await fetch("/api/current-student");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        setForm((f) => ({
+          ...f,
+          studentName: data?.name || "Guest",
+          studentId: data?.id || null,
+        }));
+      } catch (err) {
+        console.warn("Student fetch failed → Using Guest");
+        setForm((f) => ({ ...f, studentName: "Guest", studentId: null }));
+      } finally {
+        setLoadingStudent(false);
+      }
+    };
+
+    fetchStudent();
+  }, [open, prefillBook]);
+
+  const handleChange = (name, value) => {
+    setForm((prev) => {
+      const updated = { ...prev, [name]: value };
+      updated.fees = calculateFees(updated.issueDate, updated.returnDate);
+      return updated;
+    });
+
+    setErrors((e) => ({ ...e, [name]: undefined }));
+    setSuccess(false);
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!form.studentName) newErrors.studentName = "Required";
+    if (!form.bookName) newErrors.bookName = "Required";
+    if (!form.category) newErrors.category = "Required";
+    if (!form.issueDate) newErrors.issueDate = "Required";
+    if (!form.returnDate) newErrors.returnDate = "Required";
+
+    if (
+      form.issueDate &&
+      form.returnDate &&
+      new Date(form.returnDate) < new Date(form.issueDate)
+    ) {
+      newErrors.returnDate = "Return date cannot be earlier than issue date";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    // ✅ FIXED: Grab image from prefillBook or use default
+    const bookImage = prefillBook?.img || "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=200";
+
+    const payload = {
+      id: Date.now(),
+      studentName: form.studentName,
+      studentId: form.studentId,
+      bookName: form.bookName,
+      category: form.category,
+      issueDate: form.issueDate?.toLocaleDateString("en-CA") || "",
+      returnDate: form.returnDate?.toLocaleDateString("en-CA") || "",
+      fees: form.fees,
+      img: bookImage, // ✅ ADDED THIS LINE
+    };
+
+    dispatch(addRentedBook(payload));
+    setShowPopup(true);
+
+    setTimeout(() => {
+      setShowPopup(false);
+      onClose();
+    }, 1300);
+  };
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* SUCCESS POPUP */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-6 right-6 bg-green-600 text-white px-4 py-2 rounded-xl shadow-lg z-[999]"
+          >
+            Book Issued Successfully!
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* backdrop */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.6 }}
+        exit={{ opacity: 0 }}
+        className="absolute inset-0 bg-black"
+        onClick={onClose}
+      />
+
+      {/* modal */}
+      <motion.div
+        initial={{ y: 20, opacity: 0, scale: 0.98 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 10, opacity: 0, scale: 0.98 }}
+        transition={{ duration: 0.18 }}
+        className="relative z-60 w-full max-w-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 border border-amber-200 shadow-2xl rounded-3xl p-6 md:p-8 mx-4"
+      >
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col">
+            <h3 className="text-2xl text-amber-950 font-bold tracking-tight">
+              Issue Book
+            </h3>
+            <span className="text-amber-700/60 text-sm font-medium">Rent Management</span>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full text-amber-800/60 hover:bg-amber-100 hover:text-amber-900 cursor-pointer transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {loadingStudent && <p className="text-sm text-amber-600 mb-4 animate-pulse">Loading student info...</p>}
+
+        {success && (
+          <div className="mb-5 bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-3 rounded-xl flex items-center gap-2">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+            <span className="font-medium">Book issued successfully!</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Student Name</label>
+            <input
+              type="text"
+              value={form.studentName}
+              onChange={(e) => handleChange("studentName", e.target.value)}
+              className="w-full rounded-xl border border-stone-200 p-2.5 bg-white/80 shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+              placeholder="Enter student name..."
+            />
+            {errors.studentName && (
+              <p className="text-red-500 text-xs font-medium mt-1 ml-1">{errors.studentName}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Book Name</label>
+            <input
+              type="text"
+              value={form.bookName}
+              onChange={(e) => handleChange("bookName", e.target.value)}
+              className="w-full rounded-xl border border-stone-200 p-2.5 bg-white/80 shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+              placeholder="Search book title..."
+            />
+            {errors.bookName && <p className="text-red-500 text-xs font-medium mt-1 ml-1">{errors.bookName}</p>}
+          </div>
+
+          <CategoryDropdown
+            label="Category"
+            value={form.category}
+            onChange={(val) => handleChange("category", val)}
+            error={errors.category}
+          />
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <FancyDatePicker
+                label="Issue Date"
+                value={form.issueDate}
+                onChange={(date) => handleChange("issueDate", date)}
+              />
+              {errors.issueDate && <p className="text-red-500 text-xs font-medium mt-1 ml-1">{errors.issueDate}</p>}
+            </div>
+            <div>
+              <FancyDatePicker
+                label="Return Date"
+                value={form.returnDate}
+                onChange={(date) => handleChange("returnDate", date)}
+              />
+              {errors.returnDate && (
+                <p className="text-red-500 text-xs font-medium mt-1 ml-1">{errors.returnDate}</p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Fees</label>
+            <div className="relative">
+              <span className="absolute left-3 top-2.5 text-gray-500">₹</span>
+              <input
+                type="number"
+                value={form.fees}
+                readOnly
+                className="w-full rounded-xl border border-stone-200 p-2.5 pl-7 bg-stone-100 text-gray-500 cursor-not-allowed font-medium"
+              />
+            </div>
+            <p className="text-xs text-gray-900 mt-1 ml-1">Rent Charges - ₹ 3/day <a className="text-orange-900">(Charges are calculated based on selected days)</a></p>
+
+            {form.issueDate && form.returnDate && (
+              <p className="text-gray-700 font-medium mt-2">
+                Total Days: <span className="text-amber-700">{calculateDays(form.issueDate, form.returnDate)}</span>
+              </p>
+            )}
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-amber-200/50 mt-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2.5 rounded-xl cursor-pointer text-stone-600 hover:bg-stone-100 font-medium  text-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/issue-book-form", { state: { prefillData: form } })}
+              className="px-5 py-2.5 cursor-pointer rounded-xl bg-white border border-amber-300 text-amber-900 shadow-sm hover:bg-amber-50 font-medium  text-sm  hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
+            >
+              View Details
+            </button>
+
+            <button
+              type="submit"
+              className="px-6 py-2.5 rounded-xl bg-gray-900 cursor-pointer text-white shadow-lg hover:bg-black hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 font-medium text-sm flex items-center gap-2"
+            >
+              <span>Confirm Issue</span>
+              <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  );
+}
+
+
+/* ----------------------------------------------------------
+   MAIN BooksList Component
+-----------------------------------------------------------*/
 function BooksList() {
   const navigate = useNavigate();
   const { id } = useParams();
-  
+
   // ✅ 1. Get location state to find the highlighted ID
   const location = useLocation();
   const highlightId = location.state?.highlightId;
 
   const dispatch = useDispatch();
   const issueBooks = useSelector((state) => state.issueBooks.books);
+  const rentedBooks = useSelector((state) => state.issueBooks.rentedBooks); // Get rented books
 
   const [search, setSearch] = useState("");
   const [selectedLetter, setSelectedLetter] = useState("");
@@ -573,9 +2279,13 @@ function BooksList() {
   const [headerHeight, setHeaderHeight] = useState(0);
   const filterSectionRef = useRef(null);
 
-  const currentCategory = categories.find(cat => cat.categorieNumber === parseInt(id));
+  // Modal state
+  const [rentModalOpen, setRentModalOpen] = useState(false);
+  const [modalPrefillBook, setModalPrefillBook] = useState(null);
+
+  const currentCategory = categories.find((cat) => cat.categorieNumber === parseInt(id));
   const categoryName = currentCategory ? currentCategory.title : "Books Category";
-  
+
   const books = allBooksData[id] || [];
 
   const filteredBooks = useMemo(() => {
@@ -592,7 +2302,7 @@ function BooksList() {
     });
   }, [books, search, selectedLetter]);
 
-  // ✅ 2. Effect to scroll to the highlighted book
+  // Scroll to highlighted book
   useEffect(() => {
     if (highlightId && filteredBooks.length > 0) {
       setTimeout(() => {
@@ -600,7 +2310,7 @@ function BooksList() {
         if (element) {
           element.scrollIntoView({ behavior: "smooth", block: "center" });
         }
-      }, 300); // 300ms delay ensures the DOM elements are rendered
+      }, 300);
     }
   }, [highlightId, filteredBooks]);
 
@@ -615,13 +2325,21 @@ function BooksList() {
   };
 
   const isAdded = (book) => !!issueBooks.find((b) => b.id === book.id);
+  // Check if book is rented
+  const isRented = (book) => !!rentedBooks.find((r) => r.bookName === book.title);
+
+  // Open modal with prefill
+  const openRentModal = (book) => {
+    setModalPrefillBook(book);
+    setRentModalOpen(true);
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 min-h-screen px-6 md:px-12 lg:px-20 md:mt-[-70px] py-2 mt-[-170px] pb-23 md:pb-15"
+      className="bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 min-h-screen px-6 md:px-12 lg:px-20 md:mt-2 py-2 mt-[10px] pb-23 md:pb-15 "
     >
       <Header
         viewMode={viewMode}
@@ -633,6 +2351,7 @@ function BooksList() {
         scrollToFilterRef={filterSectionRef}
         openPageFilter={() => setShowFilter(true)}
         issueBooks={issueBooks}
+        rentedBooks={rentedBooks}
         setHeaderHeight={setHeaderHeight}
       />
 
@@ -647,49 +2366,102 @@ function BooksList() {
         {categoryName}
       </motion.h1>
 
+      {/* Modal (Issue Form) */}
+      <AnimatePresence>
+        {rentModalOpen && (
+          <IssueBookModal
+            key="issue-modal"
+            open={rentModalOpen}
+            onClose={() => setRentModalOpen(false)}
+            prefillBook={modalPrefillBook}
+          />
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {filteredBooks.length > 0 ? (
           viewMode === "grid" ? (
             <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               <AnimatePresence>
                 {filteredBooks.map((item) => {
-                  // ✅ 3. Check if this is the highlighted item
                   const isHighlighted = item.id === highlightId;
-                  
+
                   return (
                     <motion.div
                       key={item.id}
-                      id={`book-${item.id}`} // ✅ Added ID anchor
+                      id={`book-${item.id}`}
                       layout
                       variants={itemVariants}
                       initial="hidden"
-                      // ✅ 4. Visual Highlight Animation
-                      animate={isHighlighted ? { 
-                        opacity: 1, 
-                        y: 0, 
-                        scale: [1, 1.05, 1],
-                        borderColor: "#f59e0b",
-                        boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)"
-                      } : "visible"}
+                      animate={
+                        isHighlighted
+                          ? {
+                            opacity: 1,
+                            y: 0,
+                            scale: [1, 1.05, 1],
+                            borderColor: "#f59e0b",
+                            boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)",
+                          }
+                          : "visible"
+                      }
                       exit="exit"
                       whileHover={{ scale: 1.03, y: -5, transition: { type: "spring", stiffness: 300 } }}
-                      // ✅ 5. Apply highlight border classes
                       className={`bg-white rounded-2xl shadow-md border overflow-hidden cursor-pointer mt-2 
-                        ${isHighlighted ? "border-amber-500 ring-4 ring-amber-200" : "border-amber-100"}`}
+                         ${isHighlighted ? "border-amber-500 ring-4 ring-amber-200" : "border-amber-100"}`}
                     >
                       <img src={item.img} alt={item.title} className="w-full h-44 sm:h-52 md:h-56 object-cover rounded-t-2xl" />
                       <div className={`p-4 flex flex-col justify-between ${isHighlighted ? "bg-amber-50" : ""}`}>
                         <h2 className="text-base sm:text-lg h-20 font-bold text-gray-800">{item.title}</h2>
                         <p className="text-gray-600 text-sm mt-2 h-15 overflow-y-auto pr-2">{item.desc}</p>
+                        <p className="text- sm:text-sm font-bold mt-3 text-gray-800">Rent Charges - ₹ 3/day </p>
+
                         <div className="mt-3 flex items-center justify-between">
                           <p className="text-amber-700 font-semibold text-lg">₹ {item.price}</p>
+
                           {isAdded(item) ? (
                             <div className="flex gap-2">
-                              <button className="flex-1 py-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold w-23 px-2 bg-green-500 shadow"><Check size={16} /> Added</button>
-                              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleRemoveBook(item)} className="flex-1 py-2 px-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow cursor-pointer"><MinusCircle size={16} /> Remove</motion.button>
+                              <button className="flex-1 py-[6px] rounded-xl flex items-center cursor-not-allowed justify-center gap-2 text-white font-semibold w-23 px-2 bg-green-500 shadow">
+                                <Check size={16} /> Added
+                              </button>
+
+                              <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => handleRemoveBook(item)}
+                                className="flex-1 py-[6px] px-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow cursor-pointer"
+                              >
+                                <MinusCircle size={16} /> Remove
+                              </motion.button>
                             </div>
                           ) : (
-                            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleAddBook(item)} className="w-40 py-2 rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-amber-400 hover:bg-amber-500 shadow"><Plus size={16} /> Add</motion.button>
+                            <div className="flex gap-2">
+                              <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => handleAddBook(item)}
+                                className="w-20 py-[6px] rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-amber-400 hover:bg-amber-500 shadow"
+                              >
+                                <Plus size={16} /> Buy
+                              </motion.button>
+
+                              {isRented(item) ? (
+                                <button
+                                  disabled
+                                  className="w-30 py-[6px] rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-green-500 cursor-not-allowed shadow"
+                                >
+                                  <Check size={16} /> Rented
+                                </button>
+                              ) : (
+                                <motion.button
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  onClick={() => openRentModal(item)}
+                                  className="w-30 py-[6px] rounded-xl flex items-center cursor-pointer justify-center gap-2 text-white font-semibold bg-blue-500 hover:bg-blue-600 shadow"
+                                >
+                                  <Plus size={16} /> On Rent
+                                </motion.button>
+                              )}
+                            </div>
                           )}
                         </div>
                       </div>
@@ -699,38 +2471,41 @@ function BooksList() {
               </AnimatePresence>
             </motion.div>
           ) : (
-            // LIST VIEW
             <motion.div layout className="space-y-4">
               <AnimatePresence>
                 {filteredBooks.map((item) => {
-                   const isHighlighted = item.id === highlightId;
+                  const isHighlighted = item.id === highlightId;
 
-                   return (
+                  return (
                     <motion.div
                       key={item.id}
-                      id={`book-${item.id}`} // ✅ Added ID anchor
+                      id={`book-${item.id}`}
                       layout
                       variants={itemVariants}
                       initial="hidden"
-                      // ✅ Visual Highlight Animation for List View
-                      animate={isHighlighted ? { 
-                        opacity: 1, 
-                        y: 0, 
-                        scale: [1, 1.02, 1],
-                        borderColor: "#f59e0b",
-                        boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)"
-                      } : "visible"}
+                      animate={
+                        isHighlighted
+                          ? {
+                            opacity: 1,
+                            y: 0,
+                            scale: [1, 1.02, 1],
+                            borderColor: "#f59e0b",
+                            boxShadow: "0px 0px 20px rgba(245, 158, 11, 0.5)",
+                          }
+                          : "visible"
+                      }
                       exit="exit"
-                      whileHover={{ scale: 1.02, x: 5, transition: { type: "spring", stiffness: 300 } }}
-                      // ✅ Highlight styling
+                      whileHover={{ scale: 1.01, x: 5, transition: { type: "spring", stiffness: 300 } }}
                       className={`flex flex-col sm:flex-row items-center p-4 sm:p-5 rounded-2xl shadow-md hover:shadow-lg border cursor-pointer overflow-hidden
-                        ${isHighlighted ? "bg-amber-50 border-amber-500 ring-2 ring-amber-200" : "bg-white border-amber-100"}`}
+                         ${isHighlighted ? "bg-amber-50 border-amber-500 ring-2 ring-amber-200" : "bg-white border-amber-100"}`}
                     >
                       <img src={item.img} alt={item.title} className="w-full sm:w-32 h-20 object-cover rounded-xl" />
                       <div className="sm:ml-5 mt-3 sm:mt-0 flex-1 text-center sm:text-left">
                         <h2 className="text-lg sm:text-xl font-bold text-gray-800">{item.title}</h2>
                         <p className="text-gray-600 text-sm mt-1 line-clamp-2">{item.desc}</p>
                         <p className="text-amber-700 font-semibold text-lg mt-2">₹ {item.price}</p>
+                        <p className="text- sm:text-sm font-bold text-gray-800">Rent Charges - ₹ 3/day </p>
+
                       </div>
                       <div className="ml-3 mt-3 sm:mt-0">
                         {isAdded(item) ? (
@@ -739,7 +2514,22 @@ function BooksList() {
                             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleRemoveBook(item)} className="py-2 rounded-xl flex items-center px-3 justify-center cursor-pointer gap-2 text-white font-semibold bg-red-500 hover:bg-red-600 shadow"><MinusCircle size={16} /> Remove</motion.button>
                           </div>
                         ) : (
-                          <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => handleAddBook(item)} className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 w-22 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:from-amber-500 hover:to-orange-500 shadow-md"><Plus size={18} /> Add</motion.button>
+                          <div className="flex gap-2">
+                            <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => handleAddBook(item)} className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 w-22 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:from-amber-500 hover:to-orange-500 shadow-md"><Plus size={18} /> Add</motion.button>
+
+                            {isRented(item) ? (
+                              <button
+                                disabled
+                                className="flex items-center justify-center gap-2 bg-green-500 text-white font-medium px-2 py-2 rounded-xl cursor-not-allowed shadow-md w-28"
+                              >
+                                <Check size={18} /> Added
+                              </button>
+                            ) : (
+                              <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => openRentModal(item)} className="flex items-center justify-center gap-2 bg-blue-500 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:bg-blue-600 shadow-md">
+                                <Plus size={18} /> On Rent
+                              </motion.button>
+                            )}
+                          </div>
                         )}
                       </div>
                     </motion.div>
@@ -752,6 +2542,10 @@ function BooksList() {
           <motion.p layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-gray-500 text-center mt-10">No books found.</motion.p>
         )}
       </AnimatePresence>
+
+      <div className="mt-20 mb-[-45px] ml-[-60px] mr-[-60px]">
+        <Footer />
+      </div>
     </motion.div>
   );
 }

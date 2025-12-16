@@ -14,6 +14,7 @@ function Header({
   scrollToFilterRef,
   openPageFilter,
   issueBooks = [],
+    rentedBooks = [],   // ← ADD THIS
   setHeaderHeight,
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -140,6 +141,31 @@ function Header({
             </motion.span>
           )}
         </motion.button>
+        <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => navigate("/issue-book-form")}
+  className="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-2 bg-white rounded-xl hover:bg-amber-100 border border-amber-200 shadow-md"
+>
+  <BookOpen size={18} className="text-amber-600 animate-bounce" />
+  <span className="text-sm font-medium text-amber-700 cursor-pointer animate-bounce">
+    Issue Books
+  </span>
+
+  {/* ⭐ ADD THIS BADGE */}
+  {rentedBooks.length > 0 && (
+    <motion.span
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md"
+    >
+      {rentedBooks.length}
+    </motion.span>
+  )}
+</motion.button>
+ 
+
+    {/* <button onClick={() => navigate("/issue-book-form")} > issue boks </button> */}
 
         {/* ✅ Filter + Grid/List Controls */}
         <div className="flex items-center gap-2 mr-0 sm:mr-2">
@@ -263,9 +289,10 @@ function Header({
   );
 }
 export default React.memo(Header);
-// .............................................................................................................................///////////////////////////////////
-// import React, { useState, useRef, useEffect } from "react";
 
+
+
+// import React, { useState, useRef, useEffect } from "react";
 // import {
 //   User,
 //   Settings,
@@ -276,11 +303,12 @@ export default React.memo(Header);
 //   X,
 //   BookOpen,
 //   LibraryBig,
+//   Sparkles, // AI icon
 // } from "lucide-react";
 // import { motion, AnimatePresence } from "framer-motion";
 // import { useNavigate } from "react-router-dom";
 
-//  function Header({
+// function Header({
 //   viewMode,
 //   setViewMode,
 //   search,
@@ -294,9 +322,15 @@ export default React.memo(Header);
 // }) {
 //   const [profileOpen, setProfileOpen] = useState(false);
 //   const [filterOpen, setFilterOpen] = useState(false);
+//   const [aiOpen, setAiOpen] = useState(false); // NEW AI DROPDOWN
+
+//   const [aiSearch, setAiSearch] = useState(""); // SEPARATE AI SEARCH
+
 //   const profileRef = useRef(null);
 //   const filterRef = useRef(null);
+//   const aiRef = useRef(null);
 //   const headerRef = useRef(null);
+
 //   const navigate = useNavigate();
 
 //   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -312,12 +346,14 @@ export default React.memo(Header);
 //     }
 //   }, [setHeaderHeight]);
 
+//   // Close dropdowns if clicked outside
 //   useEffect(() => {
 //     const handleClickOutside = (e) => {
 //       if (profileRef.current && !profileRef.current.contains(e.target))
 //         setProfileOpen(false);
 //       if (filterRef.current && !filterRef.current.contains(e.target))
 //         setFilterOpen(false);
+//       if (aiRef.current && !aiRef.current.contains(e.target)) setAiOpen(false);
 //     };
 //     document.addEventListener("mousedown", handleClickOutside);
 //     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -333,7 +369,6 @@ export default React.memo(Header);
 //     }
 //     if (openPageFilter) openPageFilter();
 //   };
-  
 
 //   return (
 //     <motion.header
@@ -341,158 +376,190 @@ export default React.memo(Header);
 //       initial={{ y: -80, opacity: 0 }}
 //       animate={{ y: 0, opacity: 1 }}
 //       transition={{ duration: 0.5, ease: "easeOut" }}
-//       className="fixed top-0 left-0 w-full z-50 flex justify-between items-center bg-gradient-to-r from-orange-400 to-amber-400 px-4 sm:px-6 md:px-8 py-2 shadow-xl backdrop-blur-lg animate-bounce-gentle "
+//       className="fixed top-0 left-0 w-full z-50 flex flex-wrap md:flex-nowrap justify-between items-center bg-gradient-to-r from-orange-400 to-amber-400 px-3 sm:px-6 md:px-8 py-3 pt-5 md:py-2 shadow-xl backdrop-blur-lg gap-y-3"
 //     >
 //       {/* ---------------- LOGO ---------------- */}
 //       <motion.div
-//         className="cursor-pointer select-none text-white"
+//         className="cursor-pointer select-none text-white flex items-center shrink-0"
 //         onClick={() => (window.location.href = "/")}
-//         initial={{ opacity: 0, x: -20 }}
-//         animate={{ opacity: 1, x: 0 }}
-//         transition={{ delay: 0.2, duration: 0.4 }}
 //       >
 //         <motion.div
 //           whileHover={{ rotate: 10, scale: 1.1 }}
 //           whileTap={{ scale: 0.95 }}
-//           className="w-9 h-9 rounded ml-[-20px] mt-2 bg-gradient-to-br from-blue-400 to-cyan-400 fixed flex items-center justify-center text-white font-bold shadow-lg animate-[spin_20s_linear_infinite]"
+//           className="w-9 h-9 rounded bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center text-white font-bold shadow-lg animate-[spin_20s_linear_infinite]"
 //         >
 //           <LibraryBig size={20} />
 //         </motion.div>
-//         <div className="text-lg ml-8 sm:text-2xl font-extrabold tracking-tight">
-//           Library
+
+//         <div className="flex flex-col ml-3">
+//           <div className="text-lg sm:text-2xl font-extrabold tracking-tight leading-none">
+//             Library
+//           </div>
+//           <div className="text-[10px] sm:text-xs text-white/80 leading-none mt-0.5">
+//             Catalog & Dashboard
+//           </div>
 //         </div>
-//         <div className="ml-8 text-xs text-white/80">Catalog & Dashboard</div>
 //       </motion.div>
 
-//       {/* ---------------- SEARCH BAR ---------------- */}
-//       <motion.div
-//         className="flex-1 max-w-2xl mx-4 relative "
-//         initial={{ opacity: 0, y: -10 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         transition={{ delay: 0.3, duration: 0.4 }}
-//       >
-//         <SearchIcon className="absolute left-3 ml-1  top-1/2 -translate-y-1/2 text-black pointer-events-none" />
+//       {/* ---------------- STATIC SEARCH BAR ---------------- */}
+//       <motion.div className="order-last md:order-none w-full md:flex-1 md:max-w-2xl md:mx-4 relative">
+//         <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-black pointer-events-none" size={18} />
 //         <motion.input
-//           whileFocus={{
-//             boxShadow: "0 0 8px rgba(251, 191, 36, 0.6)",
-//             scale: 1.02,
-//           }}
-//           transition={{ duration: 0.2 }}
 //           value={search}
 //           onChange={(e) => setSearch(e.target.value)}
 //           placeholder="Search books, categories, authors..."
-//           className="w-full rounded-2xl py-2.5 pl-10 pr-4 ml-2 text-sm sm:text-base outline-none bg-white/90 text-black border border-white/50"
+//           whileFocus={{
+//             boxShadow: "0 0 8px rgba(251, 191, 36, 0.6)",
+//             scale: 1.005,
+//           }}
+//           className="w-full rounded-2xl py-2.5 pl-10 pr-4 text-sm bg-white/90 border border-white/50 outline-none"
 //         />
 //       </motion.div>
 
-//       {/* ---------------- RIGHT ACTIONS ---------------- */}
-//       <div className="flex items-center gap-2 relative ">
-//         {/* ✅ Issue Books Button */}
+//       {/* ---------------- RIGHT SIDE ACTIONS ---------------- */}
+//       <div className="flex items-center gap-2 ml-auto md:ml-0 relative">
+        
+//         {/* ISSUE BOOKS */}
 //         <motion.button
 //           whileHover={{ scale: 1.05 }}
-//           whileTap={{ scale: 0.95 }}
 //           onClick={() => navigate("/issue-books")}
-//           className="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-2 bg-white rounded-xl hover:bg-amber-100 border border-amber-200 shadow-md"
+//           className="hidden sm:flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-amber-200 hover:bg-amber-100 shadow-md"
 //         >
-//           <BookOpen size={18} className="text-amber-600 animate-bounce" />
-//           <span className="text-sm font-medium text-amber-700 cursor-pointer animate-bounce">
+//           <BookOpen size={18} className="text-amber-600" />
+//           <span className="text-sm font-medium text-amber-700">
 //             Buy Books
 //           </span>
 //           {issueBooks.length > 0 && (
-//             <motion.span
-//               initial={{ scale: 0 }}
-//               animate={{ scale: 1 }}
-//               className="absolute -top-2 -right-2 animate-bounce bg-amber-600 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md"
-//             >
+//             <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-xs px-2 py-0.5 rounded-full shadow-md">
 //               {issueBooks.length}
-//             </motion.span>
+//             </span>
 //           )}
 //         </motion.button>
 
-//         {/* ✅ Filter + Grid/List Controls */}
-//         <div className="flex items-center gap-2 mr-2">
-//           {/* Filter */}
-//           <div className="relative" ref={filterRef}>
-//             <motion.button
-//               whileHover={{ scale: 1.1 }}
-//               whileTap={{ scale: 0.9 }}
-//               onClick={handleFilterClick}
-//               className="p-2 rounded-xl cursor-pointer bg-white text-amber-600 border border-amber-300 hover:bg-amber-100 shadow-sm"
-//             >
-//               {filterOpen ? <X size={18} /> : <FilterIcon size={18} />}
-//             </motion.button>
-
-//             <AnimatePresence>
-//               {filterOpen && (
-//                 <motion.div
-//                   initial={{ opacity: 0, y: -6, scale: 0.95 }}
-//                   animate={{ opacity: 1, y: 0, scale: 1 }}
-//                   exit={{ opacity: 0, y: -6, scale: 0.95 }}
-//                   transition={{ duration: 0.2 }}
-//                   className="absolute right-0 top-full mt-2 w-[280px] bg-white rounded-xl shadow-lg p-3 flex flex-wrap gap-2 z-50"
-//                 >
-//                   {letters.map((L) => (
-//                     <motion.button
-//                       whileHover={{ scale: 1.05 }}
-//                       key={L}
-//                       onClick={() =>
-//                         setSelectedLetter(selectedLetter === L ? "" : L)
-//                       }
-//                       className={`px-2 py-1 rounded-lg text-sm font-medium transition-all cursor-pointer ${selectedLetter === L
-//                         ? "bg-amber-500 text-white shadow"
-//                         : "bg-white text-amber-600 border border-amber-300 hover:bg-amber-100 "
-//                         }`}
-//                     >
-//                       {L}
-//                     </motion.button>
-//                   ))}
-//                 </motion.div>
-//               )}
-//             </AnimatePresence>
-//           </div>
-
-//           {/* ✅ Grid / List View Buttons */}
+//         {/* FILTER */}
+//         <div className="relative" ref={filterRef}>
 //           <motion.button
 //             whileHover={{ scale: 1.1 }}
-//             whileTap={{ scale: 0.9 }}
-//             onClick={() => setViewMode("grid")}
-//             className={`p-2 rounded-xl ${viewMode === "grid"
-//               ? "bg-amber-600 text-white shadow"
-//               : "bg-white cursor-pointer text-amber-600 border border-amber-300 hover:bg-amber-100"
-//               }`}
+//             onClick={handleFilterClick}
+//             className="p-2 bg-white border border-amber-300 rounded-xl hover:bg-amber-100"
 //           >
-//             <LayoutGrid size={18} />
+//             {filterOpen ? <X size={18} /> : <FilterIcon size={18} />}
 //           </motion.button>
 
-//           <motion.button
-//             whileHover={{ scale: 1.1 }}
-//             whileTap={{ scale: 0.9 }}
-//             onClick={() => setViewMode("list")}
-//             className={`p-2 rounded-xl ${viewMode === "list"
-//               ? "bg-amber-600 text-white shadow"
-//               : "bg-white cursor-pointer text-amber-600 border border-amber-300 hover:bg-amber-100"
-//               }`}
-//           >
-//             <List size={18} />
-//           </motion.button>
+//           <AnimatePresence>
+//             {filterOpen && (
+//               <motion.div
+//                 initial={{ opacity: 0, y: -6 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 exit={{ opacity: 0, y: -6 }}
+//                 className="absolute right-0 top-full mt-2 w-[90vw] sm:w-[280px] bg-white p-3 rounded-xl shadow-lg flex flex-wrap gap-2 z-50"
+//               >
+//                 {letters.map((L) => (
+//                   <button
+//                     key={L}
+//                     onClick={() =>
+//                       setSelectedLetter(selectedLetter === L ? "" : L)
+//                     }
+//                     className={`px-2 py-1 rounded-lg text-sm font-medium ${
+//                       selectedLetter === L
+//                         ? "bg-amber-500 text-white"
+//                         : "bg-white border border-amber-300 text-amber-600 hover:bg-amber-100"
+//                     }`}
+//                   >
+//                     {L}
+//                   </button>
+//                 ))}
+//               </motion.div>
+//             )}
+//           </AnimatePresence>
 //         </div>
 
-//         {/* Settings */}
+//         {/* VIEW MODE */}
 //         <motion.button
-//           whileHover={{ rotate: 90, scale: 1.1 }}
-//           transition={{ type: "spring", stiffness: 300 }}
-//           className="p-2 rounded-xl hover:bg-amber-100 cursor-pointer bg-white"
+//           whileHover={{ scale: 1.1 }}
+//           onClick={() => setViewMode("grid")}
+//           className={`p-2 rounded-xl ${
+//             viewMode === "grid"
+//               ? "bg-amber-600 text-white"
+//               : "bg-white border border-amber-300 text-amber-600"
+//           }`}
 //         >
-//           <Settings size={18} className="text-amber-600 animate-[spin_10s_linear_infinite]" />
+//           <LayoutGrid size={18} />
 //         </motion.button>
 
-//         {/* Profile Dropdown */}
+//         <motion.button
+//           whileHover={{ scale: 1.1 }}
+//           onClick={() => setViewMode("list")}
+//           className={`p-2 rounded-xl ${
+//             viewMode === "list"
+//               ? "bg-amber-600 text-white"
+//               : "bg-white border border-amber-300 text-amber-600"
+//           }`}
+//         >
+//           <List size={18} />
+//         </motion.button>
+
+//         {/* ---------------- AI SEARCH BUTTON ---------------- */}
+//         <div className="relative" ref={aiRef}>
+//           <motion.button
+//             whileHover={{ scale: 1.1 }}
+//             onClick={() => setAiOpen((prev) => !prev)}
+//             className="p-2 bg-white rounded-xl border border-amber-300 hover:bg-amber-100 flex items-center gap-1"
+//           >
+//             <Sparkles size={16} className="text-amber-600" />
+//           </motion.button>
+
+//           {/* AI SEARCH DROPDOWN */}
+//           <AnimatePresence>
+//             {aiOpen && (
+//               <motion.div
+//                 initial={{ opacity: 0, y: -6 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 exit={{ opacity: 0, y: -6 }}
+//                 className="absolute right-0 w-[90vw] sm:w-72 mt-2 bg-white p-3 rounded-xl shadow-xl z-50"
+//               >
+//                 <div className="font-semibold text-amber-600 mb-2">
+//                   Ask AI to find books:
+//                 </div>
+
+//                 <div className="relative">
+//                   <SearchIcon
+//                     size={16}
+//                     className="absolute left-3 top-1/2 -translate-y-1/2 text-black"
+//                   />
+//                   <input
+//                     value={aiSearch}
+//                     onChange={(e) => setAiSearch(e.target.value)}
+//                     className="w-full pl-8 pr-3 py-2 rounded-xl border bg-white outline-none"
+//                     placeholder="Ask AI anything..."
+//                   />
+//                 </div>
+
+//                 <div className="text-xs text-gray-500 mt-2">
+//                   AI will generate smart book suggestions.
+//                 </div>
+//               </motion.div>
+//             )}
+//           </AnimatePresence>
+//         </div>
+
+//         {/* SETTINGS */}
+//         <motion.button
+//           whileHover={{ rotate: 90, scale: 1.1 }}
+//           className="p-2 bg-white rounded-xl hover:bg-amber-100"
+//         >
+//           <Settings
+//             size={18}
+//             className="text-amber-600 animate-[spin_10s_linear_infinite]"
+//           />
+//         </motion.button>
+
+//         {/* PROFILE */}
 //         <div className="relative" ref={profileRef}>
 //           <motion.button
 //             whileHover={{ scale: 1.1 }}
-//             whileTap={{ scale: 0.9 }}
 //             onClick={() => setProfileOpen((s) => !s)}
-//             className="bg-white rounded-full p-2 sm:p-3 mr-2 cursor-pointer shadow-sm"
+//             className="bg-white rounded-full p-2 shadow-sm"
 //           >
 //             <User size={18} className="text-black" />
 //           </motion.button>
@@ -503,16 +570,14 @@ export default React.memo(Header);
 //                 initial={{ opacity: 0, y: -8 }}
 //                 animate={{ opacity: 1, y: 0 }}
 //                 exit={{ opacity: 0, y: -8 }}
-//                 transition={{ duration: 0.2 }}
-//                 className="absolute right-0 mt-2 w-36 bg-white rounded-md shadow-lg overflow-hidden z-50"
+//                 className="absolute right-0 mt-2 w-36 bg-white rounded-md shadow-lg"
 //               >
-//                 <motion.button
-//                   whileHover={{ backgroundColor: "#dc2626" }}
+//                 <button
 //                   onClick={handleLogout}
-//                   className="w-full px-4 py-2 text-left text-white cursor-pointer bg-red-500 transition-colors"
+//                   className="w-full px-4 py-2 text-left bg-red-500 text-white hover:bg-red-600"
 //                 >
 //                   Logout
-//                 </motion.button>
+//                 </button>
 //               </motion.div>
 //             )}
 //           </AnimatePresence>
@@ -521,4 +586,5 @@ export default React.memo(Header);
 //     </motion.header>
 //   );
 // }
+
 // export default React.memo(Header);

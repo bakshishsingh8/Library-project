@@ -134,7 +134,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Home,BookOpen, Clipboard, Settings, BookAIcon, InfoIcon, Menu, } from "lucide-react";// Added a fallback icon for logo if needed
+import { Home,BookOpen, Clipboard, Settings, BookAIcon, InfoIcon, Menu, CreditCard } from "lucide-react";// Added a fallback icon for logo if needed
 
 const menuItems = [
   { name: "Home", path: "/welcome", icon: <Home size={20} /> },
@@ -142,6 +142,7 @@ const menuItems = [
   { name: "Buy Books", path: "/issue-books", icon: <Clipboard size={20} /> },
   { name: "ALL Books", path: "/AllBooks", icon: <BookAIcon size={20} /> },
   { name: "About", path: "/about", icon: <InfoIcon size={20} /> },
+  { name: "Payment", path: "/combined-orders", icon: <CreditCard size={20} /> },
 ];
 
 export default function Layout({ children }) {

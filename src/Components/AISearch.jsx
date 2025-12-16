@@ -14,7 +14,7 @@ function AISearch() {
   };
 
   return (
-    <div style={{ padding: 20 }} className=" items-center ml-60"> 
+    <div style={{ padding: 20 }} className=" items-center ml-53"> 
       <input
         type="text"
         placeholder="Search books using AI..."
