@@ -150,16 +150,16 @@ function Footer() {
           <h3 className="text-lg font-semibold text-amber-700 mb-3">Follow Us</h3>
           {/* Increased spacing and touch targets for mobile */}
           <div className="flex justify-center md:justify-start gap-6 md:gap-4 mt-1">
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-2xl md:text-xl text-gray-700 hover:text-blue-600 transition-transform hover:-translate-y-1 duration-300">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-2xl md:text-xl text-gray-700 hover:text-blue-600 transition-transform hover:-translate-y-1 dark:text-amber-300  duration-300">
               <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-2xl md:text-xl text-gray-700 hover:text-pink-600 transition-transform hover:-translate-y-1 duration-300">
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-2xl md:text-xl text-gray-700 hover:text-pink-600 transition-transform hover:-translate-y-1 dark:text-amber-300 duration-300">
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="https://x.com/?lang=en" target="_blank" rel="noopener noreferrer" className="text-2xl md:text-xl text-gray-700 hover:text-black transition-transform hover:-translate-y-1 duration-300">
+            <a href="https://x.com/?lang=en" target="_blank" rel="noopener noreferrer" className="text-2xl md:text-xl text-gray-700 hover:text-black transition-transform hover:-translate-y-1 dark:hover:text-blue-900 dark:text-amber-300 duration-300">
               <i className="fab fa-twitter"></i>
             </a>
-            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="text-2xl md:text-xl text-gray-700 hover:text-red-600 transition-transform hover:-translate-y-1 duration-300">
+            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="text-2xl md:text-xl text-gray-700 hover:text-red-600 transition-transform hover:-translate-y-1 dark:text-amber-300 duration-300">
               <i className="fab fa-youtube"></i>
             </a>
           </div>
