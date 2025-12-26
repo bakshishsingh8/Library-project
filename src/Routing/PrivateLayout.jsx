@@ -14,7 +14,7 @@ const PrivateLayout = () => {
   const [issueBooks, setIssueBooks] = React.useState([]);
 
   // Paths where Header & Sidebar should NOT be shown
-  const hiddenLayoutPaths = ["/issue-books","/issue-book-form", "/payment", "/welcome", "/combined-orders" ,"/combined-payment"];
+  const hiddenLayoutPaths = ["/issue-books","/issue-book-form", "/payment", "/welcome", "/combined-orders","/sell-books","/combined-payment"];
 
   // Check if the current path is one of the hidden ones
   const hideLayout = hiddenLayoutPaths.includes(location.pathname);

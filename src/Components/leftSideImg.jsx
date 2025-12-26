@@ -6,7 +6,7 @@ function LogImg() {
       <img
         src={logimg}
         alt="Login"
-        className="w-full h-full object-cover rounded-lg"
+        className="w-full h-full object-cover "
       />
       {/* Optional Back Button */}
       {/* 

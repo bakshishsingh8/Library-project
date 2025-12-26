@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-
 // Pages
 import LogIn from "../Auth-Module/login";
 import SignUp from "../Auth-Module/signup";
@@ -16,6 +15,8 @@ import Payment from "../Pages/payment";
 import AllBooks from "../Pages/allbooks";
 import About from "../Pages/about";
 import IssueBookForm from "../Pages/issuebookstable";
+import Setting from "../Pages/setting";
+import SellBooks from "../Pages/SellBooks.jsx";
 
 // Layout
 import PrivateRoute from "./privateRoutes";
@@ -55,6 +56,8 @@ export default function Routing() {
         <Route path="/issue-book-form" element={<IssueBookForm />} />
         <Route path="/combined-orders" element={<CombinedOrderView />} />
         <Route path="/combined-payment" element={<CombinedPayment />} />
+        <Route path="/settings" element={<Setting />} />
+        <Route path="/sell-books" element={<SellBooks />} />
       </Route>
 
       {/* ---------- 404 REDIRECT ---------- */}
