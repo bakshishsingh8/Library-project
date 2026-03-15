@@ -1459,7 +1459,7 @@ function BooksList() {
                               {isRented(item) ? (
                                 <button
                                   disabled
-                                  className="w-30 py-[6px] rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-green-500 cursor-not-allowed shadow"
+                                  className="w-30 py-[6px] rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-indigo-500 cursor-not-allowed shadow"
                                 >
                                   <Check size={16} /> Rented
                                 </button>
@@ -1532,9 +1532,9 @@ function BooksList() {
                             {isRented(item) ? (
                               <button
                                 disabled
-                                className="flex items-center justify-center gap-2 bg-green-500 text-white font-medium px-2 py-2 rounded-xl cursor-not-allowed shadow-md w-28"
+                                className="flex items-center justify-center gap-2 bg-indigo-500 text-white font-medium px-2 py-2 rounded-xl cursor-not-allowed shadow-md w-28"
                               >
-                                <Check size={18} /> Added
+                                <Check size={18} /> Rented
                               </button>
                             ) : (
                               <motion.button whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.93 }} onClick={() => openRentModal(item)} className="flex items-center justify-center gap-2 bg-blue-500 text-white font-medium px-2 py-2 rounded-xl cursor-pointer hover:bg-blue-600 shadow-md">

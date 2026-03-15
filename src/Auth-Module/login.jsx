@@ -172,18 +172,263 @@
 
 
 
+// import { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+// import { motion, AnimatePresence } from "framer-motion";
+// import Background from "../Components/blurBackground";
+// import LogImg from "../Components/leftSideImg";
+// import { Sun, Moon } from "lucide-react"; // Import icons for toggle
+
+// const LOGIN_URL = import.meta.env.VITE_APP_LOGIN_URL;
+
+// function LogIn() {
+//   const navigate = useNavigate();
+
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [error, setError] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [showPassword, setShowPassword] = useState(false);
+
+//   // --- QUICK TOGGLE LOGIC ---
+//   const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") === "dark");
+
+//   useEffect(() => {
+//     const root = window.document.documentElement;
+//     if (isDark) {
+//       root.classList.add("dark");
+//       localStorage.setItem("theme", "dark");
+//     } else {
+//       root.classList.remove("dark");
+//       localStorage.setItem("theme", "light");
+//     }
+//   }, [isDark]);
+//   // --------------------------
+
+//   // useEffect(() => {
+//   //   const token = localStorage.getItem("authToken");
+//   //   if (token) navigate("/books", { replace: true });
+//   // }, [navigate]);
+// ///////////////////////////////////////////////////////
+//   // const handleLogin = async (e) => {
+//   //   e.preventDefault();
+//   //   setError("");
+//   //   setLoading(true);
+
+//   //   try {
+//   //     const response = await axios.post(LOGIN_URL, { email, password });
+//   //     localStorage.setItem("authToken", response.data.token);
+
+
+//   //     navigate("/welcome", { replace: true });
+//   //   } catch (err) {
+//   //     console.error(err);
+//   //     setError(err.response?.data?.message || "Login failed! Please enter valid info.");
+//   //   } finally {
+//   //     setLoading(false);
+//   //   }
+//   // };
+
+//   const handleLogin = async (e) => {
+//   e.preventDefault();
+//   setError("");
+//   setLoading(true);
+
+//   try {
+//     const response = await axios.post(LOGIN_URL, { email, password });
+
+//     //old ✅ Store token
+//     // localStorage.setItem("authToken", response.data.token);
+
+//     // ✅ NEW: Must match what api.js is looking for!
+//       localStorage.setItem("token", response.data.token);
+    
+
+//     // ✅ Store role
+//     localStorage.setItem("role", response.data.user.role); // "admin" or "user"
+
+//     // ✅ Redirect based on role
+//     if (response.data.user.role === "admin") {
+//       navigate("/admin", { replace: true });
+//     } else {
+//       navigate("/welcome", { replace: true }); // normal users
+//     }
+    
+//   } catch (err) {
+//     console.error(err);
+//     setError(err.response?.data?.message || "Login failed! Please enter valid info.");
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+
+//   return (
+//     <div className="relative min-h-screen flex items-center justify-center font-poppins overflow-hidden bg-gradient-to-br from-amber-950 via-amber-800 to-orange-700 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-colors duration-500">
+      
+//       {/* Animated floating circles */}
+//       <div className="absolute inset-0 overflow-hidden">
+//         <motion.div
+//           className="absolute top-20 left-20 w-72 h-72 bg-amber-400/20 dark:bg-amber-600/10 rounded-full blur-3xl"
+//           animate={{ y: [0, 40, 0], x: [0, -40, 0] }}
+//           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+//         />
+//         <motion.div
+//           className="absolute bottom-20 right-20 w-80 h-80 bg-orange-500/20 dark:bg-slate-800/20 rounded-full blur-3xl"
+//           animate={{ y: [0, -30, 0], x: [0, 30, 0] }}
+//           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+//         />
+//       </div>
+
+//       <Background />
+
+//       <motion.div
+//         initial={{ opacity: 0, y: 60 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ duration: 0.8, ease: "easeOut" }}
+//         className="relative flex justify-center items-center w-[950px] h-[600px] mx-auto my-12 rounded-3xl overflow-hidden backdrop-blur-3xl shadow-[0_0_60px_rgba(255,193,7,0.25)] dark:shadow-[0_0_60px_rgba(0,0,0,0.5)] border border-white/10 dark:border-slate-700 transition-all"
+//       >
+//         {/* ✅ THE TOGGLE BUTTON (Positioned Top Right of the box) */}
+//         <motion.button
+//           whileHover={{ scale: 1.1 }}
+//           whileTap={{ scale: 0.9 }}
+//           onClick={() => setIsDark(!isDark)}
+//           className="absolute top-6 right-6 z-50 p-2 rounded-xl bg-white/10 dark:bg-slate-800/40 backdrop-blur-md border border-white/20 dark:border-slate-600 text-white shadow-lg cursor-pointer hover:bg-white/20 transition-all"
+//         >
+//           {isDark ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-slate-200" />}
+//         </motion.button>
+
+//         <motion.div
+//           initial={{ opacity: 0, x: -60 }}
+//           animate={{ opacity: 1, x: 0 }}
+//           transition={{ delay: 0.2, duration: 0.8 }}
+//           className="hidden md:block w-1/2 h-full"
+//         >
+//           <LogImg />
+//         </motion.div>
+
+//         <motion.div
+//           initial={{ opacity: 0, x: 60 }}
+//           animate={{ opacity: 1, x: 0 }}
+//           transition={{ delay: 0.4, duration: 0.8 }}
+//           className="w-full md:w-1/2 flex flex-col justify-center px-10 py-12 h-full backdrop-blur-xl text-white bg-white/10 dark:bg-slate-900/60"
+//         >
+//           <motion.h1
+//             initial={{ y: 20, opacity: 0 }}
+//             animate={{ y: 0, opacity: 1 }}
+//             transition={{ delay: 0.6, duration: 0.6 }}
+//             className="text-4xl font-bold mb-2 bg-gradient-to-r from-amber-300 to-orange-400 dark:from-amber-400 dark:to-amber-200 bg-clip-text text-transparent"
+//           >
+//             Welcome Back 👋
+//           </motion.h1>
+//           <p className="text-gray-300 dark:text-slate-400 mb-8">Please enter your details to continue</p>
+
+//           <form className="flex flex-col" onSubmit={handleLogin}>
+//             {error && (
+//               <motion.p
+//                 initial={{ opacity: 0, y: -10 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 className="text-red-400 mb-3 text-sm"
+//               >
+//                 {error}
+//               </motion.p>
+//             )}
+
+//             <motion.input
+//               type="email"
+//               placeholder="Email"
+//               autoComplete="username"  // 👈 Add this line here
+//               required
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               className="w-full mb-4 px-4 py-3 rounded-xl border border-white/20 dark:border-slate-600 bg-white/10 dark:bg-slate-800/50 text-white placeholder-white/60 focus:border-amber-400 focus:shadow-[0_0_12px_rgba(255,179,71,0.5)] outline-none transition"
+//               whileFocus={{ scale: 1.02 }}
+//             />
+
+//             <motion.div
+//               className="relative mb-4"
+//               whileFocus={{ scale: 1.02 }}
+//             >
+//               <input
+//                 type={showPassword ? "text" : "password"}
+//                 placeholder="Password"
+//                 required
+//                 value={password}
+//                 autoComplete="current-password"  // 👈 Add this line here
+//                 onChange={(e) => setPassword(e.target.value)}
+//                 className="w-full px-4 py-3 rounded-xl border border-white/20 dark:border-slate-600 bg-white/10 dark:bg-slate-800/50 text-white placeholder-white/60 focus:border-amber-400 focus:shadow-[0_0_12px_rgba(255,179,71,0.5)] outline-none transition"
+//               />
+//               <span
+//                 className="absolute right-3 top-3 text-gray-300 dark:text-slate-400 text-lg cursor-pointer select-none"
+//                 onClick={() => setShowPassword((prev) => !prev)}
+//               >
+//                 {showPassword ? "🙈" : "👁"}
+//               </span>
+//             </motion.div>
+
+//             <motion.button
+//               type="submit"
+//               disabled={loading}
+//               whileHover={{ scale: 1.03 }}
+//               whileTap={{ scale: 0.97 }}
+//               className="w-full py-3 mt-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 font-semibold text-white text-lg shadow-[0_0_15px_rgba(255,179,71,0.4)] hover:shadow-[0_0_25px_rgba(255,179,71,0.6)] dark:shadow-none transition disabled:opacity-50 cursor-pointer"
+//             >
+//               {loading ? "Logging in..." : "Log In"}
+//             </motion.button>
+
+//             <p
+//               onClick={() => navigate("/signup")}
+//               className="mt-5 text-sm text-gray-300 dark:text-slate-400 cursor-pointer text-center"
+//             >
+//               Don&apos;t have an account?{" "}
+//               <span className="text-amber-400 hover:text-amber-300 dark:text-amber-500 transition">
+//                 Sign Up
+//               </span>
+//             </p>
+//           </form>
+
+//           <div className="flex items-center text-gray-400 dark:text-slate-500 text-sm my-6">
+//             <span className="flex-1 h-px bg-white/20 dark:bg-slate-700 mx-2"></span>
+//             OR
+//             <span className="flex-1 h-px bg-white/20 dark:bg-slate-700 mx-2"></span>
+//           </div>
+
+//           <motion.p
+//             whileHover={{ scale: 1.05 }}
+//             onClick={() => navigate("/forgot-password")}
+//             className="cursor-pointer text-center text-amber-400 dark:text-amber-500 hover:underline"
+//           >
+//             Forgot Password?
+//           </motion.p>
+//         </motion.div>
+//       </motion.div>
+//     </div>
+//   );
+// }
+
+// export default LogIn;
+
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Background from "../Components/blurBackground";
 import LogImg from "../Components/leftSideImg";
-import { Sun, Moon } from "lucide-react"; // Import icons for toggle
+import { Sun, Moon } from "lucide-react"; 
+
+// 1. IMPORT THE HOOK
+import { useAuth } from "../context/AuthContext"; // Check this path!
 
 const LOGIN_URL = import.meta.env.VITE_APP_LOGIN_URL;
 
 function LogIn() {
   const navigate = useNavigate();
+  
+  // 2. GET THE LOGIN FUNCTION FROM CONTEXT
+  // (Make sure you added the 'login' function to AuthContext as shown in the previous step)
+  const { login } = useAuth(); 
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -191,7 +436,6 @@ function LogIn() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // --- QUICK TOGGLE LOGIC ---
   const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") === "dark");
 
   useEffect(() => {
@@ -204,12 +448,6 @@ function LogIn() {
       localStorage.setItem("theme", "light");
     }
   }, [isDark]);
-  // --------------------------
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) navigate("/books", { replace: true });
-  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -218,8 +456,37 @@ function LogIn() {
 
     try {
       const response = await axios.post(LOGIN_URL, { email, password });
-      localStorage.setItem("authToken", response.data.token);
-      navigate("/welcome", { replace: true });
+
+      // --- FIX STARTS HERE ---
+      
+      const token = response.data.token;
+      const role = response.data.user.role;
+      const userData = response.data.user; // ✅ Get the full user object
+
+      // 3. CALL CONTEXT LOGIN 
+      // This updates the global state immediately so the Redirect doesn't kick you back.
+      // It also handles localStorage.setItem("authToken", token) inside the context.
+      if (login) {
+          login(token); 
+      } else {
+          // Fallback if you haven't updated AuthContext yet:
+          // MAKE SURE THIS KEY MATCHES AuthContext ("authToken" vs "token")
+          localStorage.setItem("authToken", token); 
+      }
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      // Store role for your own reference if needed
+      localStorage.setItem("role", role); 
+
+      // 4. REDIRECT
+      if (role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/welcome", { replace: true });
+      }
+      
+      // --- FIX ENDS HERE ---
+
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Login failed! Please enter valid info.");
@@ -231,7 +498,7 @@ function LogIn() {
   return (
     <div className="relative min-h-screen flex items-center justify-center font-poppins overflow-hidden bg-gradient-to-br from-amber-950 via-amber-800 to-orange-700 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-colors duration-500">
       
-      {/* Animated floating circles */}
+      {/* ... (Keep your existing JSX for background animations) ... */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           className="absolute top-20 left-20 w-72 h-72 bg-amber-400/20 dark:bg-amber-600/10 rounded-full blur-3xl"
@@ -253,7 +520,7 @@ function LogIn() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative flex justify-center items-center w-[950px] h-[600px] mx-auto my-12 rounded-3xl overflow-hidden backdrop-blur-3xl shadow-[0_0_60px_rgba(255,193,7,0.25)] dark:shadow-[0_0_60px_rgba(0,0,0,0.5)] border border-white/10 dark:border-slate-700 transition-all"
       >
-        {/* ✅ THE TOGGLE BUTTON (Positioned Top Right of the box) */}
+        {/* Toggle Button */}
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -302,6 +569,7 @@ function LogIn() {
             <motion.input
               type="email"
               placeholder="Email"
+              autoComplete="username"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -318,6 +586,7 @@ function LogIn() {
                 placeholder="Password"
                 required
                 value={password}
+                autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-white/20 dark:border-slate-600 bg-white/10 dark:bg-slate-800/50 text-white placeholder-white/60 focus:border-amber-400 focus:shadow-[0_0_12px_rgba(255,179,71,0.5)] outline-none transition"
               />

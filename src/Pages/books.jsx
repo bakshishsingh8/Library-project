@@ -463,7 +463,7 @@ function Books() {
                     </span>
                   )}
                   <div className="ml-140 hidden lg:block text-slate-500 dark:text-slate-400">
-                    (Ai Recommended books is not in stock)
+                    (AI Recommended books is not in stock)
                   </div>
                 </>
               )}

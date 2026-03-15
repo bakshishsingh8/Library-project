@@ -93,15 +93,118 @@
 
 // export default SettingsPanel;
 
+// import React, { useState } from "react";
+// import { User, Bell, Moon, Shield, HelpCircle, LogOut } from "lucide-react";
+// import { motion } from "framer-motion";
+
+// function SettingsPanel({ onLogout, isDark, setIsDark }) {
+//   const [notifications, setNotifications] = useState(true);
+
+//   return (
+//     <div className="w-64 bg-white dark:bg-slate-800 rounded-xl shadow-xl overflow-hidden border dark:border-slate-700 
+//     border-white transition-colors duration-300">
+//       <Section title="ACCOUNT">
+//         <Item icon={<User size={16} />} label="Profile Settings" />
+//       </Section>
+
+//       <Section title="PREFERENCES">
+//         <ToggleItem
+//           icon={<Bell size={16} />}
+//           label="Notifications"
+//           value={notifications}
+//           onChange={() => setNotifications(!notifications)}
+//         />
+//         {/* LINKED DARK MODE TOGGLE */}
+//         <ToggleItem
+//           icon={<Moon size={16} />}
+//           label="Dark Mode"
+//           value={isDark}
+//           onChange={() => setIsDark(!isDark)}
+//         />
+//       </Section>
+
+//       <Section title="SECURITY">
+//         <button onClick={() => {window.location.href = '/privacy&security'}}>
+//           <Item icon={<Shield size={16} />} label="Privacy & Security" />
+//         </button>
+//         {/*
+//         <Item icon={<Shield size={16} />} label="Privacy & Security" />
+//         */}
+//       </Section>
+
+//       <Section title="SUPPORT">
+//         <button onClick={() => {window.location.href = '/help&support'}}>
+//           <Item icon={<HelpCircle size={16} />} label="Help & Support" />
+//         </button>
+//         {/* <Item icon={<HelpCircle size={16} />} label="Help & Support" /> */}
+//       </Section>
+
+//       <button
+//         onClick={onLogout}
+//         className="w-full flex items-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-sm font-semibold border-none cursor-pointer"
+//       >
+//         <LogOut size={16} />
+//         Logout
+//       </button>
+//     </div>
+//   );
+// }
+
+// /* ---------- Reusable Helpers ---------- */
+
+// const Section = ({ title, children }) => (
+//   <div className="border-b last:border-none dark:border-slate-500 border-amber-400">
+//     <p className="px-4 pt-3 pb-1 text-[10px] font-bold text-gray-400 dark:text-slate-500 tracking-widest uppercase">
+//       {title}
+//     </p>
+//     {children}
+//   </div>
+// );
+
+// const Item = ({ icon, label }) => (
+//   <button className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-amber-50 dark:hover:bg-slate-700 text-sm text-gray-700 dark:text-slate-200 transition-colors cursor-pointer border-none outline-none">
+//     <span className="text-amber-600 dark:text-amber-500">{icon}</span>
+//     {label}
+//   </button>
+// );
+
+// const ToggleItem = ({ icon, label, value, onChange }) => (
+//   <div className="flex items-center justify-between px-4 py-2.5">
+//     <div className="flex items-center gap-3 text-sm text-gray-700 dark:text-slate-200">
+//       <span className="text-amber-600 dark:text-amber-500">{icon}</span>
+//       {label}
+//     </div>
+//     <button
+//       onClick={(e) => {
+//         e.stopPropagation(); // Prevents dropdown from closing accidentally
+//         onChange();
+//       }}
+//       className={`w-10 h-5 rounded-full p-1 transition-colors duration-300 flex items-center cursor-pointer border-none outline-none ${
+//         value ? "bg-amber-500" : "bg-gray-300 dark:bg-slate-600"
+//       }`}
+//     >
+//       <motion.div
+//         animate={{ x: value ? 20 : 0 }}
+//         transition={{ type: "spring", stiffness: 500, damping: 30 }}
+//         className="w-3 h-3 bg-white rounded-full shadow-sm"
+//       />
+//     </button>
+//   </div>
+// );
+
+// export default SettingsPanel;
+
+
 import React, { useState } from "react";
-import { User, Bell, Moon, Shield, HelpCircle, LogOut } from "lucide-react";
+import { User, Bell, Moon, Shield, LogOut, HelpCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 function SettingsPanel({ onLogout, isDark, setIsDark }) {
   const [notifications, setNotifications] = useState(true);
 
   return (
-    <div className="w-64 bg-white dark:bg-slate-800 rounded-xl shadow-xl overflow-hidden border dark:border-slate-700 transition-colors duration-300">
+    <div className="w-64 bg-white dark:bg-slate-800 rounded-xl shadow-xl overflow-hidden border dark:border-slate-700 border-white transition-colors duration-300">
+      
       <Section title="ACCOUNT">
         <Item icon={<User size={16} />} label="Profile Settings" />
       </Section>
@@ -113,7 +216,7 @@ function SettingsPanel({ onLogout, isDark, setIsDark }) {
           value={notifications}
           onChange={() => setNotifications(!notifications)}
         />
-        {/* LINKED DARK MODE TOGGLE */}
+
         <ToggleItem
           icon={<Moon size={16} />}
           label="Dark Mode"
@@ -123,16 +226,28 @@ function SettingsPanel({ onLogout, isDark, setIsDark }) {
       </Section>
 
       <Section title="SECURITY">
-        <Item icon={<Shield size={16} />} label="Privacy & Security" />
+        <Item
+          icon={<Shield size={16} />}
+          label="Privacy & Security"
+          onClick={() => {
+            window.location.href = "/privacy&security";
+          }}
+        />
       </Section>
 
       <Section title="SUPPORT">
-        <Item icon={<HelpCircle size={16} />} label="Help & Support" />
+        <Item
+          icon={<HelpCircle size={16} />}
+          label="Help & Support"
+          onClick={() => {
+            window.location.href = "/help&support";
+          }}
+        />
       </Section>
 
       <button
         onClick={onLogout}
-        className="w-full flex items-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-sm font-semibold border-t dark:border-slate-700 cursor-pointer"
+        className="w-full flex items-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-sm font-semibold border-none cursor-pointer"
       >
         <LogOut size={16} />
         Logout
@@ -144,7 +259,7 @@ function SettingsPanel({ onLogout, isDark, setIsDark }) {
 /* ---------- Reusable Helpers ---------- */
 
 const Section = ({ title, children }) => (
-  <div className="border-b last:border-none dark:border-slate-700">
+  <div className="border-b last:border-none dark:border-slate-500 border-amber-400">
     <p className="px-4 pt-3 pb-1 text-[10px] font-bold text-gray-400 dark:text-slate-500 tracking-widest uppercase">
       {title}
     </p>
@@ -152,8 +267,11 @@ const Section = ({ title, children }) => (
   </div>
 );
 
-const Item = ({ icon, label }) => (
-  <button className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-amber-50 dark:hover:bg-slate-700 text-sm text-gray-700 dark:text-slate-200 transition-colors cursor-pointer border-none outline-none">
+const Item = ({ icon, label, onClick }) => (
+  <button
+    onClick={onClick}
+    className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-amber-50 dark:hover:bg-slate-700 text-sm text-gray-700 dark:text-slate-200 transition-colors cursor-pointer border-none outline-none"
+  >
     <span className="text-amber-600 dark:text-amber-500">{icon}</span>
     {label}
   </button>
@@ -167,11 +285,13 @@ const ToggleItem = ({ icon, label, value, onChange }) => (
     </div>
     <button
       onClick={(e) => {
-        e.stopPropagation(); // Prevents dropdown from closing accidentally
+        e.stopPropagation();
         onChange();
       }}
       className={`w-10 h-5 rounded-full p-1 transition-colors duration-300 flex items-center cursor-pointer border-none outline-none ${
-        value ? "bg-amber-500" : "bg-gray-300 dark:bg-slate-600"
+        value
+          ? "bg-amber-500"
+          : "bg-gray-300 dark:bg-slate-600"
       }`}
     >
       <motion.div

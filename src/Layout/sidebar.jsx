@@ -215,6 +215,8 @@ const menuItems = [
   { name: "About", path: "/about", icon: <InfoIcon size={20} /> },
   { name: "Payment", path: "/combined-orders", icon: <CreditCard size={20} /> },
   {name: "Sell Books", path: "/sell-books", icon: <Tag size={20} /> },
+  // { name: "Dashboard", path: "/admin/sell-requests", icon: <Settings size={20} /> },
+  
 ];
 
 export default function Layout({ children }) {

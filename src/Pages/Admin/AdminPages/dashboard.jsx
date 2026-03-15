@@ -686,82 +686,154 @@
 //   )
 // }
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell
+} from "recharts";
 
-const stats = {
-  totalBooks: 1240,
-  issued: 312,
-  available: 928,
-  students: 410
-}
+import { db } from "../../../firebase";
+import {
+  collection,
+  getDocs,
+  query,
+  where
+} from "firebase/firestore";
 
-const monthly = [
-  {name:'Jan', issued: 20},
-  {name:'Feb', issued: 35},
-  {name:'Mar', issued: 45},
-  {name:'Apr', issued: 60},
-  {name:'May', issued: 55},
-  {name:'Jun', issued: 70},
-  {name:'Jul', issued: 80},
-  {name:'Aug', issued: 95},
-  {name:'Sep', issued: 65},
-  {name:'Oct', issued: 40},
-  {name:'Nov', issued: 30},
-  {name:'Dec', issued: 17}
-]
+const PIE_COLORS = ["#3B82F6", "#10B981"];
 
-export default function Dashboard(){
+export default function Dashboard() {
+  const [stats, setStats] = useState({
+    totalBooks: 0,
+    issued: 0,
+    available: 0,
+    students: 0
+  });
+
+  const [monthly, setMonthly] = useState([]);
+
+  useEffect(() => {
+    fetchStats();
+    fetchMonthlyIssued();
+  }, []);
+
+  // ---------------- Fetch Stats ----------------
+  const fetchStats = async () => {
+    const booksSnap = await getDocs(collection(db, "books"));
+    const usersSnap = await getDocs(
+      query(collection(db, "users"), where("role", "==", "user"))
+    );
+
+    let issued = 0;
+    let available = 0;
+
+    booksSnap.forEach(doc => {
+      doc.data().status === "issued" ? issued++ : available++;
+    });
+
+    setStats({
+      totalBooks: booksSnap.size,
+      issued,
+      available,
+      students: usersSnap.size
+    });
+  };
+
+  // ---------------- Monthly Issued ----------------
+  const fetchMonthlyIssued = async () => {
+    const booksSnap = await getDocs(
+      query(collection(db, "books"), where("status", "==", "issued"))
+    );
+
+    const monthMap = {};
+
+    booksSnap.forEach(doc => {
+      const date = doc.data().issuedAt?.toDate();
+      if (!date) return;
+
+      const month = date.toLocaleString("default", { month: "short" });
+      monthMap[month] = (monthMap[month] || 0) + 1;
+    });
+
+    const chartData = Object.keys(monthMap).map(month => ({
+      name: month,
+      issued: monthMap[month]
+    }));
+
+    setMonthly(chartData);
+  };
+
   return (
-    <div className="space-y-6 p-10">
-      <motion.div className="grid grid-cols-1 md:grid-cols-4 gap-4" initial={{opacity:0, y:8}} animate={{opacity:1, y:0}}>
-        <Card title="Total Books" value={stats.totalBooks}/>
-        <Card title="Books Issued" value={stats.issued}/>
-        <Card title="Available" value={stats.available}/>
-        <Card title="Students" value={stats.students}/>
+    <div className="space-y-6 p-10 mt-16">
+      {/* Stats */}
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-4 gap-4"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <Card title="Total Books" value={stats.totalBooks} />
+        <Card title="Books Issued" value={stats.issued} />
+        <Card title="Available" value={stats.available} />
+        <Card title="Students" value={stats.students} />
       </motion.div>
 
+      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white p-4 rounded shadow-sm border">
+        <div className="lg:col-span-2 bg-white p-4 rounded border">
           <h3 className="font-semibold mb-2">Books Issued — Monthly</h3>
-          <div style={{height:260}}>
+          <div className="h-[260px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={monthly}>
-                <XAxis dataKey="name"/>
-                <YAxis/>
-                <Tooltip/>
-                <Bar dataKey="issued" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="issued" fill="#3B82F6" />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded shadow-sm border">
+        <div className="bg-white p-4 rounded border">
           <h3 className="font-semibold mb-2">Availability</h3>
-          <div style={{height:260}}>
+          <div className="h-[260px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={[{name:'Issued', value: stats.issued},{name:'Available', value: stats.available}]} dataKey="value" innerRadius={50} outerRadius={80} paddingAngle={2}>
-                  <Cell key="c1" />
-                  <Cell key="c2" />
+                <Pie
+                  data={[
+                    { name: "Issued", value: stats.issued },
+                    { name: "Available", value: stats.available }
+                  ]}
+                  dataKey="value"
+                  innerRadius={50}
+                  outerRadius={80}
+                >
+                  {PIE_COLORS.map((c, i) => (
+                    <Cell key={i} fill={c} />
+                  ))}
                 </Pie>
-                <Tooltip/>
+                <Tooltip />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-function Card({title, value}){
+function Card({ title, value }) {
   return (
-    <div className="bg-white p-4 rounded shadow-sm border flex flex-col">
+    <div className="bg-white p-4 rounded border">
       <div className="text-xs text-gray-500">{title}</div>
       <div className="text-2xl font-bold">{value}</div>
-      <div className="mt-2 text-sm text-gray-500">Static data — replace with API call when backend ready</div>
     </div>
-  )
+  );
 }

@@ -183,6 +183,8 @@ import Background from "../Components/blurBackground";
 import LogImg from "../Components/leftSideImg";
 import { Sun, Moon } from "lucide-react"; // Import icons for toggle
 
+
+
 function SignUp() {
   const navigate = useNavigate();
   const REGISTER_URL = import.meta.env.VITE_APP_REGISTER_URL;

@@ -736,7 +736,7 @@ function CombinedPayment() {
               </div>
               <h2 className="text-2xl font-black text-amber-950 dark:text-slate-100">Payment Success!</h2>
               <p className="text-gray-500 dark:text-slate-400 mt-2 italic">You successfully paid ₹{grandTotal}</p>
-              <button onClick={() => window.location.href = "/"}
+              <button onClick={() => window.location.href = "/books"}
                 className="mt-8 w-full bg-gradient-to-r from-orange-500 to-amber-600 text-white font-black py-4 cursor-pointer rounded-2xl shadow-lg hover:brightness-110 transition-all">
                 Continue
               </button>

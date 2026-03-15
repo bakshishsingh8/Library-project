@@ -1756,7 +1756,7 @@ function AllBooks({
                         {item.title}
                       </h2>
                       <p
-                        className="text-gray-600 dark:text-slate-400 text-sm mt-2 h-15 overflow-y-auto pr-2"
+                        className="text-gray-600 dark:text-slate-300 text-sm mt-2 h-15 overflow-y-auto pr-2"
                         style={{ maxHeight: 80 }}
                       >
                         {item.desc}
@@ -1792,7 +1792,7 @@ function AllBooks({
                               {isRented(item) ? (
                                 <button
                                   disabled
-                                  className="flex-1 py-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-green-500 cursor-not-allowed shadow"
+                                  className="flex-1 py-2 rounded-xl flex items-center justify-center gap-2 text-white font-semibold bg-indigo-500 cursor-not-allowed shadow"
                                 >
                                   <Check size={16} /> Rented
                                 </button>
@@ -1858,7 +1858,7 @@ function AllBooks({
                           {isRented(item) ? (
                             <button
                               disabled
-                              className="flex items-center justify-center gap-2 bg-green-500 text-white font-medium px-4 py-2 rounded-xl cursor-not-allowed shadow-md"
+                              className="flex items-center justify-center gap-2 bg-indigo-500 text-white font-medium px-4 py-2 rounded-xl cursor-not-allowed shadow-md"
                             >
                               <Check size={18} /> Rented
                             </button>

@@ -786,17 +786,17 @@ function Header({
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate("/issue-books")}
-          className="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800 rounded-xl hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200 dark:border-slate-600 shadow-md"
+          className="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-2 bg-white dark:bg-gradient-to-r from-amber-500 to-orange-500 text-amber-700 dark:text-white rounded-xl hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200  dark:border-slate-600 shadow-md"
         >
-          <BookOpen size={18} className="text-amber-600" />
-          <span className="text-sm font-medium text-amber-700 dark:text-amber-300">
+          <BookOpen size={18} className="" />
+          <span className="text-sm font-medium ">
             Buy Books
           </span>
           {issueBooks.length > 0 && (
             <motion.span
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute -top-2 -right-2 animate-bounce bg-amber-600 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md"
+              className="absolute -top-2 -right-2 animate-bounce bg-amber-600 dark:bg-amber-50 text-white dark:text-red-800 text-xs font-bold px-2 py-0.5 rounded-full shadow-md"
             >
               {issueBooks.length}
             </motion.span>
@@ -808,17 +808,20 @@ function Header({
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate("/issue-book-form")}
-          className="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800 rounded-xl hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200 dark:border-slate-600 shadow-md"
+          className="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-2 bg-white dark:bg-gradient-to-r from-amber-500 to-orange-500 text-amber-700 dark:text-white rounded-xl hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200  dark:border-slate-600 shadow-md"
+
+          // ="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800 rounded-xl hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200 dark:border-slate-600 shadow-md"
         >
-          <BookOpen size={18} className="text-amber-600" />
-          <span className="text-sm font-medium text-amber-700 dark:text-amber-300">
+          <BookOpen size={18} className="" />
+          <span className="text-sm font-medium">
+            {/* text-amber-700 dark:text-amber-300 */}
             Issue Books
           </span>
           {rentedBooks.length > 0 && (
             <motion.span
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md"
+              className="absolute -top-2 -right-2 bg-amber-600 text-white dark:bg-white dark:text-red-800 text-xs font-bold px-2 py-0.5 rounded-full shadow-md "
             >
               {rentedBooks.length}
             </motion.span>
@@ -831,7 +834,8 @@ function Header({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={handleFilterClick}
-            className="p-2 rounded-xl cursor-pointer bg-white dark:bg-slate-800 text-amber-600 dark:text-amber-400 border border-amber-300 dark:border-slate-600 shadow-sm"
+            className="cursor-pointer relative hidden sm:flex items-center gap-2 px-2 py-2 bg-white dark:bg-gradient-to-r from-amber-500 to-orange-500 text-amber-700 dark:text-white rounded-xl hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200  dark:border-slate-600 shadow-md"
+            // p-2 rounded-xl cursor-pointer bg-white dark:bg-slate-800 text-amber-600 dark:text-amber-400 border border-amber-300 dark:border-slate-600 shadow-sm
           >
             {filterOpen ? <X size={18} /> : <FilterIcon size={18} />}
           </motion.button>
@@ -870,7 +874,7 @@ function Header({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setViewMode("grid")}
-            className={`p-2 rounded-xl border transition-all ${viewMode === "grid" ? "bg-amber-600 text-white shadow" : "bg-white dark:bg-slate-800 cursor-pointer text-amber-600 dark:text-amber-400 border-amber-300 dark:border-slate-600 hover:bg-amber-100"}`}
+            className={`p-2 rounded-xl border transition-all ${viewMode === "grid" ? "bg-amber-600 text-white shadow dark:bg-slate-800" : "bg-white dark:bg-amber-600 cursor-pointer text-amber-600 dark:text-white border-amber-300 dark:border-slate-600 hover:bg-amber-100"}`}
             >
             <LayoutGrid size={18} />
             </motion.button>
@@ -879,7 +883,7 @@ function Header({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setViewMode("list")}
-            className={`p-2 rounded-xl border transition-all ${viewMode === "list" ? "bg-amber-600 text-white shadow" : "bg-white dark:bg-slate-800 cursor-pointer text-amber-600 dark:text-amber-400 border-amber-300 dark:border-slate-600 hover:bg-amber-100"}`}
+            className={`p-2 rounded-xl border transition-all ${viewMode === "list" ? "bg-amber-600 text-white shadow dark:bg-slate-800" : "bg-white dark:bg-amber-600 cursor-pointer text-amber-600 dark:text-white border-amber-300 dark:border-slate-600 hover:bg-amber-100"}`}
             >
             <List size={18} />
             </motion.button>
@@ -890,9 +894,9 @@ function Header({
           <motion.button
             whileHover={{ rotate: 90, scale: 1.1 }}
             onClick={() => setSettingsOpen((s) => !s)}
-            className="p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-slate-700 cursor-pointer border border-amber-300 dark:border-slate-600 shadow-sm"
+            className="cursor-pointer relative hidden sm:flex items-center gap-2 px-2 py-2 bg-white dark:bg-gradient-to-r from-amber-500 to-orange-500 text-amber-700 dark:text-white rounded-xl hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200  dark:border-slate-600 shadow-md"
           >
-            <Settings size={18} className="text-amber-600 dark:text-amber-400" />
+            <Settings size={18} className="" />
           </motion.button>
 
           <AnimatePresence>
@@ -922,8 +926,9 @@ function Header({
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={() => setProfileOpen((s) => !s)}
-            className="bg-white dark:bg-slate-800 rounded-full p-2 sm:p-3 cursor-pointer shadow-sm border-2 border-amber-400 dark:border-slate-600"
+            onClick={() => navigate("/userprofile")}
+            
+            className="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-3 bg-white dark:bg-gradient-to-r from-amber-500 to-orange-500 text-amber-700 dark:text-white rounded-full hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200  dark:border-slate-600 shadow-md"
           >
             <User size={18} className="text-black dark:text-white" />
           </motion.button>
@@ -935,7 +940,7 @@ function Header({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.2 }}
-                className="absolute right-0 mt-2 w-36 bg-white dark:bg-slate-800 rounded-md shadow-lg overflow-hidden z-50 border dark:border-slate-700"
+                className="absolute right-0 mt-2 w-36 bg-white dark:bg-slate-800 rounded-md shadow-lg overflow-hidden z-50  dark:border-slate-700 border-red-500 border-2"
               >
                 <motion.button
                   whileHover={{ backgroundColor: "#dc2626" }}

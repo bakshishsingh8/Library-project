@@ -257,7 +257,8 @@ function IssueBooks() {
 
   return (
     <motion.div
-      className="station-page bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen md:pb-0 pb-6 flex flex-col transition-colors duration-500"
+      className="station-page bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 dark:from-slate-950
+       dark:via-slate-900 dark:to-slate-950 min-h-screen md:pb-0 pb-6 flex flex-col transition-colors duration-500"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -282,7 +283,7 @@ function IssueBooks() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate("/books")}
-          className="flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2 bg-amber-50 dark:bg-slate-700 text-amber-700 dark:text-amber-400 text-sm md:text-base font-medium rounded-xl shadow hover:shadow-md transition-all cursor-pointer border dark:border-slate-600"
+          className="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-2 bg-white dark:bg-gradient-to-r from-amber-500 to-orange-500 text-amber-700 dark:text-white rounded-xl hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200  dark:border-slate-600 shadow-md"
         >
           <ArrowLeft size={16} />
           Back

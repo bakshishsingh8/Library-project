@@ -398,7 +398,7 @@ function Payment() {
 
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-medium rounded-xl shadow hover:scale-105 transition-transform cursor-pointer"
+          className="cursor-pointer relative hidden sm:flex items-center gap-2 px-3 py-2 bg-white dark:bg-gradient-to-r from-amber-500 to-orange-500 text-amber-700 dark:text-white rounded-xl hover:bg-amber-100 dark:hover:bg-slate-700 border border-amber-200  dark:border-slate-600 shadow-md"
         >
           <ArrowLeft size={18} />
           Back
@@ -588,7 +588,7 @@ function Payment() {
               </p>
               <button
                 onClick={() => {
-                  window.location.href = "/";
+                  window.location.href = "/books";
                 }} className="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl cursor-pointer font-bold transition-all shadow-lg shadow-amber-900/20"
               >
                 Continue

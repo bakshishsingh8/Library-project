@@ -314,3 +314,217 @@ const About = () => {
 };
 
 export default About;
+
+
+
+// import React from 'react';
+// import { 
+//   Home, Search, Library, Plus, Heart, ArrowLeft, ArrowRight, 
+//   Bell, User, Download, Play, Pause, SkipBack, SkipForward, 
+//   Repeat, Shuffle, Mic2, ListMusic, MonitorSpeaker, Maximize2, 
+//   Volume2, MoreHorizontal 
+// } from 'lucide-react';
+
+// const App = () => {
+//   return (
+//     <div className="flex flex-col h-screen bg-black text-white overflow-hidden font-sans">
+      
+//       {/* Middle Section: Sidebar + Main + Right Panel */}
+//       <div className="flex flex-1 overflow-hidden">
+        
+//         {/* LEFT SIDEBAR (Narrow Rail) */}
+//         <aside className="w-[72px] bg-[#121212] m-2 mr-0 rounded-lg flex flex-col items-center py-4 gap-6">
+//           <div className="flex flex-col gap-6 text-gray-400">
+//             <button className="hover:text-white transition"><Library size={28} /></button>
+//             <button className="hover:text-white transition"><Plus size={28} /></button>
+//           </div>
+
+//           {/* Liked Songs (Purple Box) */}
+//           <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-300 rounded-md flex items-center justify-center cursor-pointer hover:scale-105 transition">
+//             <Heart size={20} fill="white" className="text-white" />
+//           </div>
+
+//           {/* Artist Avatars (Scrollable area) */}
+//           <div className="flex-1 flex flex-col gap-4 overflow-y-auto scrollbar-hide w-full items-center pt-2">
+//             {[1, 2, 3, 4, 5].map((i) => (
+//               <img 
+//                 key={i} 
+//                 src={`https://i.pravatar.cc/100?img=${i + 10}`} 
+//                 alt="Artist" 
+//                 className="w-12 h-12 rounded-full border-2 border-transparent hover:border-white cursor-pointer transition"
+//               />
+//             ))}
+//           </div>
+//         </aside>
+
+//         {/* MAIN CONTENT AREA */}
+//         <main className="flex-1 bg-[#121212] m-2 rounded-lg overflow-y-auto relative no-scrollbar">
+          
+//           {/* Top Navbar (Sticky) */}
+//           <header className="sticky top-0 bg-[#121212]/90 backdrop-blur-md z-10 flex items-center justify-between px-6 py-4">
+//             <div className="flex gap-4">
+//               <button className="bg-black/50 p-1.5 rounded-full text-gray-400 hover:text-white cursor-not-allowed"><ArrowLeft size={20} /></button>
+//               <button className="bg-black/50 p-1.5 rounded-full text-gray-400 hover:text-white cursor-not-allowed"><ArrowRight size={20} /></button>
+//             </div>
+
+//             {/* Search Bar */}
+//             <div className="flex-1 max-w-md mx-4 relative group">
+//               <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-white">
+//                  <Search size={20} />
+//               </div>
+//               <input 
+//                 type="text" 
+//                 placeholder="What do you want to play?" 
+//                 className="w-full bg-[#242424] text-sm text-white rounded-full py-3 pl-10 pr-10 focus:outline-none focus:ring-2 focus:ring-white/20 hover:bg-[#2a2a2a] transition"
+//               />
+//               <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 border-l border-gray-600 pl-3">
+//                  <Library size={20} />
+//               </div>
+//             </div>
+
+//             <div className="flex items-center gap-4">
+//               <button className="flex items-center gap-1 text-sm font-bold text-gray-300 hover:text-white hover:scale-105 transition bg-black/40 px-3 py-1.5 rounded-full border border-gray-600">
+//                 <Download size={16} /> Install App
+//               </button>
+//               <button className="text-gray-400 hover:text-white"><Bell size={20} /></button>
+//               <button className="text-gray-400 hover:text-white"><User size={20} /></button>
+//               <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center font-bold text-black cursor-pointer hover:scale-105">B</div>
+//             </div>
+//           </header>
+
+//           {/* Content Body */}
+//           <div className="px-6 pb-8">
+            
+//             {/* Section 1: Start Browsing */}
+//             <h2 className="text-2xl font-bold mb-4 mt-2">Start browsing</h2>
+//             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+//               <CategoryCard title="Music" color="bg-[#E8115B]" img="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=300&q=80" />
+//               <CategoryCard title="Podcasts" color="bg-[#006450]" img="https://images.unsplash.com/photo-1478737270239-2f02b77ac6d5?auto=format&fit=crop&w=300&q=80" />
+//               <CategoryCard title="Live Events" color="bg-[#8400E7]" img="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=300&q=80" />
+//             </div>
+
+//             {/* Section 2: Browse All */}
+//             <h2 className="text-2xl font-bold mb-4">Browse all</h2>
+//             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+//               <CategoryCard title="2025 in Music" color="bg-[#D8B00D]" img="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=300&q=80" rotate />
+//               <CategoryCard title="2025 in Podcasts" color="bg-[#6C8D23]" img="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=300&q=80" rotate />
+//               <CategoryCard title="Made For You" color="bg-[#1E3264]" img="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?auto=format&fit=crop&w=300&q=80" rotate />
+//               <CategoryCard title="New Releases" color="bg-[#608108]" img="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=300&q=80" rotate />
+//             </div>
+//           </div>
+//         </main>
+
+//         {/* RIGHT PANEL (Now Playing / Artist Info) */}
+//         <aside className="w-[350px] bg-[#121212] m-2 ml-0 rounded-lg overflow-y-auto hidden lg:flex flex-col p-4">
+//            <div className="flex items-center justify-between mb-4">
+//              <h3 className="font-bold hover:underline cursor-pointer">Haji Mastan</h3>
+//              <MoreHorizontal className="text-gray-400 cursor-pointer hover:text-white" />
+//            </div>
+           
+//            {/* Artist Image Large */}
+//            <div className="w-full aspect-square rounded-lg overflow-hidden mb-4 shadow-lg relative group">
+//               <img 
+//                 src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?auto=format&fit=crop&w=800&q=80" 
+//                 alt="Haji Mastan" 
+//                 className="w-full h-full object-cover"
+//               />
+//               <div className="absolute top-2 right-2 bg-black/60 rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
+//                 <Maximize2 size={16} />
+//               </div>
+//            </div>
+
+//            {/* Track Info in Panel */}
+//            <div className="mb-6">
+//              <h2 className="text-2xl font-bold leading-tight mb-1">Haji Mastan</h2>
+//              <p className="text-gray-400 text-sm">Cheema Y, Gur Sidhu, Jasmeen...</p>
+//            </div>
+
+//            {/* About the Artist Card */}
+//            <div className="bg-[#242424] rounded-lg p-4 cursor-pointer hover:bg-[#2a2a2a] transition relative overflow-hidden group">
+//              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center opacity-40 group-hover:opacity-50 transition"></div>
+//              <div className="relative z-10">
+//                 <h4 className="font-bold mb-2">About the artist</h4>
+//                 {/* Circular artist image small */}
+//                 <div className="w-10 h-10 rounded-full overflow-hidden mb-2">
+//                    <img src="https://images.unsplash.com/photo-1520333789090-1afc82db536a?auto=format&fit=crop&w=100&q=80" alt="Artist" className="w-full h-full object-cover"/>
+//                 </div>
+//                 <div className="font-bold">Cheema Y</div>
+//              </div>
+//            </div>
+//         </aside>
+
+//       </div>
+
+//       {/* BOTTOM PLAYER BAR */}
+//       <footer className="h-[90px] bg-black border-t border-[#282828] px-4 flex items-center justify-between z-50">
+        
+//         {/* Left: Current Song Info */}
+//         <div className="flex items-center gap-4 w-[30%]">
+//            <img 
+//              src="https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&w=100&q=80" 
+//              alt="Album Art" 
+//              className="w-14 h-14 rounded bg-gray-800 object-cover"
+//            />
+//            <div className="flex flex-col justify-center">
+//              <a href="#" className="text-sm font-semibold hover:underline decoration-1">Haji Mastan</a>
+//              <a href="#" className="text-xs text-gray-400 hover:underline decoration-1 hover:text-white">Cheema Y, Gur Sidhu, Jas...</a>
+//            </div>
+//            <button className="text-gray-400 hover:text-white ml-2"><Plus size={18}/></button>
+//         </div>
+
+//         {/* Center: Controls */}
+//         <div className="flex flex-col items-center w-[40%] max-w-[722px]">
+//            <div className="flex items-center gap-6 mb-2">
+//              <button className="text-gray-400 hover:text-white"><Shuffle size={18} /></button>
+//              <button className="text-gray-400 hover:text-white"><SkipBack fill="currentColor" size={20} /></button>
+//              <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-105 transition text-black">
+//                <Pause fill="black" size={18} />
+//              </button>
+//              <button className="text-gray-400 hover:text-white"><SkipForward fill="currentColor" size={20} /></button>
+//              <button className="text-gray-400 hover:text-white"><Repeat size={18} /></button>
+//            </div>
+//            <div className="w-full flex items-center gap-2 text-xs text-gray-400 font-medium">
+//              <span>0:24</span>
+//              <div className="h-1 bg-gray-600 rounded-full flex-1 group cursor-pointer">
+//                <div className="h-1 bg-white rounded-full w-[15%] group-hover:bg-green-500 relative">
+//                  <div className="hidden group-hover:block w-3 h-3 bg-white rounded-full absolute -right-1.5 -top-1 shadow"></div>
+//                </div>
+//              </div>
+//              <span>2:48</span>
+//            </div>
+//         </div>
+
+//         {/* Right: Volume & Extras */}
+//         <div className="flex items-center justify-end gap-3 w-[30%] text-gray-400">
+//            <button className="hover:text-white"><Mic2 size={18} /></button>
+//            <button className="hover:text-white"><ListMusic size={18} /></button>
+//            <button className="hover:text-white"><MonitorSpeaker size={18} /></button>
+//            <div className="flex items-center gap-2 w-24 group">
+//              <Volume2 size={18} />
+//              <div className="h-1 bg-gray-600 rounded-full flex-1">
+//                <div className="h-1 bg-white rounded-full w-[80%] group-hover:bg-green-500"></div>
+//              </div>
+//            </div>
+//            <button className="hover:text-white"><Maximize2 size={18} /></button>
+//         </div>
+
+//       </footer>
+//     </div>
+//   );
+// };
+
+// // Reusable Card Component for "Start Browsing" and "Browse All"
+// const CategoryCard = ({ title, color, img, rotate }) => {
+//   return (
+//     <div className={`relative ${color} h-[200px] rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition group`}>
+//       <h3 className="text-2xl font-bold p-4 absolute z-10">{title}</h3>
+//       <img 
+//         src={img} 
+//         alt={title}
+//         className={`absolute w-32 h-32 shadow-xl bottom-0 right-0 translate-x-[18%] translate-y-[5%] rounded-lg ${rotate ? 'rotate-[25deg] translate-x-[15%]' : 'rotate-[25deg]'} shadow-black/20`}
+//       />
+//     </div>
+//   );
+// };
+
+// export default App;
