@@ -74,25 +74,25 @@ export default function Sidebar({ isDark, isOpen, setIsOpen }) {
       {/* Logo Area */}
       <div className="h-20 flex items-center justify-center border-b border-gray-100 dark:border-slate-800 relative">
         <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white shadow-lg">
-               <Hourglass size={20} className="animate-[spin_10s_linear_infinite]" />
-            </div>
-            <AnimatePresence>
-              {isOpen && (
-                <motion.h1 
-                  initial={{ opacity: 0, x: -10 }} 
-                  animate={{ opacity: 1, x: 0 }} 
-                  exit={{ opacity: 0, x: -10 }}
-                  className="text-xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent whitespace-nowrap"
-                >
-                  Admin Panel
-                </motion.h1>
-              )}
-            </AnimatePresence>
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white shadow-lg">
+            <Hourglass size={20} className="animate-[spin_10s_linear_infinite]" />
+          </div>
+          <AnimatePresence>
+            {isOpen && (
+              <motion.h1
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                className="text-xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent whitespace-nowrap"
+              >
+                Admin Panel
+              </motion.h1>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Toggle Button */}
-        <button 
+        <button
           onClick={() => setIsOpen(!isOpen)}
           className="cursor-pointer absolute -right-3 top-8 bg-white dark:bg-slate-800 border  border-amber-200 dark:border-slate-600 rounded-full p-1 text-amber-500 shadow-md hover:scale-110 transition"
         >
@@ -108,19 +108,18 @@ export default function Sidebar({ isDark, isOpen, setIsOpen }) {
             to={path}
             end={path === "/admin"}
             className={({ isActive }) =>
-              `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden ${
-                isActive
-                  ? "bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg shadow-orange-200 dark:shadow-none"
-                  : "text-gray-600 dark:text-gray-400 hover:bg-amber-50 dark:hover:bg-slate-800"
+              `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden ${isActive
+                ? "bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg shadow-orange-200 dark:shadow-none"
+                : "text-gray-600 dark:text-gray-400 hover:bg-amber-50 dark:hover:bg-slate-800"
               }`
             }
           >
             <Icon size={22} className="min-w-[22px]" />
             <AnimatePresence>
               {isOpen && (
-                <motion.span 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }} 
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   className="font-medium whitespace-nowrap"
                 >
